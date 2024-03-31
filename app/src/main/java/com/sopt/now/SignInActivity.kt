@@ -13,6 +13,17 @@ class SignInActivity : AppCompatActivity() {
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        signInBtnClickListener()
+        signUpBtnClickListener()
+    }
+
+    private fun signInBtnClickListener() {
+        binding.btnSignUp.setOnClickListener {
+            navigateSignUpActivity()
+        }
+    }
+
+    private fun signUpBtnClickListener() {
         binding.btnSignIn.setOnClickListener {
             val idLength = binding.etvId.text.length
             val pwLength = binding.etvPw.text.length
@@ -24,9 +35,6 @@ class SignInActivity : AppCompatActivity() {
             } else {
                 showSnackBar(message)
             }
-        }
-        binding.btnSignUp.setOnClickListener {
-            navigateSignUpActivity()
         }
     }
 
