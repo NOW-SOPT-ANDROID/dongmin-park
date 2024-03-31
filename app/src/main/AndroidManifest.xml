@@ -22,6 +22,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
     </application>

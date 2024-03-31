@@ -68,4 +68,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/btn_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원가입하기"
+        android:textColor="@color/gray"
+        app:layout_constraintEnd_toEndOf="@id/btn_sign_in"
+        app:layout_constraintStart_toStartOf="@id/btn_sign_in"
+        app:layout_constraintTop_toBottomOf="@id/btn_sign_in" />
 </androidx.constraintlayout.widget.ConstraintLayout>

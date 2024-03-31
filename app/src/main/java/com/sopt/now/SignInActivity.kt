@@ -25,6 +25,9 @@ class SignInActivity : AppCompatActivity() {
                 showSnackBar(message)
             }
         }
+        binding.btnSignUp.setOnClickListener {
+            navigateSignUpActivity()
+        }
     }
 
     private fun getMessage(idLength: Int, pwLength: Int): String? = when {
@@ -41,6 +44,11 @@ class SignInActivity : AppCompatActivity() {
 
     private fun navigateMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateSignUpActivity() {
+        val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
 }
