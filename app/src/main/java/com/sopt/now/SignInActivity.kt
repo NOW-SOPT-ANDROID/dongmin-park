@@ -43,12 +43,14 @@ class SignInActivity : AppCompatActivity() {
     ).show()
 
     private fun navigateMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        Intent(this, MainActivity::class.java).apply {
+            startActivity(this)
+        }
     }
 
     private fun navigateSignUpActivity() {
-        val intent = Intent(this, SignUpActivity::class.java)
-        startActivity(intent)
+        Intent(this, SignUpActivity::class.java).apply {
+            startActivity(this)
+        }
     }
 }
