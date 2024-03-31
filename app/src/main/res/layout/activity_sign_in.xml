@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Welcome To SOPT!"
+        android:text="@string/sign_in_title"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:text="ID"
+        android:text="@string/id"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
@@ -33,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:hint="아이디를 입력해주세요"
+        android:hint="@string/id_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_id"
         app:layout_constraintTop_toBottomOf="@id/tv_id" />
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="PW"
+        android:text="@string/pw"
         app:layout_constraintStart_toStartOf="@id/tv_id"
         app:layout_constraintTop_toBottomOf="@id/etv_id" />
 
@@ -53,7 +53,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:hint="비밀번호를 입력해주세요"
+        android:hint="@string/pw_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_pw"
         app:layout_constraintTop_toBottomOf="@id/tv_pw" />
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="60dp"
-        android:text="로그인하기"
+        android:text="@string/sign_in_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -73,7 +73,7 @@
         android:id="@+id/btn_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회원가입하기"
+        android:text="@string/sign_up_button"
         android:textColor="@color/gray"
         app:layout_constraintEnd_toEndOf="@id/btn_sign_in"
         app:layout_constraintStart_toStartOf="@id/btn_sign_in"
