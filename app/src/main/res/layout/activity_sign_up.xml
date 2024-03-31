@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="SIGN UP"
+        android:text="@string/sign_up_title"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:text="ID"
+        android:text="@string/id"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_up_title" />
 
@@ -32,7 +32,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:hint="아이디를 입력해주세요"
+        android:hint="@string/id_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_sign_up_id"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_up_id" />
@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="PW"
+        android:text="@string/pw"
         app:layout_constraintStart_toStartOf="@id/tv_sign_up_id"
         app:layout_constraintTop_toBottomOf="@id/etv_sign_up_id" />
 
@@ -52,7 +52,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:hint="비밀번호를 입력해주세요"
+        android:hint="@string/pw_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_sign_up_pw"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_up_pw" />
@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Nickname"
+        android:text="@string/nickname"
         app:layout_constraintStart_toStartOf="@id/etv_sign_up_pw"
         app:layout_constraintTop_toBottomOf="@id/etv_sign_up_pw" />
 
@@ -72,7 +72,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:hint="닉네임을 입력해주세요"
+        android:hint="@string/nickname_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_sign_up_nickname"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_up_nickname" />
@@ -83,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="주량"
+        android:text="@string/juryang"
         app:layout_constraintStart_toStartOf="@id/etv_sign_up_nickname"
         app:layout_constraintTop_toBottomOf="@id/etv_sign_up_nickname" />
 
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
         android:inputType="number"
-        android:hint="소주 주량을 입력해주세요"
+        android:hint="@string/juryang_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_sign_up_juryang"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_up_juryang" />
@@ -104,7 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="60dp"
-        android:text="회원가입하기"
+        android:text="@string/sign_up_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -6,6 +6,8 @@
     <string name="pw_hint">비밀번호를 입력해주세요</string>
     <string name="nickname">Nickname</string>
     <string name="nickname_hint">닉네임을 입력해주세요</string>
+    <string name="juryang">주량</string>
+    <string name="juryang_hint">주량을 입력해주세요</string>
 
     <!--sign_in-->
     <string name="sign_in_title">WELCOME TO SOPT</string>
