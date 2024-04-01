@@ -25,7 +25,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>({ ActivityMainBinding.inf
             tvMainIdValue.text = user?.id
             tvMainPwValue.text = user?.pw
             tvMainNickname.text = user?.nickname
-            tvMainJuryangValue.text = getString(R.string.juryang_count, user?.juryang)
+            tvMainJuryangValue.text = getString(R.string.main_juryang_count, user?.juryang)
         }
     }
 

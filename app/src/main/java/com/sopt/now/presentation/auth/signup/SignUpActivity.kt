@@ -25,7 +25,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>({ ActivitySignUpBindi
 
             when (val error = getMessageError(idLength, pwLength, nickname, juryang)) {
                 SignUpState.SUCCESS -> navigateSignIn()
-                else -> snackBar(binding.root, error.errorMessage)
+                else -> snackBar(binding.root, getString(error.errorMessage))
             }
         }
     }

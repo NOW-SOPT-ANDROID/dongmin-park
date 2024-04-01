@@ -36,7 +36,7 @@
         android:layout_marginEnd="20dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="ㅎㅇ"
+        android:text="@string/main_comment"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/iv_main_profile"

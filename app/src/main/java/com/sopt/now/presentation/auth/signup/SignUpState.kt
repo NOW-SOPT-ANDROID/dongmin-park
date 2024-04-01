@@ -1,9 +1,11 @@
 package com.sopt.now.presentation.auth.signup
 
-sealed class SignUpState(val errorMessage: String) {
-    data object SUCCESS : SignUpState("SUCCESS")
-    data object IdState : SignUpState("ID ERROR")
-    data object PwState : SignUpState("PW ERROR")
-    data object NicknameState : SignUpState("NICKNAME ERROR")
-    data object JuryangState : SignUpState("JURYANG ERROR")
+import com.sopt.now.R
+
+sealed class SignUpState(val errorMessage: Int) {
+    data object SUCCESS : SignUpState(R.string.network_error)
+    data object IdState : SignUpState(R.string.id_error)
+    data object PwState : SignUpState(R.string.pw_error)
+    data object NicknameState : SignUpState(R.string.nickname_error)
+    data object JuryangState : SignUpState(R.string.juryang_error)
 }

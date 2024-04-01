@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignInBinding
 import com.sopt.now.model.User
 import com.sopt.now.presentation.auth.signup.SignUpActivity
@@ -53,7 +54,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>({ ActivitySignInBindi
             if (id == user?.id && pw == user?.pw) {
                 navigateToMainActivity()
             } else {
-                snackBar(binding.root, "회원정보가 일치하지 않습니다")
+                snackBar(binding.root, getString(R.string.user_error))
             }
         }
     }
