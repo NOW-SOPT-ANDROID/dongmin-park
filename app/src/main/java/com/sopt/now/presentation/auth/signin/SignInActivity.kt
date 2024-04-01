@@ -2,7 +2,6 @@ package com.sopt.now.presentation.auth.signin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.sopt.now.databinding.ActivitySignInBinding
@@ -34,15 +33,22 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>({ ActivitySignInBindi
                 user = result.data?.getParcelable(USER_KEY, User::class.java)
                     ?: return@registerForActivityResult
 
-                Log.e("TAG", "$user")
+                setLoginInfo()
             }
+        }
+    }
+
+    private fun setLoginInfo() {
+        with(binding) {
+            etvSignInId.setText(user?.id)
+            etvSignInPw.setText(user?.pw)
         }
     }
 
     private fun signInBtnClickListener() {
         binding.btnSignIn.setOnClickListener {
-            val id = binding.etvId.text.toString()
-            val pw = binding.etvPw.text.toString()
+            val id = binding.etvSignInId.text.toString()
+            val pw = binding.etvSignInPw.text.toString()
 
             if (id == user?.id && pw == user?.pw) {
                 navigateToMainActivity()
@@ -57,6 +63,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>({ ActivitySignInBindi
             this,
             user ?: throw IllegalStateException(),
         ).also(::startActivity)
+        finish()
     }
 
     private fun signUpBtnClickListener() {

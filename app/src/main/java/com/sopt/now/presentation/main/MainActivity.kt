@@ -3,6 +3,7 @@ package com.sopt.now.presentation.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.sopt.now.R
 import com.sopt.now.databinding.ActivityMainBinding
 import com.sopt.now.model.User
 import com.sopt.now.presentation.auth.signup.SignUpActivity.Companion.USER_KEY
@@ -24,7 +25,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>({ ActivityMainBinding.inf
             tvMainIdValue.text = user?.id
             tvMainPwValue.text = user?.pw
             tvMainNickname.text = user?.nickname
-            tvMainJuryangValue.text = user?.juryang + "병" // 이거 string 추출하는걸로 변경
+            tvMainJuryangValue.text = getString(R.string.juryang_count, user?.juryang)
         }
     }
 

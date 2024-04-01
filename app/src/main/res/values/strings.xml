@@ -16,4 +16,7 @@
 
     <!--sign_up-->
     <string name="sign_up_title">SIGN UP</string>
+
+    <!--main-->
+    <string name="juryang_count">%s병</string>
 </resources>
