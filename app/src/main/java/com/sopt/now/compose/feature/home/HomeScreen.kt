@@ -21,10 +21,10 @@ import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.sopt.now.compose.R
-import com.sopt.now.compose.User
 import com.sopt.now.compose.component.layout.ErrorScreen
 import com.sopt.now.compose.component.layout.LoadingScreen
 import com.sopt.now.compose.component.text.TextWithTitle
+import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.UiState
 
 

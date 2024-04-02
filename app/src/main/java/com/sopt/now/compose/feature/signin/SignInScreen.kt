@@ -36,11 +36,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.User
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
 import com.sopt.now.compose.ext.addFocusCleaner
 import com.sopt.now.compose.ext.noRippleClickable
 import com.sopt.now.compose.feature.main.Screen
+import com.sopt.now.compose.model.User
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
 

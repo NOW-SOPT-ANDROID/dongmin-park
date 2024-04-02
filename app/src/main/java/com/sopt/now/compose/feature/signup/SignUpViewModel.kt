@@ -3,7 +3,6 @@ package com.sopt.now.compose.feature.signup
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.sopt.now.compose.R
-import com.sopt.now.compose.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow

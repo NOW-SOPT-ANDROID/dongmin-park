@@ -2,7 +2,7 @@ package com.sopt.now.compose.feature.signin
 
 import androidx.lifecycle.ViewModel
 import com.sopt.now.compose.R
-import com.sopt.now.compose.User
+import com.sopt.now.compose.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
