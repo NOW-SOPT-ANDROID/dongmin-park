@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.sopt.now.compose.feature.signup.SignUpScreen
+import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,10 +21,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SignUpScreen()
-//                    Box(modifier = Modifier, contentAlignment = Alignment.Center) {
-//                        Text(text = "hi")
-//                    }
+                    val navController = rememberNavController()
+                    MainScreen(navController = navController)
                 }
             }
         }

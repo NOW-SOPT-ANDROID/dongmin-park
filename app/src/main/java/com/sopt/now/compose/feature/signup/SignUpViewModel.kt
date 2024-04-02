@@ -42,8 +42,8 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
         when {
             _state.value.id.length !in 6..10 -> _sideEffect.emit(SignUpSideEffect.SnackBar("ID ERROR"))
             _state.value.pw.length !in 8..12 -> _sideEffect.emit(SignUpSideEffect.SnackBar("PW ERROR"))
-            _state.value.nickname.isNotBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar("NICKNAME ERROR"))
-            _state.value.juryang.isNotBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar("JURYANG ERROR"))
+            _state.value.nickname.isBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar("NICKNAME ERROR"))
+            _state.value.juryang.isBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar("JURYANG ERROR"))
             else -> _sideEffect.emit(SignUpSideEffect.NavigateToSignIn)
         }
         _sideEffect.resetReplayCache()

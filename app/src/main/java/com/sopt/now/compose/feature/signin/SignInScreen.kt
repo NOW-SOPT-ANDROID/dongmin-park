@@ -31,14 +31,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
 import com.sopt.now.compose.ext.addFocusCleaner
+import com.sopt.now.compose.ext.navigateClear
 import com.sopt.now.compose.ext.noRippleClickable
+import com.sopt.now.compose.feature.main.Screen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun SignInScreen(
+    navController: NavController,
     viewModel: SignInViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -52,17 +57,12 @@ fun SignInScreen(
             viewModel.sideEffect.collect { sideEffect ->
                 when (sideEffect) {
                     SignInSideEffect.NavigateToMain -> {
-                        scope.launch {
-                            snackBarHostState.currentSnackbarData?.dismiss()
-                            snackBarHostState.showSnackbar("Sign Up Move")
-                        }
+                        navController.navigate(Screen.Home.route)
+                        navController.navigateClear(Screen.Home.route)
                     }
 
                     SignInSideEffect.NavigateToSignUp -> {
-                        scope.launch {
-                            snackBarHostState.currentSnackbarData?.dismiss()
-                            snackBarHostState.showSnackbar("Sign In Move")
-                        }
+                        navController.navigate(Screen.SignUp.route)
                     }
 
                     is SignInSideEffect.SnackBar -> {
@@ -169,6 +169,7 @@ fun SignInScreen(
 @Composable
 fun SignInScreenPreview() {
     NOWSOPTAndroidTheme {
-        SignInScreen()
+        val navController = rememberNavController()
+        SignInScreen(navController)
     }
 }
