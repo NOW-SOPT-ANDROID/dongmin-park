@@ -36,7 +36,6 @@ import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.User
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
 import com.sopt.now.compose.ext.addFocusCleaner
-import com.sopt.now.compose.ext.navigateClear
 import com.sopt.now.compose.ext.noRippleClickable
 import com.sopt.now.compose.feature.main.Screen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
@@ -58,15 +57,18 @@ fun SignInScreen(
             viewModel.sideEffect.collect { sideEffect ->
                 when (sideEffect) {
                     SignInSideEffect.NavigateToMain -> {
-                        val user = User("1","1","1","1")
+                        val user = User(
+                            id = state.id,
+                            pw = state.pw,
+                            nickname = state.nickname,
+                            juryang = state.juryang
+                        )
 
                         navController.currentBackStackEntry?.savedStateHandle?.set(
                             key = "user",
                             value = user
                         )
-
                         navController.navigate(Screen.Home.route)
-                        // navController.navigateClear(Screen.Home.route)
                     }
 
                     SignInSideEffect.NavigateToSignUp -> {
@@ -81,6 +83,13 @@ fun SignInScreen(
                     }
                 }
             }
+        }
+    }
+
+    LaunchedEffect(key1 = true) {
+        navController.previousBackStackEntry?.savedStateHandle?.run {
+            val user = get<User>("user") ?: User()
+            viewModel.setInfo(user)
         }
     }
 

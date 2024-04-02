@@ -1,6 +1,9 @@
 package com.sopt.now.compose.feature.signin
 
+import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.sopt.now.compose.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -12,7 +15,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel @Inject constructor() : ViewModel() {
+class SignInViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
     private val _state: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
     val state: StateFlow<SignInState>
         get() = _state.asStateFlow()
@@ -20,6 +25,14 @@ class SignInViewModel @Inject constructor() : ViewModel() {
     private val _sideEffect: MutableSharedFlow<SignInSideEffect> = MutableSharedFlow()
     val sideEffect: SharedFlow<SignInSideEffect>
         get() = _sideEffect.asSharedFlow()
+    fun setInfo(user: User) {
+        _state.value = _state.value.copy(
+            id = user.id,
+            pw = user.pw,
+            nickname = user.nickname,
+            juryang = user.juryang
+        )
+    }
 
     fun fetchId(id: String) {
         _state.value = _state.value.copy(id = id)

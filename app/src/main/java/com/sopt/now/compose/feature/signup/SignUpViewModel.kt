@@ -1,6 +1,8 @@
 package com.sopt.now.compose.feature.signup
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.sopt.now.compose.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -12,7 +14,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor() : ViewModel() {
+class SignUpViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
     private val _state: MutableStateFlow<SignUpState> = MutableStateFlow(SignUpState())
     val state: StateFlow<SignUpState>
         get() = _state.asStateFlow()

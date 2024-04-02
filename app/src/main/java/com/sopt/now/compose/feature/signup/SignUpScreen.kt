@@ -1,5 +1,6 @@
 package com.sopt.now.compose.feature.signup
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -31,7 +33,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.sopt.now.compose.User
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
+import com.sopt.now.compose.feature.main.MainActivity
 import com.sopt.now.compose.feature.main.Screen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
@@ -52,6 +56,17 @@ fun SignUpScreen(
             viewModel.sideEffect.collect { sideEffect ->
                 when (sideEffect) {
                     SignUpSideEffect.NavigateToSignIn -> {
+                        val user = User(
+                            id = state.id,
+                            pw = state.pw,
+                            nickname = state.nickname,
+                            juryang = state.juryang
+                        )
+
+                        navController.currentBackStackEntry?.savedStateHandle?.set(
+                            key = "user",
+                            value = user
+                        )
                         navController.navigate(Screen.SignIn.route)
                     }
 
