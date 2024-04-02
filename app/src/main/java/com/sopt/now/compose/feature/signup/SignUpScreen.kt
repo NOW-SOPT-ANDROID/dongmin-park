@@ -74,7 +74,7 @@ fun SignUpScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(30.dp),
+                    .padding(40.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(

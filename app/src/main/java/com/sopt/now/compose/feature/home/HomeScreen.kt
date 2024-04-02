@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +20,7 @@ import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.sopt.now.compose.R
+import com.sopt.now.compose.User
 import com.sopt.now.compose.component.text.TextWithTitle
 
 @OptIn(ExperimentalGlideComposeApi::class)
@@ -28,6 +30,13 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = true) {
+        navController.previousBackStackEntry?.savedStateHandle?.run {
+            val user = get<User>("user") ?: User()
+            viewModel.setInfo(user)
+        }
+    }
 
     Column(
         modifier = Modifier

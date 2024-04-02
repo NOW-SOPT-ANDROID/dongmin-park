@@ -33,6 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.sopt.now.compose.User
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
 import com.sopt.now.compose.ext.addFocusCleaner
 import com.sopt.now.compose.ext.navigateClear
@@ -57,8 +58,15 @@ fun SignInScreen(
             viewModel.sideEffect.collect { sideEffect ->
                 when (sideEffect) {
                     SignInSideEffect.NavigateToMain -> {
+                        val user = User("1","1","1","1")
+
+                        navController.currentBackStackEntry?.savedStateHandle?.set(
+                            key = "user",
+                            value = user
+                        )
+
                         navController.navigate(Screen.Home.route)
-                        navController.navigateClear(Screen.Home.route)
+                        // navController.navigateClear(Screen.Home.route)
                     }
 
                     SignInSideEffect.NavigateToSignUp -> {
@@ -112,7 +120,7 @@ fun SignInScreen(
                         }
                     }
                 ) {
-                    Text(text = "회원가입하기")
+                    Text(text = "로그인하기")
                 }
                 Text(
                     modifier = Modifier.noRippleClickable {

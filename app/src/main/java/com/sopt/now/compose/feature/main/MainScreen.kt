@@ -22,7 +22,10 @@ fun MainScreen(
 }
 
 fun NavGraphBuilder.authGraph(navController: NavController) {
-    navigation(startDestination = Screen.SignIn.route, route = Graph.Auth.route) {
+    navigation(
+        startDestination = Screen.SignIn.route,
+        route = Graph.Auth.route,
+    ) {
         composable(
             route = Screen.SignIn.route
         ) {
@@ -38,7 +41,10 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
 }
 
 fun NavGraphBuilder.mainGraph(navController: NavController) {
-    navigation(startDestination = Screen.Home.route, route = Graph.Main.route) {
+    navigation(
+        startDestination = Screen.Home.route,
+        route = Graph.Main.route
+    ) {
         composable(
             route = Screen.Home.route
         ) {
