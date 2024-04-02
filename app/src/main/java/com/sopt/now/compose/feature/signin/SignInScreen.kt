@@ -20,8 +20,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +35,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.sopt.now.compose.R
 import com.sopt.now.compose.User
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
 import com.sopt.now.compose.ext.addFocusCleaner
@@ -51,6 +54,7 @@ fun SignInScreen(
 
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -78,7 +82,7 @@ fun SignInScreen(
                     is SignInSideEffect.SnackBar -> {
                         scope.launch {
                             snackBarHostState.currentSnackbarData?.dismiss()
-                            snackBarHostState.showSnackbar(sideEffect.message)
+                            snackBarHostState.showSnackbar(context.getString(sideEffect.message))
                         }
                     }
                 }
@@ -106,7 +110,7 @@ fun SignInScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Welcome To SOPT",
+                    text = stringResource(id = R.string.sign_in_title),
                     fontSize = 30.sp,
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -129,7 +133,7 @@ fun SignInScreen(
                         }
                     }
                 ) {
-                    Text(text = "로그인하기")
+                    Text(text = stringResource(id = R.string.sign_in_title))
                 }
                 Text(
                     modifier = Modifier.noRippleClickable {
@@ -137,7 +141,7 @@ fun SignInScreen(
                             viewModel.signUpBtnClicked()
                         }
                     },
-                    text = "회원가입하기",
+                    text = stringResource(id = R.string.sign_up_btn),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Thin,
                     color = Color.LightGray
@@ -157,9 +161,9 @@ fun SignInScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TextFieldWithTitle(
-                title = "ID",
+                title = stringResource(id = R.string.id),
                 value = state.id,
-                hint = "아이디를 입력해주세요",
+                hint = stringResource(id = R.string.id_hint),
                 singleLine = true,
                 onValueChanged = { id ->
                     viewModel.fetchId(id)
@@ -169,11 +173,11 @@ fun SignInScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             TextFieldWithTitle(
-                title = "PW",
+                title = stringResource(id = R.string.pw),
                 value = state.pw,
                 singleLine = true,
                 keyboardType = KeyboardType.Password,
-                hint = "비밀번호를 입력해주세요",
+                hint = stringResource(id = R.string.pw_hint),
                 onValueChanged = { pw ->
                     viewModel.fetchPw(pw)
                 }

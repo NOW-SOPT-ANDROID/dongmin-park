@@ -13,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,7 +32,7 @@ fun HomeScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(true) {
         navController.previousBackStackEntry?.savedStateHandle?.run {
             val user = get<User>("user") ?: User()
             viewModel.setInfo(user)
@@ -53,26 +54,26 @@ fun HomeScreen(
             )
             Text(
                 modifier = Modifier.padding(start = 6.dp),
-                text = "이름"
+                text = stringResource(id = R.string.name)
             )
         }
         Spacer(modifier = Modifier.padding(vertical = 6.dp))
-        Text(text = "자기소개개개개개개개개")
+        Text(text = stringResource(id = R.string.description))
 
         Spacer(modifier = Modifier.padding(vertical = 30.dp))
 
-        TextWithTitle(title = "ID", description = state.id)
+        TextWithTitle(title = stringResource(id = R.string.id), description = state.id)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        TextWithTitle(title = "PW", description = state.pw)
+        TextWithTitle(title = stringResource(id = R.string.pw), description = state.pw)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        TextWithTitle(title = "Nickname", description = state.nickname)
+        TextWithTitle(title = stringResource(id = R.string.nickname), description = state.nickname)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        TextWithTitle(title = "주량", description = state.juryang)
+        TextWithTitle(title = stringResource(id = R.string.juryang), description = state.juryang)
     }
 }

@@ -2,6 +2,7 @@ package com.sopt.now.compose.feature.signup
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.sopt.now.compose.R
 import com.sopt.now.compose.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -44,10 +45,10 @@ class SignUpViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun signUpBtnClicked() {
         when {
-            _state.value.id.length !in 6..10 -> _sideEffect.emit(SignUpSideEffect.SnackBar("ID ERROR"))
-            _state.value.pw.length !in 8..12 -> _sideEffect.emit(SignUpSideEffect.SnackBar("PW ERROR"))
-            _state.value.nickname.isBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar("NICKNAME ERROR"))
-            _state.value.juryang.isBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar("JURYANG ERROR"))
+            _state.value.id.length !in 6..10 -> _sideEffect.emit(SignUpSideEffect.SnackBar(R.string.id_error))
+            _state.value.pw.length !in 8..12 -> _sideEffect.emit(SignUpSideEffect.SnackBar(R.string.pw_error))
+            _state.value.nickname.isBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar(R.string.nickname_error))
+            _state.value.juryang.isBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar(R.string.juryang_error))
             else -> _sideEffect.emit(SignUpSideEffect.NavigateToSignIn)
         }
         _sideEffect.resetReplayCache()

@@ -3,7 +3,9 @@ package com.sopt.now.compose.feature.signin
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.sopt.now.compose.R
 import com.sopt.now.compose.User
+import com.sopt.now.compose.feature.signup.SignUpSideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -45,8 +47,8 @@ class SignInViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun signInBtnClicked() {
         when {
-            _state.value.id.length !in 6..10 -> _sideEffect.emit(SignInSideEffect.SnackBar("ID ERROR"))
-            _state.value.pw.length !in 8..12 -> _sideEffect.emit(SignInSideEffect.SnackBar("PW ERROR"))
+            _state.value.id.length !in 6..10 -> _sideEffect.emit(SignInSideEffect.SnackBar(R.string.id_error))
+            _state.value.pw.length !in 8..12 -> _sideEffect.emit(SignInSideEffect.SnackBar(R.string.pw_error))
             else -> _sideEffect.emit(SignInSideEffect.NavigateToMain)
         }
         _sideEffect.resetReplayCache()

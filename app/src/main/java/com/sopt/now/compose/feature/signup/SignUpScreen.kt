@@ -1,6 +1,5 @@
 package com.sopt.now.compose.feature.signup
 
-import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,9 +33,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.sopt.now.compose.R
 import com.sopt.now.compose.User
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
-import com.sopt.now.compose.feature.main.MainActivity
 import com.sopt.now.compose.feature.main.Screen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
@@ -50,6 +50,7 @@ fun SignUpScreen(
 
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -73,7 +74,7 @@ fun SignUpScreen(
                     is SignUpSideEffect.SnackBar -> {
                         scope.launch {
                             snackBarHostState.currentSnackbarData?.dismiss()
-                            snackBarHostState.showSnackbar(sideEffect.message)
+                            snackBarHostState.showSnackbar(context.getString(sideEffect.message))
                         }
                     }
                 }
@@ -93,7 +94,7 @@ fun SignUpScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Sign Up",
+                    text = stringResource(id = R.string.sign_up_title),
                     fontSize = 30.sp,
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -115,7 +116,7 @@ fun SignUpScreen(
                         }
                     }
                 ) {
-                    Text(text = "회원가입하기")
+                    Text(text = stringResource(id = R.string.sign_up_btn))
                 }
             }
         }
@@ -132,9 +133,9 @@ fun SignUpScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TextFieldWithTitle(
-                title = "ID",
+                title = stringResource(id = R.string.id),
                 value = state.id,
-                hint = "아이디를 입력해주세요",
+                hint = stringResource(id = R.string.id_hint),
                 singleLine = true,
                 onValueChanged = { id ->
                     viewModel.fetchId(id)
@@ -144,11 +145,11 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             TextFieldWithTitle(
-                title = "PW",
+                title = stringResource(id = R.string.pw),
                 value = state.pw,
                 singleLine = true,
                 keyboardType = KeyboardType.Password,
-                hint = "비밀번호를 입력해주세요",
+                hint = stringResource(id = R.string.pw_hint),
                 onValueChanged = { pw ->
                     viewModel.fetchPw(pw)
                 }
@@ -157,9 +158,9 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             TextFieldWithTitle(
-                title = "닉네임",
+                title = stringResource(id = R.string.nickname),
                 value = state.nickname,
-                hint = "닉네임을 입력해주세요",
+                hint = stringResource(id = R.string.nickname_hint),
                 singleLine = true,
                 onValueChanged = { nickname ->
                     viewModel.fetchNickname(nickname)
@@ -169,9 +170,9 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             TextFieldWithTitle(
-                title = "주량",
+                title = stringResource(id = R.string.juryang),
                 value = state.juryang,
-                hint = "주량을 입력해주세요",
+                hint = stringResource(id = R.string.juryang_hint),
                 singleLine = true,
                 onValueChanged = { juryang ->
                     viewModel.fetchJuryang(juryang)
