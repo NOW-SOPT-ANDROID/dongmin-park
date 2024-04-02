@@ -82,6 +82,37 @@ fun SignUpScreen(
         }
     }
 
+    SignUpScreen(
+        snackBarHostState = snackBarHostState,
+        id = state.id,
+        pw = state.pw,
+        nickname = state.nickname,
+        juryang = state.juryang,
+        fetchId = { viewModel.fetchId(it) },
+        fetchPw = { viewModel.fetchPw(it) },
+        fetchNickname = { viewModel.fetchNickname(it) },
+        fetchJuryang = { viewModel.fetchJuryang(it) },
+        signUpBtnClicked = {
+            scope.launch {
+                viewModel.signUpBtnClicked()
+            }
+        }
+    )
+}
+
+@Composable
+fun SignUpScreen(
+    snackBarHostState: SnackbarHostState,
+    id: String,
+    pw: String,
+    nickname: String,
+    juryang: String,
+    fetchId: (String) -> Unit,
+    fetchPw: (String) -> Unit,
+    fetchNickname: (String) -> Unit,
+    fetchJuryang: (String) -> Unit,
+    signUpBtnClicked: () -> Unit,
+) {
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState)
@@ -110,11 +141,7 @@ fun SignUpScreen(
                 Button(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    onClick = {
-                        scope.launch {
-                            viewModel.signUpBtnClicked()
-                        }
-                    }
+                    onClick = signUpBtnClicked
                 ) {
                     Text(text = stringResource(id = R.string.sign_up_btn))
                 }
@@ -134,11 +161,11 @@ fun SignUpScreen(
         ) {
             TextFieldWithTitle(
                 title = stringResource(id = R.string.id),
-                value = state.id,
+                value = id,
                 hint = stringResource(id = R.string.id_hint),
                 singleLine = true,
                 onValueChanged = { id ->
-                    viewModel.fetchId(id)
+                    fetchId(id)
                 }
             )
 
@@ -146,12 +173,12 @@ fun SignUpScreen(
 
             TextFieldWithTitle(
                 title = stringResource(id = R.string.pw),
-                value = state.pw,
+                value = pw,
                 singleLine = true,
                 keyboardType = KeyboardType.Password,
                 hint = stringResource(id = R.string.pw_hint),
                 onValueChanged = { pw ->
-                    viewModel.fetchPw(pw)
+                    fetchPw(pw)
                 }
             )
 
@@ -159,11 +186,11 @@ fun SignUpScreen(
 
             TextFieldWithTitle(
                 title = stringResource(id = R.string.nickname),
-                value = state.nickname,
+                value = nickname,
                 hint = stringResource(id = R.string.nickname_hint),
                 singleLine = true,
                 onValueChanged = { nickname ->
-                    viewModel.fetchNickname(nickname)
+                    fetchNickname(nickname)
                 }
             )
 
@@ -171,11 +198,11 @@ fun SignUpScreen(
 
             TextFieldWithTitle(
                 title = stringResource(id = R.string.juryang),
-                value = state.juryang,
+                value = juryang,
                 hint = stringResource(id = R.string.juryang_hint),
                 singleLine = true,
                 onValueChanged = { juryang ->
-                    viewModel.fetchJuryang(juryang)
+                    fetchJuryang(juryang)
                 }
             )
         }
