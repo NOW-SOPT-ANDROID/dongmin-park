@@ -1,6 +1,5 @@
 package com.sopt.now.compose.feature.signin
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -91,13 +90,42 @@ fun SignInScreen(
         }
     }
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(true) {
         navController.previousBackStackEntry?.savedStateHandle?.run {
             val user = get<User>("user") ?: User()
             viewModel.setInfo(user)
         }
     }
 
+    SignInScreen(
+        snackBarHostState,
+        id = state.id,
+        pw = state.pw,
+        signInBtnClicked = {
+            scope.launch {
+                viewModel.signInBtnClicked()
+            }
+        },
+        signUpBtnClicked = {
+            scope.launch {
+                viewModel.signUpBtnClicked()
+            }
+        },
+        fetchId = { viewModel.fetchId(it) },
+        fetchPw = { viewModel.fetchPw(it) }
+    )
+}
+
+@Composable
+fun SignInScreen(
+    snackBarHostState: SnackbarHostState,
+    id: String,
+    pw: String,
+    signInBtnClicked: () -> Unit,
+    signUpBtnClicked: () -> Unit,
+    fetchId: (String) -> Unit,
+    fetchPw: (String) -> Unit
+) {
     Scaffold(
         modifier = Modifier.addFocusCleaner(LocalFocusManager.current),
         snackbarHost = {
@@ -128,19 +156,13 @@ fun SignInScreen(
                 Button(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    onClick = {
-                        scope.launch {
-                            viewModel.signInBtnClicked()
-                        }
-                    }
+                    onClick = signInBtnClicked
                 ) {
                     Text(text = stringResource(id = R.string.sign_in_title))
                 }
                 Text(
                     modifier = Modifier.noRippleClickable {
-                        scope.launch {
-                            viewModel.signUpBtnClicked()
-                        }
+                        signUpBtnClicked()
                     },
                     text = stringResource(id = R.string.sign_up_btn),
                     fontSize = 12.sp,
@@ -163,11 +185,11 @@ fun SignInScreen(
         ) {
             TextFieldWithTitle(
                 title = stringResource(id = R.string.id),
-                value = state.id,
+                value = id,
                 hint = stringResource(id = R.string.id_hint),
                 singleLine = true,
                 onValueChanged = { id ->
-                    viewModel.fetchId(id)
+                    fetchId(id)
                 }
             )
 
@@ -175,12 +197,12 @@ fun SignInScreen(
 
             TextFieldWithTitle(
                 title = stringResource(id = R.string.pw),
-                value = state.pw,
+                value = pw,
                 singleLine = true,
                 keyboardType = KeyboardType.Password,
                 hint = stringResource(id = R.string.pw_hint),
                 onValueChanged = { pw ->
-                    viewModel.fetchPw(pw)
+                    fetchPw(pw)
                 }
             )
         }
