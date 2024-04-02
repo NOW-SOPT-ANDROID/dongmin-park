@@ -31,7 +31,7 @@ fun TextFieldWithTitle(
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = title,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Normal,
             fontSize = 30.sp
         )
         Spacer(modifier = Modifier.padding(vertical = 4.dp))

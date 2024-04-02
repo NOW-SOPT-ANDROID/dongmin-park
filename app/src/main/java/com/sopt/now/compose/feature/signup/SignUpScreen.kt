@@ -166,7 +166,7 @@ fun SignUpScreen(
 
 @Preview
 @Composable
-fun SignInScreenPreview() {
+fun SignUpScreenPreview() {
     NOWSOPTAndroidTheme {
         SignUpScreen()
     }
