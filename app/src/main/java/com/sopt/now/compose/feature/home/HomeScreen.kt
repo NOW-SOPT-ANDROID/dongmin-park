@@ -22,9 +22,12 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.sopt.now.compose.R
 import com.sopt.now.compose.User
+import com.sopt.now.compose.component.layout.ErrorScreen
+import com.sopt.now.compose.component.layout.LoadingScreen
 import com.sopt.now.compose.component.text.TextWithTitle
+import com.sopt.now.compose.util.UiState
 
-@OptIn(ExperimentalGlideComposeApi::class)
+
 @Composable
 fun HomeScreen(
     navController: NavController,
@@ -34,11 +37,27 @@ fun HomeScreen(
 
     LaunchedEffect(true) {
         navController.previousBackStackEntry?.savedStateHandle?.run {
-            val user = get<User>("user") ?: User()
-            viewModel.setInfo(user)
+            when (val user = get<User>("user")) {
+                null -> viewModel.setState(UiState.Failure)
+                else -> viewModel.setState(UiState.Success(user))
+            }
         }
     }
 
+    when (state.loadState) {
+        UiState.Loading -> LoadingScreen()
+        UiState.Failure -> ErrorScreen()
+        is UiState.Success -> {
+            HomeScreen(user = (state.loadState as UiState.Success<User>).data)
+        }
+    }
+}
+
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun HomeScreen(
+    user: User
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -62,18 +81,18 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.padding(vertical = 30.dp))
 
-        TextWithTitle(title = stringResource(id = R.string.id), description = state.id)
+        TextWithTitle(title = stringResource(id = R.string.id), description = user.id)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        TextWithTitle(title = stringResource(id = R.string.pw), description = state.pw)
+        TextWithTitle(title = stringResource(id = R.string.pw), description = user.pw)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        TextWithTitle(title = stringResource(id = R.string.nickname), description = state.nickname)
+        TextWithTitle(title = stringResource(id = R.string.nickname), description = user.nickname)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        TextWithTitle(title = stringResource(id = R.string.juryang), description = state.juryang)
+        TextWithTitle(title = stringResource(id = R.string.juryang), description = user.juryang)
     }
 }
