@@ -3,6 +3,7 @@ package com.sopt.now.presentation.auth.signup
 import android.os.Bundle
 import android.text.Editable
 import androidx.core.widget.doOnTextChanged
+import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.model.User
 import com.sopt.now.util.base.BaseActivity
@@ -25,7 +26,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>({ ActivitySignUpBindi
 
             when (val error = getMessageError(idLength, pwLength, nickname, juryang)) {
                 SignUpState.SUCCESS -> navigateSignIn()
-                else -> snackBar(binding.root, getString(error.errorMessage))
+                is SignUpState.ERROR -> snackBar(binding.root, getString(error.errorMessage))
             }
         }
     }
@@ -36,10 +37,10 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>({ ActivitySignUpBindi
         nickname: Editable,
         juryang: Editable
     ) = when {
-        idLength !in ID_MIN_LEN..ID_MAX_LEN -> SignUpState.IdState
-        pwLength !in PW_MIN_LEN..PW_MAX_LEN -> SignUpState.PwState
-        nickname.isBlank() -> SignUpState.NicknameState
-        juryang.isEmpty() -> SignUpState.JuryangState
+        idLength !in ID_MIN_LEN..ID_MAX_LEN -> SignUpState.ERROR(R.string.id_error)
+        pwLength !in PW_MIN_LEN..PW_MAX_LEN -> SignUpState.ERROR(R.string.pw_error)
+        nickname.isBlank() -> SignUpState.ERROR(R.string.nickname_error)
+        juryang.isEmpty() -> SignUpState.ERROR(R.string.juryang_error)
         else -> SignUpState.SUCCESS
     }
 
