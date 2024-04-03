@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
         android:hint="@string/pw_hint"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_sign_in_pw"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_in_pw" />
