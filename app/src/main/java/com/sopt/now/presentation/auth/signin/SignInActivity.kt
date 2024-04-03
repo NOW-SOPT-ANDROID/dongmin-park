@@ -60,11 +60,18 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>({ ActivitySignInBindi
     }
 
     private fun navigateToMainActivity() {
-        MainActivity.createIntent(
-            this,
-            user ?: throw IllegalStateException(),
-        ).also(::startActivity)
-        finish()
+        runCatching {
+            MainActivity.createIntent(
+                this,
+                user ?: throw IllegalStateException(),
+            ).also(::startActivity)
+
+        }.onFailure {
+            snackBar(binding.root, getString(R.string.user_error))
+        }.onSuccess {
+            finish()
+        }
+
     }
 
     private fun signUpBtnClickListener() {
