@@ -6,106 +6,125 @@
     android:layout_height="match_parent"
     tools:context=".presentation.main.MainActivity">
 
-    <ImageView
-        android:id="@+id/iv_main_profile"
-        android:layout_width="80dp"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcv_home"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_profile"
-        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintBottom_toTopOf="@id/bnv_home"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_main_nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/iv_main_profile"
-        app:layout_constraintStart_toEndOf="@id/iv_main_profile"
-        app:layout_constraintTop_toTopOf="@id/iv_main_profile"
-        tools:text="박동민" />
-
-    <TextView
-        android:id="@+id/tv_main_comment"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnv_home"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/main_comment"
-        android:textSize="15sp"
+        android:layout_height="80dp"
+        app:menu="@menu/menu_home"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/iv_main_profile"
-        app:layout_constraintTop_toBottomOf="@id/iv_main_profile" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_main_id_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/id"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_main_profile" />
 
-    <TextView
-        android:id="@+id/tv_main_id_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_main_id_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_id_title"
-        tools:text="chattymin" />
+    <!--    <ImageView-->
+<!--        android:id="@+id/iv_main_profile"-->
+<!--        android:layout_width="80dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:src="@drawable/ic_profile"-->
+<!--        app:layout_constraintDimensionRatio="1"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <TextView
-        android:id="@+id/tv_main_pw_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/pw"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_id_value" />
+<!--    <TextView-->
+<!--        android:id="@+id/tv_main_nickname"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/iv_main_profile"-->
+<!--        app:layout_constraintStart_toEndOf="@id/iv_main_profile"-->
+<!--        app:layout_constraintTop_toTopOf="@id/iv_main_profile"-->
+<!--        tools:text="박동민" />-->
 
-    <TextView
-        android:id="@+id/tv_main_pw_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_main_pw_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_pw_title"
-        tools:text="1" />
+<!--    <TextView-->
+<!--        android:id="@+id/tv_main_comment"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:ellipsize="end"-->
+<!--        android:maxLines="1"-->
+<!--        android:text="@string/main_comment"-->
+<!--        android:textSize="15sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="@id/iv_main_profile"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/iv_main_profile" />-->
 
-    <TextView
-        android:id="@+id/tv_main_juryang_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/juryang"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_pw_value" />
+<!--    <TextView-->
+<!--        android:id="@+id/tv_main_id_title"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:text="@string/id"-->
+<!--        android:textSize="30sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/iv_main_profile" />-->
 
-    <TextView
-        android:id="@+id/tv_main_juryang_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_main_juryang_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_juryang_title"
-        tools:text="1" />
+<!--    <TextView-->
+<!--        android:id="@+id/tv_main_id_value"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/tv_main_id_title"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tv_main_id_title"-->
+<!--        tools:text="chattymin" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_main_pw_title"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:text="@string/pw"-->
+<!--        android:textSize="30sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tv_main_id_value" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_main_pw_value"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/tv_main_pw_title"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tv_main_pw_title"-->
+<!--        tools:text="1" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_main_juryang_title"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:text="@string/juryang"-->
+<!--        android:textSize="30sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tv_main_pw_value" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_main_juryang_value"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/tv_main_juryang_title"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tv_main_juryang_title"-->
+<!--        tools:text="1" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

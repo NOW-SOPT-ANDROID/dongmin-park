@@ -10,6 +10,7 @@
     <string name="juryang_hint">주량을 입력해주세요</string>
 
     <!--error-->
+    <string name="binding_error">BINDING ERROR</string>
     <string name="id_error">ID ERROR</string>
     <string name="pw_error">PW ERROR</string>
     <string name="nickname_error">NICKNAME ERROR</string>
