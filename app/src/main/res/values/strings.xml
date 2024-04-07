@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">NOW SOPT Android</string>
+    <string name="id">ID</string>
+    <string name="id_hint">아이디를 입력해주세요</string>
+    <string name="pw">PW</string>
+    <string name="pw_hint">비밀번호를 입력해주세요</string>
+    <string name="nickname">Nickname</string>
+    <string name="nickname_hint">닉네임을 입력해주세요</string>
+    <string name="juryang">주량</string>
+    <string name="juryang_hint">주량을 입력해주세요</string>
+
+    <!--error-->
+    <string name="binding_error">BINDING ERROR</string>
+    <string name="id_error">ID ERROR</string>
+    <string name="pw_error">PW ERROR</string>
+    <string name="nickname_error">NICKNAME ERROR</string>
+    <string name="juryang_error">JURYANG ERROR</string>
+    <string name="network_error">NETWORK ERROR</string>
+    <string name="user_error">회원정보가 일치하지 않습니다</string>
+
+
+    <!--sign_in-->
+    <string name="sign_in_title">WELCOME TO SOPT</string>
+    <string name="sign_in_button">로그인하기</string>
+    <string name="sign_up_button">회원가입하기</string>
+
+    <!--sign_up-->
+    <string name="sign_up_title">SIGN UP</string>
+
+    <!--main-->
+    <string name="main_comment">안냐세요</string>
+    <string name="main_juryang_count">%s병</string>
 </resources>

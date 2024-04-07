@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.auth.signup.SignUpActivity">
+    <TextView
+        android:id="@+id/tv_sign_up_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/sign_up_title"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_sign_up_id"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_sign_up_title" />
+
+    <EditText
+        android:id="@+id/etv_sign_up_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:hint="@string/id_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_sign_up_id"
+        app:layout_constraintTop_toBottomOf="@id/tv_sign_up_id" />
+
+    <TextView
+        android:id="@+id/tv_sign_up_pw"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/pw"
+        app:layout_constraintStart_toStartOf="@id/tv_sign_up_id"
+        app:layout_constraintTop_toBottomOf="@id/etv_sign_up_id" />
+
+    <EditText
+        android:id="@+id/etv_sign_up_pw"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:inputType="textPassword"
+        android:hint="@string/pw_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_sign_up_pw"
+        app:layout_constraintTop_toBottomOf="@id/tv_sign_up_pw" />
+
+    <TextView
+        android:id="@+id/tv_sign_up_nickname"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/nickname"
+        app:layout_constraintStart_toStartOf="@id/etv_sign_up_pw"
+        app:layout_constraintTop_toBottomOf="@id/etv_sign_up_pw" />
+
+    <EditText
+        android:id="@+id/etv_sign_up_nickname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:hint="@string/nickname_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_sign_up_nickname"
+        app:layout_constraintTop_toBottomOf="@id/tv_sign_up_nickname" />
+
+    <TextView
+        android:id="@+id/tv_sign_up_juryang"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/juryang"
+        app:layout_constraintStart_toStartOf="@id/etv_sign_up_nickname"
+        app:layout_constraintTop_toBottomOf="@id/etv_sign_up_nickname" />
+
+    <EditText
+        android:id="@+id/etv_sign_up_juryang"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:inputType="number"
+        android:hint="@string/juryang_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_sign_up_juryang"
+        app:layout_constraintTop_toBottomOf="@id/tv_sign_up_juryang" />
+
+    <Button
+        android:id="@+id/btn_sign_up"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="60dp"
+        android:text="@string/sign_up_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
