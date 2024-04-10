@@ -30,10 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
@@ -176,12 +174,8 @@ fun SignInScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(
-                    top = paddingValues.calculateTopPadding(),
-                    bottom = paddingValues.calculateBottomPadding(),
-                    start = 20.dp,
-                    end = 20.dp
-                ),
+                .padding(paddingValues)
+                .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TextFieldWithTitle(

@@ -149,12 +149,8 @@ fun SignUpScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(
-                    top = paddingValues.calculateTopPadding(),
-                    bottom = paddingValues.calculateBottomPadding(),
-                    start = 20.dp,
-                    end = 20.dp
-                ),
+                .padding(paddingValues)
+                .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TextFieldWithTitle(
