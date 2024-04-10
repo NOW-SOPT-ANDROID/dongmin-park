@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -57,8 +58,8 @@ fun SignInScreen(
     val context = LocalContext.current
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
-        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            viewModel.sideEffect.collect { sideEffect ->
+        viewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
+            .collect { sideEffect ->
                 when (sideEffect) {
                     SignInSideEffect.NavigateToMain -> {
                         val user = User(
@@ -86,8 +87,8 @@ fun SignInScreen(
                         }
                     }
                 }
+
             }
-        }
     }
 
     LaunchedEffect(true) {

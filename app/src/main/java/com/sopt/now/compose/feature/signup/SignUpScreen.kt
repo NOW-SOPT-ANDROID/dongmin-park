@@ -28,9 +28,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
@@ -53,32 +52,31 @@ fun SignUpScreen(
     val context = LocalContext.current
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
-        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            viewModel.sideEffect.collect { sideEffect ->
-                when (sideEffect) {
-                    SignUpSideEffect.NavigateToSignIn -> {
-                        val user = User(
-                            id = state.id,
-                            pw = state.pw,
-                            nickname = state.nickname,
-                            juryang = state.juryang
-                        )
+        viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle).collect { sideEffect ->
+            when (sideEffect) {
+                SignUpSideEffect.NavigateToSignIn -> {
+                    val user = User(
+                        id = state.id,
+                        pw = state.pw,
+                        nickname = state.nickname,
+                        juryang = state.juryang
+                    )
 
-                        navController.currentBackStackEntry?.savedStateHandle?.set(
-                            key = "user",
-                            value = user
-                        )
-                        navController.navigate(Screen.SignIn.route)
-                    }
+                    navController.currentBackStackEntry?.savedStateHandle?.set(
+                        key = "user",
+                        value = user
+                    )
+                    navController.navigate(Screen.SignIn.route)
+                }
 
-                    is SignUpSideEffect.SnackBar -> {
-                        scope.launch {
-                            snackBarHostState.currentSnackbarData?.dismiss()
-                            snackBarHostState.showSnackbar(context.getString(sideEffect.message))
-                        }
+                is SignUpSideEffect.SnackBar -> {
+                    scope.launch {
+                        snackBarHostState.currentSnackbarData?.dismiss()
+                        snackBarHostState.showSnackbar(context.getString(sideEffect.message))
                     }
                 }
             }
+
         }
     }
 
