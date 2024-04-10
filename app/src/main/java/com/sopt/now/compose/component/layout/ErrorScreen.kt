@@ -30,7 +30,6 @@ fun ErrorScreen() {
             contentDescription = "error",
             modifier = Modifier
                 .size(100.dp)
-                .aspectRatio(1f)
         )
         Text(text = "이런! 오류가 발생했어요!")
         Text(text = "다시시도해주세요!")

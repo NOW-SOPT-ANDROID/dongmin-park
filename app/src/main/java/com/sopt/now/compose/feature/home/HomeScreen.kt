@@ -27,7 +27,6 @@ import com.sopt.now.compose.component.text.TextWithTitle
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.UiState
 
-
 @Composable
 fun HomeScreen(
     navController: NavController,
@@ -69,7 +68,6 @@ fun HomeScreen(
                 contentDescription = "profile",
                 modifier = Modifier
                     .size(40.dp)
-                    .aspectRatio(1f)
             )
             Text(
                 modifier = Modifier.padding(start = 6.dp),
