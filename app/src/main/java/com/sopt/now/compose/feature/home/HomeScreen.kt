@@ -22,7 +22,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.layout.CircleLoadingScreen
 import com.sopt.now.compose.component.layout.ErrorScreen
-import com.sopt.now.compose.component.text.TextWithTitle
+import com.sopt.now.compose.component.text.DescriptionWithTitle
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.UiState
 
@@ -78,18 +78,18 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.padding(vertical = 30.dp))
 
-        TextWithTitle(title = stringResource(id = R.string.id), description = user.id)
+        DescriptionWithTitle(title = stringResource(id = R.string.id), description = user.id)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        TextWithTitle(title = stringResource(id = R.string.pw), description = user.pw)
+        DescriptionWithTitle(title = stringResource(id = R.string.pw), description = user.pw)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        TextWithTitle(title = stringResource(id = R.string.nickname), description = user.nickname)
+        DescriptionWithTitle(title = stringResource(id = R.string.nickname), description = user.nickname)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        TextWithTitle(title = stringResource(id = R.string.juryang), description = user.juryang)
+        DescriptionWithTitle(title = stringResource(id = R.string.juryang), description = user.juryang)
     }
 }

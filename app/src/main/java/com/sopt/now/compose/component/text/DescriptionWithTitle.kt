@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TextWithTitle(title: String, description: String) {
+fun DescriptionWithTitle(title: String, description: String) {
     Column {
         Text(
             text = title,
@@ -32,5 +32,5 @@ fun TextWithTitle(title: String, description: String) {
 @Preview
 @Composable
 fun TextWithTitlePreview() {
-    TextWithTitle("ID", "chattymin")
+    DescriptionWithTitle("ID", "chattymin")
 }
