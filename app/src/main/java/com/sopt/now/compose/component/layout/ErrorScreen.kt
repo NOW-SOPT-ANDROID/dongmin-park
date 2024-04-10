@@ -18,9 +18,9 @@ import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun ErrorScreen() {
+fun ErrorScreen(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
