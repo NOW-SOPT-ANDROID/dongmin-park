@@ -46,7 +46,13 @@ fun HomeScreen(
         UiState.Loading -> CircleLoadingScreen()
         UiState.Failure -> ErrorScreen()
         is UiState.Success -> {
-            HomeScreen(user = (state.loadState as UiState.Success<User>).data)
+            val user = (state.loadState as UiState.Success<User>).data
+            HomeScreen(
+                id = user.id,
+                pw = user.pw,
+                nickname = user.nickname,
+                juryang = user.juryang
+            )
         }
     }
 }
@@ -54,7 +60,10 @@ fun HomeScreen(
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun HomeScreen(
-    user: User
+    id: String,
+    pw: String,
+    nickname: String,
+    juryang: String
 ) {
     Column(
         modifier = Modifier
@@ -78,18 +87,18 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.padding(vertical = 30.dp))
 
-        DescriptionWithTitle(title = stringResource(id = R.string.id), description = user.id)
+        DescriptionWithTitle(title = stringResource(id = R.string.id), description = id)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        DescriptionWithTitle(title = stringResource(id = R.string.pw), description = user.pw)
+        DescriptionWithTitle(title = stringResource(id = R.string.pw), description = pw)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        DescriptionWithTitle(title = stringResource(id = R.string.nickname), description = user.nickname)
+        DescriptionWithTitle(title = stringResource(id = R.string.nickname), description = nickname)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        DescriptionWithTitle(title = stringResource(id = R.string.juryang), description = user.juryang)
+        DescriptionWithTitle(title = stringResource(id = R.string.juryang), description = juryang)
     }
 }
