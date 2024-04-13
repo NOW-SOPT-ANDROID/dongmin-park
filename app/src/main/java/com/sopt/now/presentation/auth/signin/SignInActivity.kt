@@ -22,8 +22,8 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>({ ActivitySignInBindi
         super.onCreate(savedInstanceState)
 
         setSignUpActivityLauncher()
-        signInBtnClickListener()
-        signUpBtnClickListener()
+        setSignInBtnClickListener()
+        setSignUpBtnClickListener()
     }
 
     private fun setSignUpActivityLauncher() {
@@ -46,7 +46,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>({ ActivitySignInBindi
         }
     }
 
-    private fun signInBtnClickListener() {
+    private fun setSignInBtnClickListener() {
         binding.btnSignIn.setOnClickListener {
             val id = binding.etvSignInId.text.toString()
             val pw = binding.etvSignInPw.text.toString()
@@ -74,7 +74,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>({ ActivitySignInBindi
 
     }
 
-    private fun signUpBtnClickListener() {
+    private fun setSignUpBtnClickListener() {
         binding.btnSignUp.setOnClickListener {
             Intent(this, SignUpActivity::class.java).apply {
                 resultLauncher.launch(this)

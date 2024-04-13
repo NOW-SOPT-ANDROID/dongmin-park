@@ -13,11 +13,11 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>({ ActivitySignUpBindi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        signUpBtnClickListener()
-        juryangEtvDoOnTextChanged()
+        setSignUpBtnClickListener()
+        setJuryangEtvDoOnTextChanged()
     }
 
-    private fun signUpBtnClickListener() {
+    private fun setSignUpBtnClickListener() {
         binding.btnSignUp.setOnClickListener {
             val idLength = binding.etvSignUpId.text.length
             val pwLength = binding.etvSignUpPw.text.length
@@ -61,7 +61,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>({ ActivitySignUpBindi
         finish()
     }
 
-    private fun juryangEtvDoOnTextChanged() {
+    private fun setJuryangEtvDoOnTextChanged() {
         binding.etvSignUpJuryang.doOnTextChanged { text, _, _, _ ->
             val newValue = text.toString().filter { it.isDigit() }.toIntOrNull()
             if (newValue != null && newValue.toString() != text.toString()) {
