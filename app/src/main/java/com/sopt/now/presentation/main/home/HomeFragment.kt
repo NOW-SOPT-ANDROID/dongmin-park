@@ -1,4 +1,4 @@
-package com.sopt.now.presentation.main
+package com.sopt.now.presentation.main.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sopt.now.R
 import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.model.Friend
+import com.sopt.now.presentation.main.FriendAdapter
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
