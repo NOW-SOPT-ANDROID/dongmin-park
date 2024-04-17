@@ -1,4 +1,4 @@
-package com.sopt.now.presentation.main
+package com.sopt.now.presentation.main.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
