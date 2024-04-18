@@ -65,7 +65,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>({ ActivityMainBinding.inf
     }
 
     private fun getUserInfo() {
-        val intent = intent
         val user = intent.getParcelable(USER_KEY, User::class.java)
 
         if (user == null) {

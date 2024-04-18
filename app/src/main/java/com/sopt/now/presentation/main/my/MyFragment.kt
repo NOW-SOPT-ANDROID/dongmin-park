@@ -7,24 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.sopt.now.R
+import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.databinding.FragmentMyBinding
 import com.sopt.now.presentation.main.MainViewModel
+import com.sopt.now.util.base.BaseFragment
 
-class MyFragment : Fragment() {
-    val viewmodel: MainViewModel by activityViewModels()
+class MyFragment : BaseFragment<FragmentMyBinding>() {
+    private val viewmodel: MainViewModel by activityViewModels()
 
-    private var _binding: FragmentMyBinding? = null
-    private val binding: FragmentMyBinding
-        get() = requireNotNull(_binding) { getString(R.string.binding_error) }
-
-    override fun onCreateView(
+    override fun getFragmentBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMyBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+        container: ViewGroup?
+    ): FragmentMyBinding = FragmentMyBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,10 +35,5 @@ class MyFragment : Fragment() {
             tvMyNickname.text = user.nickname
             tvMainJuryangValue.text = user.juryang
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
