@@ -5,21 +5,14 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseActivity<B : ViewBinding>(
-    val bindingFactory: (LayoutInflater) -> B
+abstract class BaseActivity<T : ViewBinding>(
+    val bindingFactory: (LayoutInflater) -> T,
 ) : AppCompatActivity() {
-
-    private var _binding: B? = null
-    val binding get() = _binding!!
+    lateinit var binding: T
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = bindingFactory(layoutInflater)
+        binding = bindingFactory(layoutInflater)
         setContentView(binding.root)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }
