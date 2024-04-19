@@ -1,5 +1,6 @@
 package com.sopt.now.compose.feature.my
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -41,12 +42,14 @@ fun MyRoute(
         UiState.Loading -> CircleLoadingScreen()
         UiState.Failure -> ErrorScreen()
         is UiState.Success -> {
-            val data = (state.loadState as UiState.Success<User>).data
+            val user = (state.loadState as UiState.Success<User>).data
             MyScreen(
-                id = data.id,
-                pw = data.pw,
-                nickname = data.nickname,
-                juryang = data.juryang,
+                profileImage = user.profileImage,
+                id = user.id,
+                pw = user.pw,
+                nickname = user.nickname,
+                juryang = user.juryang,
+                selfDescription = user.selfDescription,
                 modifier = Modifier.padding(paddingValues)
             )
         }
@@ -56,10 +59,12 @@ fun MyRoute(
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun MyScreen(
+    @DrawableRes profileImage: Int,
     id: String,
     pw: String,
     nickname: String,
     juryang: String,
+    selfDescription: String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -69,18 +74,18 @@ fun MyScreen(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             GlideImage(
-                model = R.drawable.img_profile,
+                model = profileImage,
                 contentDescription = "profile",
                 modifier = Modifier
                     .size(40.dp)
             )
             Text(
                 modifier = Modifier.padding(start = 6.dp),
-                text = stringResource(id = R.string.name)
+                text = nickname
             )
         }
         Spacer(modifier = Modifier.padding(vertical = 6.dp))
-        Text(text = stringResource(id = R.string.description))
+        Text(text = selfDescription)
 
         Spacer(modifier = Modifier.padding(vertical = 30.dp))
 
@@ -89,10 +94,6 @@ fun MyScreen(
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
         DescriptionWithTitle(title = stringResource(id = R.string.pw), description = pw)
-
-        Spacer(modifier = Modifier.padding(vertical = 20.dp))
-
-        DescriptionWithTitle(title = stringResource(id = R.string.nickname), description = nickname)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
