@@ -8,14 +8,14 @@ import com.sopt.now.compose.feature.signin.SignInRoute
 import com.sopt.now.compose.model.User
 
 fun NavController.navigateSignIn() {
-    navigate(SignInScreen.ROUTE)
+    navigate(SignInRoute.ROUTE)
 }
 
 fun NavGraphBuilder.signInNavGraph(
     onSignUpClick: () -> Unit,
     onMainClick: () -> Unit
 ) {
-    composable(route = SignInScreen.ROUTE) {
+    composable(route = SignInRoute.ROUTE) {
         SignInRoute(
             onSignUpClick = onSignUpClick,
             onMainClick = onMainClick
@@ -23,6 +23,6 @@ fun NavGraphBuilder.signInNavGraph(
     }
 }
 
-object SignInScreen {
+object SignInRoute {
     const val ROUTE = "signin"
 }

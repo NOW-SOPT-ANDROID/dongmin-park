@@ -8,14 +8,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.sopt.now.compose.feature.home.navigation.HomeRoute
 import com.sopt.now.compose.feature.home.navigation.navigateHome
 import com.sopt.now.compose.feature.my.navigation.navigateMy
 import com.sopt.now.compose.feature.search.navigation.navigateSearch
-import com.sopt.now.compose.feature.signin.navigation.SignInScreen
+import com.sopt.now.compose.feature.signin.navigation.SignInRoute
 import com.sopt.now.compose.feature.signin.navigation.navigateSignIn
 import com.sopt.now.compose.feature.signup.navigation.navigateSignUp
-import com.sopt.now.compose.model.User
 
 class MainNavigator(
     val navController: NavHostController,
@@ -24,7 +22,7 @@ class MainNavigator(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    val startDestination = SignInScreen.ROUTE
+    val startDestination = SignInRoute.ROUTE
 
     val currentTab: MainTab?
         @Composable get() = currentDestination
@@ -54,19 +52,6 @@ class MainNavigator(
     fun navigateSignIn() {
         navController.navigateSignIn()
     }
-
-    private fun popBackStack() {
-        navController.popBackStack()
-    }
-
-    fun popBackStackIfNotHome() {
-        if (!isSameCurrentDestination(HomeRoute.ROUTE)) {
-            popBackStack()
-        }
-    }
-
-    private fun isSameCurrentDestination(route: String) =
-        navController.currentDestination?.route == route
 
     @Composable
     fun shouldShowBottomBar(): Boolean {

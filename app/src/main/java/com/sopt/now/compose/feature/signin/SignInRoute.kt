@@ -57,20 +57,7 @@ fun SignInRoute(
         viewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
             .collect { sideEffect ->
                 when (sideEffect) {
-                    SignInSideEffect.NavigateToMain -> {
-                        val user = User(
-                            id = state.id,
-                            pw = state.pw,
-                            nickname = state.nickname,
-                            juryang = state.juryang
-                        )
-
-//                        navController.currentBackStackEntry?.savedStateHandle?.set(
-//                            key = "user",
-//                            value = user
-//                        )
-                        onMainClick()
-                    }
+                    SignInSideEffect.NavigateToMain -> onMainClick()
 
                     SignInSideEffect.NavigateToSignUp -> onSignUpClick()
 
@@ -194,13 +181,5 @@ fun SignInScreen(
                 }
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun SignInScreenPreview() {
-    NOWSOPTAndroidTheme {
-        // SignInScreen()
     }
 }

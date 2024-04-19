@@ -36,6 +36,7 @@ import androidx.navigation.compose.NavHost
 import com.sopt.now.compose.feature.home.navigation.homeNavGraph
 import com.sopt.now.compose.feature.my.navigation.myNavGraph
 import com.sopt.now.compose.feature.search.navigation.searchNavGraph
+import com.sopt.now.compose.feature.signin.navigation.SignInRoute
 import com.sopt.now.compose.feature.signin.navigation.signInNavGraph
 import com.sopt.now.compose.feature.signup.navigation.signUpNavGraph
 
@@ -58,7 +59,13 @@ fun MainScreen(
                 ) {
                     signInNavGraph(
                         onSignUpClick = { navigator.navigateSignUp() },
-                        onMainClick = { navigator.navigate(MainTab.HOME) }
+                        onMainClick = {
+                            navigator.navController.navigate(MainTab.HOME.route) {
+                                popUpTo(SignInRoute.ROUTE) {
+                                    inclusive = true
+                                }
+                            }
+                        }
                     )
                     signUpNavGraph(
                         onSignInClick = { navigator.navigateSignIn() }
