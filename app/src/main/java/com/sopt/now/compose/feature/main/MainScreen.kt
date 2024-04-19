@@ -64,7 +64,7 @@ fun MainScreen(
                         onSignInClick = { navigator.navigateSignIn() }
                     )
                     homeNavGraph(paddingValue)
-                    searchNavGraph()
+                    searchNavGraph(paddingValue)
                     myNavGraph(paddingValue)
                 }
             }
