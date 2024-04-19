@@ -5,19 +5,17 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.sopt.now.compose.feature.home.HomeScreen
-import com.sopt.now.compose.model.User
+import com.sopt.now.compose.feature.home.HomeRoute
 
 fun NavController.navigateHome(navOptions: NavOptions) {
     navigate(HomeRoute.ROUTE, navOptions)
 }
 
 fun NavGraphBuilder.homeNavGraph(
-    user: User?,
     paddingValues: PaddingValues
 ) {
     composable(route = HomeRoute.ROUTE) {
-        HomeScreen(user)
+        HomeRoute()
     }
 }
 

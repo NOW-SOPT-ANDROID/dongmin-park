@@ -10,7 +10,7 @@ fun NavController.navigateSignUp() {
     navigate(SignUpRoute.ROUTE)
 }
 
-fun NavGraphBuilder.signUpNavGraph(onSignInClick: (User) -> Unit) {
+fun NavGraphBuilder.signUpNavGraph(onSignInClick: () -> Unit) {
     composable(route = SignUpRoute.ROUTE) {
         SignUpRoute(
             onSignInClick = onSignInClick

@@ -1,6 +1,5 @@
 package com.sopt.now.compose.feature.main
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -34,13 +33,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
-import com.sopt.now.compose.data.local.DataStore
 import com.sopt.now.compose.feature.home.navigation.homeNavGraph
 import com.sopt.now.compose.feature.my.navigation.myNavGraph
 import com.sopt.now.compose.feature.search.navigation.searchNavGraph
 import com.sopt.now.compose.feature.signin.navigation.signInNavGraph
 import com.sopt.now.compose.feature.signup.navigation.signUpNavGraph
-import com.sopt.now.compose.model.User
 
 @Composable
 fun MainScreen(
@@ -49,7 +46,7 @@ fun MainScreen(
     val snackBarHostState = remember { SnackbarHostState() }
 
     Scaffold(
-        content = { padding ->
+        content = { paddingValue ->
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -64,15 +61,11 @@ fun MainScreen(
                         onMainClick = { navigator.navigate(MainTab.HOME) }
                     )
                     signUpNavGraph(
-                        onSignInClick = { user ->
-
-
-                            navigator.navigateSignIn()
-                        }
+                        onSignInClick = { navigator.navigateSignIn() }
                     )
-                    homeNavGraph(null, padding)
+                    homeNavGraph(paddingValue)
                     searchNavGraph()
-                    myNavGraph()
+                    myNavGraph(paddingValue)
                 }
             }
         },

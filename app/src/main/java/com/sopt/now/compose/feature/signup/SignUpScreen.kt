@@ -38,7 +38,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpRoute(
-    onSignInClick: (User) -> Unit,
+    onSignInClick: () -> Unit,
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -61,7 +61,7 @@ fun SignUpRoute(
 
                     viewModel.setUserData(user)
 
-                    onSignInClick(user)
+                    onSignInClick()
                 }
 
                 is SignUpSideEffect.SnackBar -> {

@@ -1,4 +1,4 @@
-package com.sopt.now.compose.feature.home
+package com.sopt.now.compose.feature.my
 
 import androidx.lifecycle.ViewModel
 import com.sopt.now.compose.data.local.DataStore
@@ -11,9 +11,18 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ViewModel() {
-    private val _state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
-    val state: StateFlow<HomeState>
+class MyViewModel @Inject constructor(
+    private val dataStore: DataStore
+) : ViewModel() {
+    private val _state: MutableStateFlow<MyState> = MutableStateFlow(MyState())
+    val state: StateFlow<MyState>
         get() = _state.asStateFlow()
 
+    fun setState() {
+        val user = dataStore.run {
+            User(id, pw, nickname, juryang)
+        }
+
+        _state.value = MyState(UiState.Success(user))
+    }
 }
