@@ -3,6 +3,8 @@ package com.sopt.now.compose.feature.signup
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.sopt.now.compose.R
+import com.sopt.now.compose.data.local.DataStore
+import com.sopt.now.compose.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,7 +16,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor() : ViewModel() {
+class SignUpViewModel @Inject constructor(
+    private val dataStore: DataStore
+) : ViewModel() {
     private val _state: MutableStateFlow<SignUpState> = MutableStateFlow(SignUpState())
     val state: StateFlow<SignUpState>
         get() = _state.asStateFlow()
@@ -51,10 +55,19 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
         _sideEffect.resetReplayCache()
     }
 
+    fun setUserData(user: User) {
+        with(dataStore) {
+            id = user.id
+            pw = user.pw
+            nickname = user.nickname
+            juryang = user.juryang
+        }
+    }
+
     companion object {
         const val ID_MIN_LEN = 6
         const val ID_MAX_LEN = 10
-        const val PW_MIN_LEN = 12
+        const val PW_MIN_LEN = 8
         const val PW_MAX_LEN = 12
     }
 }

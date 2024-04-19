@@ -32,20 +32,18 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
 import com.sopt.now.compose.ext.addFocusCleaner
 import com.sopt.now.compose.ext.noRippleClickable
-import com.sopt.now.compose.feature.main.Screen
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun SignInScreen(
-    navController: NavController,
+fun SignInRoute(
+    onSignUpClick: () -> Unit,
+    onMainClick: () -> Unit,
     viewModel: SignInViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -67,16 +65,14 @@ fun SignInScreen(
                             juryang = state.juryang
                         )
 
-                        navController.currentBackStackEntry?.savedStateHandle?.set(
-                            key = "user",
-                            value = user
-                        )
-                        navController.navigate(Screen.Home.route)
+//                        navController.currentBackStackEntry?.savedStateHandle?.set(
+//                            key = "user",
+//                            value = user
+//                        )
+                        onMainClick()
                     }
 
-                    SignInSideEffect.NavigateToSignUp -> {
-                        navController.navigate(Screen.SignUp.route)
-                    }
+                    SignInSideEffect.NavigateToSignUp -> onSignUpClick()
 
                     is SignInSideEffect.SnackBar -> {
                         scope.launch {
@@ -90,10 +86,7 @@ fun SignInScreen(
     }
 
     LaunchedEffect(true) {
-        navController.previousBackStackEntry?.savedStateHandle?.run {
-            val user = get<User>("user") ?: User()
-            viewModel.setInfo(user)
-        }
+        viewModel.setInfo()
     }
 
     SignInScreen(
@@ -208,7 +201,6 @@ fun SignInScreen(
 @Composable
 fun SignInScreenPreview() {
     NOWSOPTAndroidTheme {
-        val navController = rememberNavController()
-        SignInScreen(navController)
+        // SignInScreen()
     }
 }

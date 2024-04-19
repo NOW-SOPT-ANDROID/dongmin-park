@@ -1,54 +1,162 @@
 package com.sopt.now.compose.feature.main
 
+import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.navigation
-import com.sopt.now.compose.feature.home.HomeScreen
-import com.sopt.now.compose.feature.signin.SignInScreen
-import com.sopt.now.compose.feature.signup.SignUpScreen
+import com.sopt.now.compose.data.local.DataStore
+import com.sopt.now.compose.feature.home.navigation.homeNavGraph
+import com.sopt.now.compose.feature.my.navigation.myNavGraph
+import com.sopt.now.compose.feature.search.navigation.searchNavGraph
+import com.sopt.now.compose.feature.signin.navigation.signInNavGraph
+import com.sopt.now.compose.feature.signup.navigation.signUpNavGraph
+import com.sopt.now.compose.model.User
 
 @Composable
 fun MainScreen(
-    navController: NavHostController,
+    navigator: MainNavigator = rememberMainNavigator(),
 ) {
-    NavHost(navController = navController, startDestination = Graph.Auth.route) {
-        authGraph(navController)
-        mainGraph(navController)
+    val snackBarHostState = remember { SnackbarHostState() }
+
+    Scaffold(
+        content = { padding ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.surfaceDim)
+            ) {
+                NavHost(
+                    navController = navigator.navController,
+                    startDestination = navigator.startDestination,
+                ) {
+                    signInNavGraph(
+                        onSignUpClick = { navigator.navigateSignUp() },
+                        onMainClick = { navigator.navigate(MainTab.HOME) }
+                    )
+                    signUpNavGraph(
+                        onSignInClick = { user ->
+
+
+                            navigator.navigateSignIn()
+                        }
+                    )
+                    homeNavGraph(null, padding)
+                    searchNavGraph()
+                    myNavGraph()
+                }
+            }
+        },
+        bottomBar = {
+            MainBottomBar(
+                visible = navigator.shouldShowBottomBar(),
+                tabs = MainTab.entries,
+                currentTab = navigator.currentTab,
+                onTabSelected = { navigator.navigate(it) }
+            )
+        },
+        snackbarHost = { SnackbarHost(snackBarHostState) }
+    )
+}
+
+@Composable
+private fun MainBottomBar(
+    visible: Boolean,
+    tabs: List<MainTab>,
+    currentTab: MainTab?,
+    onTabSelected: (MainTab) -> Unit,
+) {
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn() + slideIn { IntOffset(0, it.height) },
+        exit = fadeOut() + slideOut { IntOffset(0, it.height) }
+    ) {
+        Row(
+            modifier = Modifier
+                .navigationBarsPadding()
+                .padding(start = 8.dp, end = 8.dp, bottom = 28.dp)
+                .fillMaxWidth()
+                .height(56.dp)
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(size = 28.dp)
+                )
+                .background(
+                    color = MaterialTheme.colorScheme.surface,
+                    shape = RoundedCornerShape(28.dp)
+                )
+                .padding(horizontal = 28.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            tabs.forEach { tab ->
+                MainBottomBarItem(
+                    tab = tab,
+                    selected = tab == currentTab,
+                    onClick = { onTabSelected(tab) },
+                )
+            }
+        }
     }
 }
 
-fun NavGraphBuilder.authGraph(navController: NavController) {
-    navigation(
-        startDestination = Screen.SignIn.route,
-        route = Graph.Auth.route,
+@Composable
+private fun RowScope.MainBottomBarItem(
+    tab: MainTab,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxHeight()
+            .selectable(
+                selected = selected,
+                indication = null,
+                role = null,
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = onClick,
+            ),
+        contentAlignment = Alignment.Center,
     ) {
-        composable(
-            route = Screen.SignIn.route
-        ) {
-            SignInScreen(navController)
-        }
-
-        composable(
-            route = Screen.SignUp.route
-        ) {
-            SignUpScreen(navController = navController)
-        }
-    }
-}
-
-fun NavGraphBuilder.mainGraph(navController: NavController) {
-    navigation(
-        startDestination = Screen.Home.route,
-        route = Graph.Main.route
-    ) {
-        composable(
-            route = Screen.Home.route
-        ) {
-            HomeScreen(navController = navController)
-        }
+        Icon(
+            imageVector = tab.iconResId,
+            contentDescription = tab.contentDescription,
+            tint = if (selected) {
+                MaterialTheme.colorScheme.error
+            } else {
+                MaterialTheme.colorScheme.outline
+            },
+            modifier = Modifier.size(34.dp),
+        )
     }
 }
