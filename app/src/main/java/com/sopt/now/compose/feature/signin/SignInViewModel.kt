@@ -2,7 +2,7 @@ package com.sopt.now.compose.feature.signin
 
 import androidx.lifecycle.ViewModel
 import com.sopt.now.compose.R
-import com.sopt.now.compose.model.User
+import com.sopt.now.compose.data.local.DataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,7 +14,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel @Inject constructor() : ViewModel() {
+class SignInViewModel @Inject constructor(
+    private val dataStore: DataStore
+) : ViewModel() {
     private val _state: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
     val state: StateFlow<SignInState>
         get() = _state.asStateFlow()
@@ -25,19 +27,19 @@ class SignInViewModel @Inject constructor() : ViewModel() {
     val sideEffect: SharedFlow<SignInSideEffect>
         get() = _sideEffect.asSharedFlow()
 
-    fun setInfo(user: User) {
+    fun setInfo() {
         _state.value = _state.value.copy(
-            id = user.id,
-            pw = user.pw,
-            nickname = user.nickname,
-            juryang = user.juryang
+            id = dataStore.id,
+            pw = dataStore.pw,
+            nickname = dataStore.nickname,
+            juryang = dataStore.juryang
         )
 
         _previousState.value = _previousState.value.copy(
-            id = user.id,
-            pw = user.pw,
-            nickname = user.nickname,
-            juryang = user.juryang
+            id = dataStore.id,
+            pw = dataStore.pw,
+            nickname = dataStore.nickname,
+            juryang = dataStore.juryang
         )
     }
 

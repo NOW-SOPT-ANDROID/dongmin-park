@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.sopt.now.compose.R
@@ -28,17 +27,16 @@ import com.sopt.now.compose.util.UiState
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
+    user: User?,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
-        navController.previousBackStackEntry?.savedStateHandle?.run {
-            when (val user = get<User>("user")) {
-                null -> viewModel.setState(UiState.Failure)
-                else -> viewModel.setState(UiState.Success(user))
-            }
+        if (user == null) {
+            viewModel.setState(UiState.Failure)
+        } else {
+            viewModel.setState(UiState.Success(user))
         }
     }
 
@@ -46,12 +44,12 @@ fun HomeScreen(
         UiState.Loading -> CircleLoadingScreen()
         UiState.Failure -> ErrorScreen()
         is UiState.Success -> {
-            val user = (state.loadState as UiState.Success<User>).data
+            val data = (state.loadState as UiState.Success<User>).data
             HomeScreen(
-                id = user.id,
-                pw = user.pw,
-                nickname = user.nickname,
-                juryang = user.juryang
+                id = data.id,
+                pw = data.pw,
+                nickname = data.nickname,
+                juryang = data.juryang
             )
         }
     }
