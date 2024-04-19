@@ -26,18 +26,13 @@ import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.UiState
 
 @Composable
-fun HomeScreen(
-    user: User?,
+fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
-        if (user == null) {
-            viewModel.setState(UiState.Failure)
-        } else {
-            viewModel.setState(UiState.Success(user))
-        }
+
     }
 
     when (state.loadState) {
