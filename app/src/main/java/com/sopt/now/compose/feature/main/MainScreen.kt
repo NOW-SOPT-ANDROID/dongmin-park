@@ -28,8 +28,10 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
@@ -39,12 +41,21 @@ import com.sopt.now.compose.feature.search.navigation.searchNavGraph
 import com.sopt.now.compose.feature.signin.navigation.SignInRoute
 import com.sopt.now.compose.feature.signin.navigation.signInNavGraph
 import com.sopt.now.compose.feature.signup.navigation.signUpNavGraph
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
     navigator: MainNavigator = rememberMainNavigator(),
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    val localContextResource = LocalContext.current.resources
+    val onShowErrorSnackBar: (Int) -> Unit = { errorMessage ->
+        coroutineScope.launch {
+            snackBarHostState.currentSnackbarData?.dismiss()
+            snackBarHostState.showSnackbar(localContextResource.getString(errorMessage))
+        }
+    }
 
     Scaffold(
         content = { paddingValue ->
@@ -65,10 +76,12 @@ fun MainScreen(
                                     inclusive = true
                                 }
                             }
-                        }
+                        },
+                        onShowErrorSnackBar = onShowErrorSnackBar
                     )
                     signUpNavGraph(
-                        onSignInClick = { navigator.navigateSignIn() }
+                        onSignInClick = { navigator.navigateSignIn() },
+                        onShowErrorSnackBar = onShowErrorSnackBar
                     )
                     homeNavGraph(paddingValue)
                     searchNavGraph(paddingValue)
