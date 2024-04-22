@@ -14,8 +14,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DataStoreModule {
-    @Binds
+object ShardPreferenceModule {
+    @Provides
     @Singleton
-    abstract fun bindDataStore(dataStoreImpl: DataStoreImpl): DataStore
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
 }
