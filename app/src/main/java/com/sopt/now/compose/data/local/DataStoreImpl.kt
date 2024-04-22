@@ -21,7 +21,7 @@ class DataStoreImpl @Inject constructor(
         set(value) = dataStore.edit { putString(JURYANG, value) }
 
     override fun clearInfo() {
-        dataStore.edit().clear().apply()
+        dataStore.edit().clear().commit()
     }
 
     companion object {

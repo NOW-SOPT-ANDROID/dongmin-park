@@ -7,7 +7,6 @@ import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -19,7 +18,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -35,12 +33,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
+import com.sopt.now.compose.ext.noRippleClickable
 import com.sopt.now.compose.feature.home.navigation.homeNavGraph
 import com.sopt.now.compose.feature.my.navigation.myNavGraph
 import com.sopt.now.compose.feature.search.navigation.searchNavGraph
 import com.sopt.now.compose.feature.signin.navigation.SignInRoute
 import com.sopt.now.compose.feature.signin.navigation.signInNavGraph
 import com.sopt.now.compose.feature.signup.navigation.signUpNavGraph
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 
 @Composable
@@ -92,7 +93,7 @@ fun MainScreen(
         bottomBar = {
             MainBottomBar(
                 visible = navigator.shouldShowBottomBar(),
-                tabs = MainTab.entries,
+                tabs = MainTab.entries.toImmutableList(),
                 currentTab = navigator.currentTab,
                 onTabSelected = { navigator.navigate(it) }
             )
@@ -104,7 +105,7 @@ fun MainScreen(
 @Composable
 private fun MainBottomBar(
     visible: Boolean,
-    tabs: List<MainTab>,
+    tabs: ImmutableList<MainTab>,
     currentTab: MainTab?,
     onTabSelected: (MainTab) -> Unit,
 ) {
@@ -152,17 +153,11 @@ private fun RowScope.MainBottomBarItem(
         modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .selectable(
-                selected = selected,
-                indication = null,
-                role = null,
-                interactionSource = remember { MutableInteractionSource() },
-                onClick = onClick,
-            ),
+            .noRippleClickable(onClick),
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = tab.iconResId,
+            imageVector = tab.iconImageVector,
             contentDescription = tab.contentDescription,
             tint = if (selected) {
                 MaterialTheme.colorScheme.error

@@ -2,9 +2,6 @@ package com.sopt.now.compose.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.sopt.now.compose.data.local.DataStore
-import com.sopt.now.compose.data.local.DataStoreImpl
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,6 +14,6 @@ import javax.inject.Singleton
 object ShardPreferenceModule {
     @Provides
     @Singleton
-    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+    fun provideUserSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
         context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
 }
