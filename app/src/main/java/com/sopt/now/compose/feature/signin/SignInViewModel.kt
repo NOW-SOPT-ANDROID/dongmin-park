@@ -21,21 +21,12 @@ class SignInViewModel @Inject constructor(
     val state: StateFlow<SignInState>
         get() = _state.asStateFlow()
 
-    private val _previousState: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
-
     private val _sideEffect: MutableSharedFlow<SignInSideEffect> = MutableSharedFlow()
     val sideEffect: SharedFlow<SignInSideEffect>
         get() = _sideEffect.asSharedFlow()
 
     fun setInfo() {
         _state.value = _state.value.copy(
-            id = dataStore.id,
-            pw = dataStore.pw,
-            nickname = dataStore.nickname,
-            juryang = dataStore.juryang
-        )
-
-        _previousState.value = _previousState.value.copy(
             id = dataStore.id,
             pw = dataStore.pw,
             nickname = dataStore.nickname,
@@ -66,13 +57,13 @@ class SignInViewModel @Inject constructor(
                 )
             )
 
-            _state.value.id != _previousState.value.id -> _sideEffect.emit(
+            _state.value.id != dataStore.id -> _sideEffect.emit(
                 SignInSideEffect.SnackBar(
                     R.string.id_error
                 )
             )
 
-            _state.value.pw != _previousState.value.pw -> _sideEffect.emit(
+            _state.value.pw != dataStore.pw -> _sideEffect.emit(
                 SignInSideEffect.SnackBar(
                     R.string.pw_error
                 )
