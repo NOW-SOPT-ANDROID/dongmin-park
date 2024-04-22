@@ -7,6 +7,8 @@ import com.sopt.now.compose.model.Friend
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.immutableListOf
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,7 +30,7 @@ class HomeViewModel @Inject constructor(
         _state.value = HomeState(UiState.Success(user))
     }
 
-    val friendDataList = listOf(
+    val friendDataList = persistentListOf(
         Friend(
             R.drawable.img_error,
             "박동민",
@@ -138,15 +140,15 @@ class HomeViewModel @Inject constructor(
             R.drawable.img_error,
             "더미",
             "더미더미"
-        ),Friend(
+        ), Friend(
             R.drawable.img_error,
             "더미",
             "더미더미"
-        ),Friend(
+        ), Friend(
             R.drawable.img_error,
             "더미",
             "더미더미"
-        ),Friend(
+        ), Friend(
             R.drawable.img_error,
             "더미",
             "더미더미"
@@ -155,6 +157,6 @@ class HomeViewModel @Inject constructor(
             R.drawable.img_error,
             "더미",
             "더미더미"
-        ),
+        )
     )
 }

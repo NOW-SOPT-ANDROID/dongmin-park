@@ -10,22 +10,22 @@ import com.sopt.now.compose.feature.my.navigation.MyRoute
 import com.sopt.now.compose.feature.search.navigation.SearchRoute
 
 enum class MainTab(
-    val iconResId: ImageVector,
+    val iconImageVector: ImageVector,
     internal val contentDescription: String,
     val route: String,
 ) {
     HOME(
-        iconResId = Icons.Default.Home,
+        iconImageVector = Icons.Default.Home,
         contentDescription = "홈",
         HomeRoute.ROUTE,
     ),
     SEARCH(
-        iconResId = Icons.Default.Search,
+        iconImageVector = Icons.Default.Search,
         contentDescription = "검색",
         SearchRoute.ROUTE,
     ),
     MY(
-        iconResId = Icons.Default.Person,
+        iconImageVector = Icons.Default.Person,
         contentDescription = "마이페이지",
         MyRoute.ROUTE,
     );

@@ -77,4 +77,7 @@ dependencies {
 
     // Glide
     implementation 'com.github.bumptech.glide:compose:1.0.0-beta01'
+
+    // Immutable
+    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
 }

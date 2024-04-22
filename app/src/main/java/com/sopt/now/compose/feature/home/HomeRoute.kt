@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -36,6 +38,7 @@ import com.sopt.now.compose.component.layout.ErrorScreen
 import com.sopt.now.compose.model.Friend
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.UiState
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun HomeRoute(
@@ -49,8 +52,8 @@ fun HomeRoute(
     }
 
     when (state.loadState) {
-        UiState.Loading -> CircleLoadingScreen()
-        UiState.Failure -> ErrorScreen()
+        UiState.Loading -> CircleLoadingScreen(Modifier.padding(paddingValues))
+        UiState.Failure -> ErrorScreen(Modifier.padding(paddingValues))
         is UiState.Success -> {
             val user = (state.loadState as UiState.Success<User>).data
             HomeScreen(
@@ -65,7 +68,7 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     user: User,
-    friendList: List<Friend>,
+    friendList: ImmutableList<Friend>,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -108,7 +111,7 @@ fun ProfileView(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .border(1.dp, Color.Black, shape = RoundedCornerShape(4.dp))
             .background(Color.LightGray, shape = RoundedCornerShape(4.dp)),
@@ -117,8 +120,10 @@ fun ProfileView(
         GlideImage(
             model = image,
             contentDescription = "profile",
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(imageSize)
+                .aspectRatio(1f)
         )
         Column(
             modifier = Modifier.padding(start = 6.dp)
