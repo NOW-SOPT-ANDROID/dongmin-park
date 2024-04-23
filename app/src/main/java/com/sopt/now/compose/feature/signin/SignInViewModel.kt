@@ -2,7 +2,7 @@ package com.sopt.now.compose.feature.signin
 
 import androidx.lifecycle.ViewModel
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.local.DataStore
+import com.sopt.now.compose.data.local.UserDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val dataStore: DataStore
+    private val userDataStore: UserDataStore
 ) : ViewModel() {
     private val _state: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
     val state: StateFlow<SignInState>
@@ -27,10 +27,10 @@ class SignInViewModel @Inject constructor(
 
     fun setInfo() {
         _state.value = _state.value.copy(
-            id = dataStore.id,
-            pw = dataStore.pw,
-            nickname = dataStore.nickname,
-            juryang = dataStore.juryang
+            id = userDataStore.id,
+            pw = userDataStore.pw,
+            nickname = userDataStore.nickname,
+            juryang = userDataStore.juryang
         )
     }
 
@@ -57,13 +57,13 @@ class SignInViewModel @Inject constructor(
                 )
             )
 
-            _state.value.id != dataStore.id -> _sideEffect.emit(
+            _state.value.id != userDataStore.id -> _sideEffect.emit(
                 SignInSideEffect.SnackBar(
                     R.string.id_error
                 )
             )
 
-            _state.value.pw != dataStore.pw -> _sideEffect.emit(
+            _state.value.pw != userDataStore.pw -> _sideEffect.emit(
                 SignInSideEffect.SnackBar(
                     R.string.pw_error
                 )

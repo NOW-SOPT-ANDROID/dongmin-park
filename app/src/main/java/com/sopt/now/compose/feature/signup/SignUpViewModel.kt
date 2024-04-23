@@ -1,9 +1,8 @@
 package com.sopt.now.compose.feature.signup
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.local.DataStore
+import com.sopt.now.compose.data.local.UserDataStore
 import com.sopt.now.compose.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val dataStore: DataStore
+    private val userDataStore: UserDataStore
 ) : ViewModel() {
     private val _state: MutableStateFlow<SignUpState> = MutableStateFlow(SignUpState())
     val state: StateFlow<SignUpState>
@@ -56,7 +55,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun setUserData(user: User) {
-        with(dataStore) {
+        with(userDataStore) {
             id = user.id
             pw = user.pw
             nickname = user.nickname

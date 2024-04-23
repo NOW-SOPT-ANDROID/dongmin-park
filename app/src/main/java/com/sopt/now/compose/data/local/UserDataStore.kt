@@ -1,6 +1,6 @@
 package com.sopt.now.compose.data.local
 
-interface DataStore {
+interface UserDataStore {
     var id: String
     var pw: String
     var nickname: String
