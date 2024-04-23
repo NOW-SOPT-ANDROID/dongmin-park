@@ -15,7 +15,14 @@ import com.sopt.now.presentation.main.search.SearchFragment
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.ext.getParcelable
 
+
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+    enum class BottomNavigationType(val menuId: Int) {
+        HOME(R.id.menu_home),
+        SEARCH(R.id.menu_search),
+        MY_PAGE(R.id.menu_mypage)
+    }
+
     private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,23 +44,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     private fun initBottomNavigation() {
         binding.bnvHome.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.menu_home -> {
+            val menuEnum = BottomNavigationType.entries[it.itemId]
+
+            when (menuEnum) {
+                BottomNavigationType.HOME -> {
                     replaceFragment(HomeFragment())
                     true
                 }
 
-                R.id.menu_search -> {
+                BottomNavigationType.SEARCH -> {
                     replaceFragment(SearchFragment())
                     true
                 }
 
-                R.id.menu_mypage -> {
+                BottomNavigationType.MY_PAGE -> {
                     replaceFragment(MyFragment())
                     true
                 }
-
-                else -> false
             }
         }
     }

@@ -14,16 +14,22 @@ import com.sopt.now.util.callback.ItemDiffCallback
 class ProfileAdapter : ListAdapter<Profile, ViewHolder>(
     HomeDiffCallback
 ) {
+    enum class ProfileViewType(val layoutResId: Int) {
+        MY_PROFILE(R.layout.item_my),
+        FRIEND_PROFILE(R.layout.item_friend)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater by lazy { LayoutInflater.from(parent.context) }
+        val enumViewType = ProfileViewType.entries[viewType]
 
-        return when (viewType) {
-            R.layout.item_my -> {
+        return when (enumViewType) {
+            ProfileViewType.MY_PROFILE -> {
                 val binding = ItemMyBinding.inflate(inflater, parent, false)
                 MyViewHolder(binding)
             }
 
-            else -> {
+            ProfileViewType.FRIEND_PROFILE -> {
                 val binding = ItemFriendBinding.inflate(inflater, parent, false)
                 FriendViewHolder(binding)
             }
