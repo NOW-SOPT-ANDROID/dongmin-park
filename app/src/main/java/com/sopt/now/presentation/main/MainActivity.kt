@@ -22,7 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         super.onCreate(savedInstanceState)
 
         initFragmentView()
-        clickBottomNavigation()
+        initBottomNavigation()
         getUserInfo()
     }
 
@@ -35,7 +35,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         }
     }
 
-    private fun clickBottomNavigation() {
+    private fun initBottomNavigation() {
         binding.bnvHome.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_home -> {
