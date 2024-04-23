@@ -76,6 +76,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     private fun getUserInfo() {
+        if (viewModel.savedStateHandle.get<User>(MainViewModel.USER) == null) return
+
         val user = intent.getParcelable(USER_KEY, User::class.java)
 
         if (user == null) {
