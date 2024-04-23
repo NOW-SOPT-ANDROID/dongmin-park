@@ -26,7 +26,15 @@ class HomeViewModel @Inject constructor(
             User(id, pw, nickname, juryang)
         }
 
-        _state.value = HomeState(UiState.Success(user))
+        if (user.isEmptyUser()) {
+            _state.value = _state.value.copy(
+                loadState = UiState.Failure
+            )
+        } else {
+            _state.value = _state.value.copy(
+                loadState = UiState.Success(user)
+            )
+        }
     }
 
     val friendDataList = persistentListOf(
