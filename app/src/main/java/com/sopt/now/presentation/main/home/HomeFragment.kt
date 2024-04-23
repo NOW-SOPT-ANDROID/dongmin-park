@@ -27,6 +27,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             adapter = friendAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
-        friendAdapter.submitList(viewmodel.mockProfileList)
+        friendAdapter.submitList(viewmodel.getMockProfileList())
     }
 }
