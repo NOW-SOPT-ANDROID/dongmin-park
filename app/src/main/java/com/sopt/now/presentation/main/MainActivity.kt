@@ -20,7 +20,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     enum class BottomNavigationType(val menuId: Int) {
         HOME(R.id.menu_home),
         SEARCH(R.id.menu_search),
-        MY_PAGE(R.id.menu_mypage)
+        MY_PAGE(R.id.menu_mypage);
+
+        companion object {
+            fun getScreenEnum(id: Int) = BottomNavigationType.entries.first { it.menuId == id }
+        }
     }
 
     private val viewModel by viewModels<MainViewModel>()
@@ -44,9 +48,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     private fun initBottomNavigation() {
         binding.bnvHome.setOnItemSelectedListener {
-            val menuEnum = BottomNavigationType.entries[it.itemId]
+            val screenEnum = BottomNavigationType.getScreenEnum(it.itemId)
 
-            when (menuEnum) {
+            when (screenEnum) {
                 BottomNavigationType.HOME -> {
                     replaceFragment(HomeFragment())
                     true
