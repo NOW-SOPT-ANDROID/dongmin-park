@@ -2,12 +2,11 @@ package com.sopt.now.compose.feature.home
 
 import androidx.lifecycle.ViewModel
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.local.DataStore
+import com.sopt.now.compose.data.local.UserDataStore
 import com.sopt.now.compose.model.Friend
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.immutableListOf
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,14 +15,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val dataStore: DataStore
+    private val userDataStore: UserDataStore
 ) : ViewModel() {
     private val _state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
     val state: StateFlow<HomeState>
         get() = _state.asStateFlow()
 
     fun setState() {
-        val user = dataStore.run {
+        val user = userDataStore.run {
             User(id, pw, nickname, juryang)
         }
 

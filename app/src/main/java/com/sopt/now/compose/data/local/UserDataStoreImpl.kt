@@ -4,9 +4,9 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import javax.inject.Inject
 
-class DataStoreImpl @Inject constructor(
+class UserDataStoreImpl @Inject constructor(
     private val dataStore: SharedPreferences,
-) : DataStore {
+) : UserDataStore {
     override var id: String
         get() = dataStore.getString(ID, "") ?: ""
         set(value) = dataStore.edit { putString(ID, value) }
