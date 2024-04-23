@@ -3,7 +3,6 @@ package com.sopt.now.presentation.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivityMainBinding
@@ -13,7 +12,6 @@ import com.sopt.now.presentation.main.home.HomeFragment
 import com.sopt.now.presentation.main.my.MyFragment
 import com.sopt.now.presentation.main.search.SearchFragment
 import com.sopt.now.util.base.BaseActivity
-import com.sopt.now.util.ext.getParcelable
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -27,14 +25,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         }
     }
 
-    private val viewModel by viewModels<MainViewModel>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initFragmentView()
         initBottomNavigation()
-        getUserInfo()
     }
 
     private fun initFragmentView() {
@@ -73,18 +68,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         supportFragmentManager.beginTransaction()
             .replace(R.id.fcv_home, fragment)
             .commit()
-    }
-
-    private fun getUserInfo() {
-        if (viewModel.savedStateHandle.get<User>(MainViewModel.USER) == null) return
-
-        val user = intent.getParcelable(USER_KEY, User::class.java)
-
-        if (user == null) {
-            // 에러 발생생생
-        } else {
-            viewModel.setUserInfoValue(user)
-        }
     }
 
     companion object {

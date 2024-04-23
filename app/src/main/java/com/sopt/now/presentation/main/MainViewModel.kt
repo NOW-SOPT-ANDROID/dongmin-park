@@ -4,19 +4,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.sopt.now.data.local.mockProfileList
 import com.sopt.now.model.User
+import com.sopt.now.presentation.auth.signup.SignUpActivity.Companion.USER_KEY
 
-class MainViewModel(val savedStateHandle: SavedStateHandle) : ViewModel() {
+class MainViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
     var userInfo: User?
-        get() = savedStateHandle.get<User>(USER)
-        set(value) = savedStateHandle.set(USER, value)
-
-    fun setUserInfoValue(user: User) {
-        userInfo = user
-    }
+        get() = savedStateHandle.get<User>(USER_KEY)
+        set(value) = savedStateHandle.set(USER_KEY, value)
 
     fun getMockProfileList() = mockProfileList
-
-    companion object {
-        val USER = "user"
-    }
 }
