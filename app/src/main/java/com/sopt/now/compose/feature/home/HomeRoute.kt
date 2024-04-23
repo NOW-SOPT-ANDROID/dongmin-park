@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -81,19 +80,23 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(20.dp))
             ProfileView(
                 user.profileImage,
-                imageSize = 100.dp,
                 user.nickname,
                 user.selfDescription,
-                fontSize = 25.sp
+                fontSize = 25.sp,
+                imageModifier = Modifier
+                    .size(100.dp)
+                    .aspectRatio(1f)
             )
         }
         items(friendList) { friend ->
             ProfileView(
                 friend.profileImage,
-                imageSize = 30.dp,
                 friend.name,
                 friend.selfDescription,
-                fontSize = 15.sp
+                fontSize = 15.sp,
+                imageModifier = Modifier
+                    .size(30.dp)
+                    .aspectRatio(1f)
             )
         }
     }
@@ -104,11 +107,12 @@ fun HomeScreen(
 @Composable
 fun ProfileView(
     @DrawableRes image: Int,
-    imageSize: Dp,
     name: String,
     selfDescription: String,
     fontSize: TextUnit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    imageModifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Crop,
 ) {
     Row(
         modifier = modifier
@@ -120,10 +124,8 @@ fun ProfileView(
         GlideImage(
             model = image,
             contentDescription = "profile",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(imageSize)
-                .aspectRatio(1f)
+            contentScale = contentScale,
+            modifier = imageModifier
         )
         Column(
             modifier = Modifier.padding(start = 6.dp)
