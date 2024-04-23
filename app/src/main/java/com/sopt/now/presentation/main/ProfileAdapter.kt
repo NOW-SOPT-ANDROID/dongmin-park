@@ -8,6 +8,7 @@ import com.sopt.now.R
 import com.sopt.now.databinding.ItemFriendBinding
 import com.sopt.now.databinding.ItemMyBinding
 import com.sopt.now.model.Profile
+import com.sopt.now.util.base.BaseViewHolder
 import com.sopt.now.util.callback.ItemDiffCallback
 
 class ProfileAdapter : ListAdapter<Profile, ViewHolder>(
@@ -30,19 +31,11 @@ class ProfileAdapter : ListAdapter<Profile, ViewHolder>(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = currentList[position]
-
-        when (holder) {
-            is MyViewHolder -> holder.onBind(item as Profile.MyProfile)
-            is FriendViewHolder -> holder.onBind(item as Profile.FriendProfile)
-        }
+        val item = currentList.getOrNull(position) ?: return
+        (holder as BaseViewHolder<*>).bind(item)
     }
 
-    override fun getItemViewType(position: Int) =
-        when (currentList[position]) {
-            is Profile.MyProfile -> R.layout.item_my
-            is Profile.FriendProfile -> R.layout.item_friend
-        }
+    override fun getItemViewType(position: Int) = currentList[position].view
 
     companion object {
         private val HomeDiffCallback =
