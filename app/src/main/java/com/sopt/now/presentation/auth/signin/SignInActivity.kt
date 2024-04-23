@@ -14,7 +14,7 @@ import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.ext.getParcelable
 import com.sopt.now.util.ext.snackBar
 
-class SignInActivity : BaseActivity<ActivitySignInBinding>({ ActivitySignInBinding.inflate(it) }) {
+class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding::inflate) {
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private var user: User? = null
 

@@ -9,7 +9,7 @@ import com.sopt.now.model.User
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.ext.snackBar
 
-class SignUpActivity : BaseActivity<ActivitySignUpBinding>({ ActivitySignUpBinding.inflate(it) }) {
+class SignUpActivity : BaseActivity<ActivitySignUpBinding>(ActivitySignUpBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
