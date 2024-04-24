@@ -1,6 +1,7 @@
 package com.sopt.now.compose.feature.my.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -11,9 +12,11 @@ fun NavController.navigateMy(navOptions: NavOptions) {
     navigate(MyRoute.ROUTE, navOptions)
 }
 
-fun NavGraphBuilder.myNavGraph(paddingValue: PaddingValues) {
+fun NavGraphBuilder.myNavGraph(
+    modifier: Modifier
+) {
     composable(route = MyRoute.ROUTE) {
-        MyRoute(paddingValue)
+        MyRoute(modifier = modifier)
     }
 }
 

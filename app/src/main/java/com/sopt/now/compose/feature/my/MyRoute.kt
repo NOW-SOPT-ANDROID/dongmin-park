@@ -2,7 +2,6 @@ package com.sopt.now.compose.feature.my
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,8 +28,8 @@ import com.sopt.now.compose.util.UiState
 
 @Composable
 fun MyRoute(
-    paddingValues: PaddingValues,
-    viewModel: MyViewModel = hiltViewModel()
+    modifier: Modifier,
+    viewModel: MyViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -50,7 +49,7 @@ fun MyRoute(
                 nickname = user.nickname,
                 juryang = user.juryang,
                 selfDescription = user.selfDescription,
-                modifier = Modifier.padding(paddingValues)
+                modifier = modifier
             )
         }
     }
@@ -65,7 +64,7 @@ fun MyScreen(
     nickname: String,
     juryang: String,
     selfDescription: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier

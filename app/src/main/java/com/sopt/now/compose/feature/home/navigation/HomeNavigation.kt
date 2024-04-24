@@ -1,6 +1,7 @@
 package com.sopt.now.compose.feature.home.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -12,10 +13,10 @@ fun NavController.navigateHome(navOptions: NavOptions) {
 }
 
 fun NavGraphBuilder.homeNavGraph(
-    paddingValues: PaddingValues
+    modifier: Modifier
 ) {
     composable(route = HomeRoute.ROUTE) {
-        HomeRoute(paddingValues = paddingValues)
+        HomeRoute(modifier = modifier)
     }
 }
 

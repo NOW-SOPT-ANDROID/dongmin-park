@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -41,8 +40,8 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun HomeRoute(
-    paddingValues: PaddingValues,
-    viewModel: HomeViewModel = hiltViewModel()
+    modifier: Modifier,
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -51,14 +50,14 @@ fun HomeRoute(
     }
 
     when (state.loadState) {
-        UiState.Loading -> CircleLoadingScreen(Modifier.padding(paddingValues))
-        UiState.Failure -> ErrorScreen(Modifier.padding(paddingValues))
+        UiState.Loading -> CircleLoadingScreen(modifier)
+        UiState.Failure -> ErrorScreen(modifier)
         is UiState.Success -> {
             val user = (state.loadState as UiState.Success<User>).data
             HomeScreen(
                 user = user,
                 friendList = viewModel.friendDataList,
-                modifier = Modifier.padding(paddingValues)
+                modifier = modifier
             )
         }
     }
@@ -68,7 +67,7 @@ fun HomeRoute(
 fun HomeScreen(
     user: User,
     friendList: ImmutableList<Friend>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier
