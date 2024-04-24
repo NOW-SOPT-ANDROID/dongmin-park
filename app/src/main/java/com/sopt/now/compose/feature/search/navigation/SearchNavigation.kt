@@ -1,6 +1,6 @@
 package com.sopt.now.compose.feature.search.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -11,9 +11,11 @@ fun NavController.navigateSearch(navOptions: NavOptions) {
     navigate(SearchRoute.ROUTE, navOptions)
 }
 
-fun NavGraphBuilder.searchNavGraph(paddingValue: PaddingValues) {
+fun NavGraphBuilder.searchNavGraph(
+    modifier: Modifier
+) {
     composable(route = SearchRoute.ROUTE) {
-        SearchRoute(paddingValue = paddingValue)
+        SearchRoute(modifier = modifier)
     }
 }
 

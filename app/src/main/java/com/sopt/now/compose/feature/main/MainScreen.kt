@@ -84,9 +84,9 @@ fun MainScreen(
                         onSignInClick = { navigator.navigateSignIn() },
                         onShowErrorSnackBar = onShowErrorSnackBar
                     )
-                    homeNavGraph(paddingValue)
-                    searchNavGraph(paddingValue)
-                    myNavGraph(paddingValue)
+                    homeNavGraph(Modifier.padding(paddingValue))
+                    searchNavGraph(Modifier.padding(paddingValue))
+                    myNavGraph(Modifier.padding(paddingValue))
                 }
             }
         },
