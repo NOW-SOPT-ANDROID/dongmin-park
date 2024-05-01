@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -27,8 +26,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
-import com.sopt.now.compose.model.User
-import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpRoute(
@@ -59,7 +56,7 @@ fun SignUpRoute(
         fetchId = { viewModel.fetchId(it) },
         fetchPw = { viewModel.fetchPw(it) },
         fetchNickname = { viewModel.fetchNickname(it) },
-        fetchJuryang = { viewModel.fetchJuryang(it) },
+        fetchPhoneNumber = { viewModel.fetchPhoneNumber(it) },
         signUpBtnClicked = {
                 viewModel.signUpBtnClicked()
 
@@ -76,7 +73,7 @@ fun SignUpScreen(
     fetchId: (String) -> Unit,
     fetchPw: (String) -> Unit,
     fetchNickname: (String) -> Unit,
-    fetchJuryang: (String) -> Unit,
+    fetchPhoneNumber: (String) -> Unit,
     signUpBtnClicked: () -> Unit,
 ) {
     Scaffold(
@@ -161,7 +158,7 @@ fun SignUpScreen(
                 hint = stringResource(id = R.string.phone_number_hint),
                 singleLine = true,
                 onValueChanged = { number ->
-                    fetchJuryang(number)
+                    fetchPhoneNumber(number)
                 }
             )
         }

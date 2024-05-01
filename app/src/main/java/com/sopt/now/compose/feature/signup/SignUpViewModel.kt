@@ -6,7 +6,6 @@ import com.sopt.now.compose.R
 import com.sopt.now.compose.data.local.UserDataStore
 import com.sopt.now.compose.domain.entity.request.RequestUserEntity
 import com.sopt.now.compose.domain.repository.AuthRepository
-import com.sopt.now.compose.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val userDataStore: UserDataStore,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
     private val _state: MutableStateFlow<SignUpState> = MutableStateFlow(SignUpState())
     val state: StateFlow<SignUpState>
@@ -43,8 +42,8 @@ class SignUpViewModel @Inject constructor(
         _state.value = _state.value.copy(nickname = nickname)
     }
 
-    fun fetchJuryang(juryang: String) {
-        _state.value = _state.value.copy(phoneNumber = juryang)
+    fun fetchPhoneNumber(phone: String) {
+        _state.value = _state.value.copy(phoneNumber = phone)
     }
 
     fun signUpBtnClicked() {
@@ -60,37 +59,32 @@ class SignUpViewModel @Inject constructor(
                 }
             )
 
-            if (header == null){
+            if (header == null) {
                 emitErrorMessage()
             } else {
                 setUserData(header)
+                _sideEffect.emit(SignUpSideEffect.NavigateToSignIn)
             }
         }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private suspend fun emitErrorMessage() {
-        when {
-            _state.value.id.length !in ID_MIN_LEN..ID_MAX_LEN -> _sideEffect.emit(
-                SignUpSideEffect.SnackBar(
-                    R.string.id_error
-                )
-            )
+        val errorMessage = when {
+            _state.value.id.length !in ID_MIN_LEN..ID_MAX_LEN -> R.string.id_error
 
-            _state.value.pw.length !in PW_MIN_LEN..PW_MAX_LEN -> _sideEffect.emit(
-                SignUpSideEffect.SnackBar(
-                    R.string.pw_error
-                )
-            )
+            _state.value.pw.length !in PW_MIN_LEN..PW_MAX_LEN -> R.string.pw_error
 
-            _state.value.nickname.isBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar(R.string.nickname_error))
-            _state.value.phoneNumber.isBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar(R.string.juryang_error))
-            else -> _sideEffect.emit(SignUpSideEffect.NavigateToSignIn)
+            _state.value.nickname.isBlank() -> R.string.nickname_error
+            _state.value.phoneNumber.isBlank() -> R.string.phone_error
+            else -> R.string.server_error
         }
+
+        _sideEffect.emit(SignUpSideEffect.SnackBar(errorMessage))
         _sideEffect.resetReplayCache()
     }
 
-    fun setUserData(memberId: String) {
+    private fun setUserData(memberId: String) {
         with(userDataStore) {
             userId = memberId
             id = state.value.id

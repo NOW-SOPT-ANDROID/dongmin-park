@@ -20,5 +20,6 @@
     <string name="id_error">ID ERROR</string>
     <string name="pw_error">PW ERROR</string>
     <string name="nickname_error">NICKNAME ERROR</string>
-    <string name="juryang_error">JURYANG ERROR</string>
+    <string name="phone_error">PHONE ERROR</string>
+    <string name="server_error">SERVER ERROR</string>
 </resources>
