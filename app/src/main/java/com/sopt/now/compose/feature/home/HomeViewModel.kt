@@ -1,169 +1,46 @@
 package com.sopt.now.compose.feature.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.R
 import com.sopt.now.compose.data.local.UserDataStore
+import com.sopt.now.compose.domain.entity.response.ResponseUserList
+import com.sopt.now.compose.domain.repository.ReqresRepository
 import com.sopt.now.compose.model.Friend
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val userDataStore: UserDataStore
+    private val userDataStore: UserDataStore,
+    private val reqresRepository: ReqresRepository,
 ) : ViewModel() {
     private val _state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
     val state: StateFlow<HomeState>
         get() = _state.asStateFlow()
 
-    fun setState() {
-        val user = userDataStore.run {
-            User(id, pw, nickname, phoneNumber)
-        }
-
-        if (user.isEmptyUser()) {
-            _state.value = _state.value.copy(
-                loadState = UiState.Failure
-            )
-        } else {
-            _state.value = _state.value.copy(
-                loadState = UiState.Success(user)
-            )
+    fun getUserList() {
+        viewModelScope.launch {
+            reqresRepository.getUserList()
+                .onSuccess {
+                    _state.value = _state.value.copy(
+                        loadState = UiState.Success(it)
+                    )
+                }.onFailure {
+                    Log.e("TAG", "getUserList: $it", )
+                    _state.value = _state.value.copy(
+                        loadState = UiState.Failure
+                    )
+                }
         }
     }
-
-    val friendDataList = persistentListOf(
-        Friend(
-            R.drawable.img_error,
-            "박동민",
-            "지금은 금요일 저녁 10시"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "동민",
-            "벼락치기 힘들다"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "민",
-            "다음주엔 미리해야지"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "송혜음",
-            "히히 안드 재밌다"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "이석준",
-            "솔직히 내가 리드실력임 ㅋㅋ"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "박유진",
-            "으앙 어려워요"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ), Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ), Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ), Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        )
-    )
 }

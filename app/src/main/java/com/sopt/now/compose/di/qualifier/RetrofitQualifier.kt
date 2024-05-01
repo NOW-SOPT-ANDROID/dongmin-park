@@ -9,3 +9,7 @@ annotation class AUTH
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class HEADER
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class REQRES

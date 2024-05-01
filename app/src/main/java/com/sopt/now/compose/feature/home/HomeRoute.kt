@@ -33,8 +33,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.sopt.now.compose.component.layout.CircleLoadingScreen
 import com.sopt.now.compose.component.layout.ErrorScreen
-import com.sopt.now.compose.model.Friend
-import com.sopt.now.compose.model.User
+import com.sopt.now.compose.domain.entity.response.ResponseUserList
 import com.sopt.now.compose.util.UiState
 import kotlinx.collections.immutable.ImmutableList
 
@@ -46,17 +45,16 @@ fun HomeRoute(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
-        viewModel.setState()
+        viewModel.getUserList()
     }
 
     when (state.loadState) {
         UiState.Loading -> CircleLoadingScreen(modifier)
         UiState.Failure -> ErrorScreen(modifier)
         is UiState.Success -> {
-            val user = (state.loadState as UiState.Success<User>).data
+            val userList = (state.loadState as UiState.Success<ResponseUserList>).data.userList
             HomeScreen(
-                user = user,
-                friendList = viewModel.friendDataList,
+                userList = userList,
                 modifier = modifier
             )
         }
@@ -65,8 +63,7 @@ fun HomeRoute(
 
 @Composable
 fun HomeScreen(
-    user: User,
-    friendList: ImmutableList<Friend>,
+    userList: ImmutableList<ResponseUserList.UserData>,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -75,23 +72,11 @@ fun HomeScreen(
             .padding(horizontal = 30.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        item {
-            Spacer(modifier = Modifier.height(20.dp))
+        items(userList) { user ->
             ProfileView(
-                user.profileImage,
-                user.nickname,
-                user.selfDescription,
-                fontSize = 25.sp,
-                imageModifier = Modifier
-                    .size(100.dp)
-                    .aspectRatio(1f)
-            )
-        }
-        items(friendList) { friend ->
-            ProfileView(
-                friend.profileImage,
-                friend.name,
-                friend.selfDescription,
+                image = user.avatar,
+                name = user.first_name + user.last_name,
+                selfDescription = user.email,
                 fontSize = 15.sp,
                 imageModifier = Modifier
                     .size(30.dp)
@@ -105,7 +90,7 @@ fun HomeScreen(
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ProfileView(
-    @DrawableRes image: Int,
+    image: String,
     name: String,
     selfDescription: String,
     fontSize: TextUnit,
