@@ -2,6 +2,8 @@ package com.sopt.now.compose.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.sopt.now.compose.BuildConfig.BASE_URL
+import com.sopt.now.compose.di.qualifier.AUTH
+import com.sopt.now.compose.di.qualifier.HEADER
 import com.sopt.now.compose.ext.isJsonArray
 import com.sopt.now.compose.ext.isJsonObject
 import dagger.Module
@@ -56,6 +58,13 @@ object NetModule {
 
     @Provides
     @Singleton
+    @HEADER
+    fun provideHeaderInterceptor(headerInterceptor: HeaderInterceptor): Interceptor =
+        headerInterceptor
+
+    @Provides
+    @Singleton
+    @AUTH
     fun provideOkHttpClient(
         loggingInterceptor: Interceptor,
     ): OkHttpClient = OkHttpClient.Builder()
@@ -64,8 +73,33 @@ object NetModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(
-        client: OkHttpClient,
+    @HEADER
+    fun provideHeaderOkHttpClient(
+        loggingInterceptor: Interceptor,
+        @HEADER headerInterceptor: Interceptor,
+    ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
+        .addInterceptor(headerInterceptor)
+        .build()
+
+
+    @Provides
+    @Singleton
+    @AUTH
+    fun provideAuthRetrofit(
+        @AUTH client: OkHttpClient,
+        factory: Converter.Factory,
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .client(client)
+        .addConverterFactory(factory)
+        .build()
+
+    @Provides
+    @Singleton
+    @HEADER
+    fun provideHeaderRetrofit(
+        @HEADER client: OkHttpClient,
         factory: Converter.Factory,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)

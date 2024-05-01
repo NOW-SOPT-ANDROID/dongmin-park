@@ -1,6 +1,7 @@
 package com.sopt.now.compose.di
 
 import com.sopt.now.compose.data.remote.service.AuthService
+import com.sopt.now.compose.di.qualifier.AUTH
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +14,6 @@ import javax.inject.Singleton
 object ServiceModule {
     @Provides
     @Singleton
-    fun provideAuthService(retrofit: Retrofit): AuthService =
+    fun provideAuthService(@AUTH retrofit: Retrofit): AuthService =
         retrofit.create(AuthService::class.java)
 }
