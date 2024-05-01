@@ -13,10 +13,14 @@ fun NavController.navigateMy(navOptions: NavOptions) {
 }
 
 fun NavGraphBuilder.myNavGraph(
-    modifier: Modifier
+    modifier: Modifier,
+    onShowErrorSnackBar: (Int) -> Unit,
 ) {
     composable(route = MyRoute.ROUTE) {
-        MyRoute(modifier = modifier)
+        MyRoute(
+            modifier = modifier,
+            onShowErrorSnackBar = onShowErrorSnackBar
+        )
     }
 }
 

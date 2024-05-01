@@ -86,7 +86,10 @@ fun MainScreen(
                     )
                     homeNavGraph(Modifier.padding(paddingValue))
                     searchNavGraph(Modifier.padding(paddingValue))
-                    myNavGraph(Modifier.padding(paddingValue))
+                    myNavGraph(
+                        Modifier.padding(paddingValue),
+                        onShowErrorSnackBar = onShowErrorSnackBar
+                    )
                 }
             }
         },

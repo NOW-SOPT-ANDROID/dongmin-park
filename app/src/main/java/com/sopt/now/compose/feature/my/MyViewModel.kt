@@ -1,15 +1,18 @@
 package com.sopt.now.compose.feature.my
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.now.compose.R
 import com.sopt.now.compose.data.local.UserDataStore
 import com.sopt.now.compose.domain.repository.HomeRepository
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,13 +26,17 @@ class MyViewModel @Inject constructor(
     val state: StateFlow<MyState>
         get() = _state.asStateFlow()
 
+    private val _sideEffect: MutableSharedFlow<MySideEffect> = MutableSharedFlow()
+    val sideEffect: SharedFlow<MySideEffect>
+        get() = _sideEffect.asSharedFlow()
+
     fun getUserInfo() {
         viewModelScope.launch {
             homeRepository.getUserInfo()
                 .onSuccess {
                     setState(it.authenticationId, it.nickname, it.phone)
                 }.onFailure {
-                    Log.e("TAG", "getUserInfo: ERRRERRRRRRRR", )
+                    _sideEffect.emit(MySideEffect.SnackBar(R.string.server_error))
                 }
         }
     }
