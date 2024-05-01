@@ -17,10 +17,9 @@ class HeaderInterceptor @Inject constructor(
     }
 
     private fun Request.Builder.newAuthBuilder() =
-        this.addHeader(AUTHORIZATION, "$BEARER ${dataStore.userId}")
+        this.addHeader(NAME, dataStore.userId)
 
     companion object {
-        private const val BEARER = "BEARER"
-        private const val AUTHORIZATION = "Authorization"
+        private const val NAME = "memberId"
     }
 }

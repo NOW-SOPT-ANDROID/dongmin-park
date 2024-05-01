@@ -34,7 +34,7 @@ fun MyRoute(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
-        viewModel.setState()
+        viewModel.getUserInfo()
     }
 
     when (state.loadState) {
@@ -96,6 +96,9 @@ fun MyScreen(
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        DescriptionWithTitle(title = stringResource(id = R.string.phone_number), description = phoneNumber)
+        DescriptionWithTitle(
+            title = stringResource(id = R.string.phone_number),
+            description = phoneNumber
+        )
     }
 }
