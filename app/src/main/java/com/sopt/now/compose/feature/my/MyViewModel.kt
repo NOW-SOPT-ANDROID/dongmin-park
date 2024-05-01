@@ -20,7 +20,7 @@ class MyViewModel @Inject constructor(
 
     fun setState() {
         val user = userDataStore.run {
-            User(id, pw, nickname, juryang)
+            User(id, pw, nickname, phoneNumber)
         }
 
         _state.value = MyState(UiState.Success(user))

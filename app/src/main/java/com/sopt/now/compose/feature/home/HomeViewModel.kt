@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(
 
     fun setState() {
         val user = userDataStore.run {
-            User(id, pw, nickname, juryang)
+            User(id, pw, nickname, phoneNumber)
         }
 
         if (user.isEmptyUser()) {

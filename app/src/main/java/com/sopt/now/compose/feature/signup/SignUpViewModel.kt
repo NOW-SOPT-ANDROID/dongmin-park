@@ -1,8 +1,11 @@
 package com.sopt.now.compose.feature.signup
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.R
 import com.sopt.now.compose.data.local.UserDataStore
+import com.sopt.now.compose.domain.entity.request.RequestUserEntity
+import com.sopt.now.compose.domain.repository.AuthRepository
 import com.sopt.now.compose.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,11 +15,13 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val userDataStore: UserDataStore
+    private val userDataStore: UserDataStore,
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
     private val _state: MutableStateFlow<SignUpState> = MutableStateFlow(SignUpState())
     val state: StateFlow<SignUpState>
@@ -39,27 +44,59 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun fetchJuryang(juryang: String) {
-        _state.value = _state.value.copy(juryang = juryang)
+        _state.value = _state.value.copy(phoneNumber = juryang)
+    }
+
+    fun signUpBtnClicked() {
+        viewModelScope.launch {
+            val header = authRepository.postSignUp(
+                state.value.run {
+                    RequestUserEntity(
+                        id,
+                        pw,
+                        nickname,
+                        phoneNumber
+                    )
+                }
+            )
+
+            if (header == null){
+                emitErrorMessage()
+            } else {
+                setUserData(header)
+            }
+        }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    suspend fun signUpBtnClicked() {
+    private suspend fun emitErrorMessage() {
         when {
-            _state.value.id.length !in ID_MIN_LEN..ID_MAX_LEN -> _sideEffect.emit(SignUpSideEffect.SnackBar(R.string.id_error))
-            _state.value.pw.length !in PW_MIN_LEN..PW_MAX_LEN -> _sideEffect.emit(SignUpSideEffect.SnackBar(R.string.pw_error))
+            _state.value.id.length !in ID_MIN_LEN..ID_MAX_LEN -> _sideEffect.emit(
+                SignUpSideEffect.SnackBar(
+                    R.string.id_error
+                )
+            )
+
+            _state.value.pw.length !in PW_MIN_LEN..PW_MAX_LEN -> _sideEffect.emit(
+                SignUpSideEffect.SnackBar(
+                    R.string.pw_error
+                )
+            )
+
             _state.value.nickname.isBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar(R.string.nickname_error))
-            _state.value.juryang.isBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar(R.string.juryang_error))
+            _state.value.phoneNumber.isBlank() -> _sideEffect.emit(SignUpSideEffect.SnackBar(R.string.juryang_error))
             else -> _sideEffect.emit(SignUpSideEffect.NavigateToSignIn)
         }
         _sideEffect.resetReplayCache()
     }
 
-    fun setUserData(user: User) {
+    fun setUserData(memberId: String) {
         with(userDataStore) {
-            id = user.id
-            pw = user.pw
-            nickname = user.nickname
-            juryang = user.juryang
+            userId = memberId
+            id = state.value.id
+            pw = state.value.pw
+            nickname = state.value.nickname
+            phoneNumber = state.value.phoneNumber
         }
     }
 

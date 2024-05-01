@@ -39,21 +39,10 @@ fun SignUpRoute(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    val scope = rememberCoroutineScope()
-
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle).collect { sideEffect ->
             when (sideEffect) {
                 SignUpSideEffect.NavigateToSignIn -> {
-                    val user = User(
-                        id = state.id,
-                        pw = state.pw,
-                        nickname = state.nickname,
-                        juryang = state.juryang
-                    )
-
-                    viewModel.setUserData(user)
-
                     onSignInClick()
                 }
 
@@ -66,15 +55,14 @@ fun SignUpRoute(
         id = state.id,
         pw = state.pw,
         nickname = state.nickname,
-        juryang = state.juryang,
+        phoneNumber = state.phoneNumber,
         fetchId = { viewModel.fetchId(it) },
         fetchPw = { viewModel.fetchPw(it) },
         fetchNickname = { viewModel.fetchNickname(it) },
         fetchJuryang = { viewModel.fetchJuryang(it) },
         signUpBtnClicked = {
-            scope.launch {
                 viewModel.signUpBtnClicked()
-            }
+
         }
     )
 }
@@ -84,7 +72,7 @@ fun SignUpScreen(
     id: String,
     pw: String,
     nickname: String,
-    juryang: String,
+    phoneNumber: String,
     fetchId: (String) -> Unit,
     fetchPw: (String) -> Unit,
     fetchNickname: (String) -> Unit,
@@ -168,12 +156,12 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             TextFieldWithTitle(
-                title = stringResource(id = R.string.juryang),
-                value = juryang,
-                hint = stringResource(id = R.string.juryang_hint),
+                title = stringResource(id = R.string.phone_number),
+                value = phoneNumber,
+                hint = stringResource(id = R.string.phone_number_hint),
                 singleLine = true,
-                onValueChanged = { juryang ->
-                    fetchJuryang(juryang)
+                onValueChanged = { number ->
+                    fetchJuryang(number)
                 }
             )
         }

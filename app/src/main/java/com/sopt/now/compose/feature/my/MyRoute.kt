@@ -47,7 +47,7 @@ fun MyRoute(
                 id = user.id,
                 pw = user.pw,
                 nickname = user.nickname,
-                juryang = user.juryang,
+                phoneNumber = user.phoneNumber,
                 selfDescription = user.selfDescription,
                 modifier = modifier
             )
@@ -62,7 +62,7 @@ fun MyScreen(
     id: String,
     pw: String,
     nickname: String,
-    juryang: String,
+    phoneNumber: String,
     selfDescription: String,
     modifier: Modifier = Modifier,
 ) {
@@ -96,6 +96,6 @@ fun MyScreen(
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        DescriptionWithTitle(title = stringResource(id = R.string.juryang), description = juryang)
+        DescriptionWithTitle(title = stringResource(id = R.string.phone_number), description = phoneNumber)
     }
 }

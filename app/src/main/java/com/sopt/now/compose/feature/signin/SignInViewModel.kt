@@ -30,7 +30,7 @@ class SignInViewModel @Inject constructor(
             id = userDataStore.id,
             pw = userDataStore.pw,
             nickname = userDataStore.nickname,
-            juryang = userDataStore.juryang
+            juryang = userDataStore.phoneNumber
         )
     }
 
