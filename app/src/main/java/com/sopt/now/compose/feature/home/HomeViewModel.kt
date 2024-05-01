@@ -3,16 +3,10 @@ package com.sopt.now.compose.feature.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.compose.R
 import com.sopt.now.compose.data.local.UserDataStore
-import com.sopt.now.compose.domain.entity.response.ResponseUserList
 import com.sopt.now.compose.domain.repository.ReqresRepository
-import com.sopt.now.compose.model.Friend
-import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,7 +30,6 @@ class HomeViewModel @Inject constructor(
                         loadState = UiState.Success(it)
                     )
                 }.onFailure {
-                    Log.e("TAG", "getUserList: $it", )
                     _state.value = _state.value.copy(
                         loadState = UiState.Failure
                     )

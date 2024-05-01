@@ -1,11 +1,10 @@
 package com.sopt.now.compose.feature.home
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +13,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -66,11 +68,12 @@ fun HomeScreen(
     userList: ImmutableList<ResponseUserList.UserData>,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 30.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = modifier,
+        contentPadding = PaddingValues(16.dp), // 컨텐츠와 격자 사이의 패딩
+        verticalArrangement = Arrangement.spacedBy(8.dp), // 행 간격
+        horizontalArrangement = Arrangement.spacedBy(8.dp) // 열 간격
     ) {
         items(userList) { user ->
             ProfileView(
@@ -79,7 +82,7 @@ fun HomeScreen(
                 selfDescription = user.email,
                 fontSize = 15.sp,
                 imageModifier = Modifier
-                    .size(30.dp)
+                    .fillMaxWidth()
                     .aspectRatio(1f)
             )
         }
@@ -98,28 +101,24 @@ fun ProfileView(
     imageModifier: Modifier = Modifier,
     contentScale: ContentScale = ContentScale.Crop,
 ) {
-    Row(
+    Column(
         modifier = modifier
-            .fillMaxWidth()
             .border(1.dp, Color.Black, shape = RoundedCornerShape(4.dp))
             .background(Color.LightGray, shape = RoundedCornerShape(4.dp)),
-        verticalAlignment = Alignment.CenterVertically
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(
+            text = name,
+            fontSize = fontSize
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(text = selfDescription)
+        Spacer(modifier = Modifier.height(4.dp))
         GlideImage(
             model = image,
             contentDescription = "profile",
             contentScale = contentScale,
             modifier = imageModifier
         )
-        Column(
-            modifier = Modifier.padding(start = 6.dp)
-        ) {
-            Text(
-                text = name,
-                fontSize = fontSize
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = selfDescription)
-        }
     }
 }
