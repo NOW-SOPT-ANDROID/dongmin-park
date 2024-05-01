@@ -1,8 +1,11 @@
 package com.sopt.now.compose.feature.signin
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.R
 import com.sopt.now.compose.data.local.UserDataStore
+import com.sopt.now.compose.domain.entity.request.RequestSignInEntity
+import com.sopt.now.compose.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -11,11 +14,13 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val userDataStore: UserDataStore
+    private val userDataStore: UserDataStore,
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
     private val _state: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
     val state: StateFlow<SignInState>
@@ -42,36 +47,16 @@ class SignInViewModel @Inject constructor(
         _state.value = _state.value.copy(pw = pw)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun signInBtnClicked() {
-        when {
-            _state.value.id == "" -> _sideEffect.emit(
-                SignInSideEffect.SnackBar(
-                    R.string.id_error
-                )
-            )
-
-            _state.value.pw == "" -> _sideEffect.emit(
-                SignInSideEffect.SnackBar(
-                    R.string.pw_error
-                )
-            )
-
-            _state.value.id != userDataStore.id -> _sideEffect.emit(
-                SignInSideEffect.SnackBar(
-                    R.string.id_error
-                )
-            )
-
-            _state.value.pw != userDataStore.pw -> _sideEffect.emit(
-                SignInSideEffect.SnackBar(
-                    R.string.pw_error
-                )
-            )
-
-            else -> _sideEffect.emit(SignInSideEffect.NavigateToMain)
+        viewModelScope.launch {
+            authRepository.getSignIn(RequestSignInEntity(_state.value.id, _state.value.pw))
+                .onSuccess { _sideEffect.emit(SignInSideEffect.NavigateToMain) }
+                .onFailure {
+                    SignInSideEffect.SnackBar(
+                        R.string.id_error
+                    )
+                }
         }
-        _sideEffect.resetReplayCache()
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

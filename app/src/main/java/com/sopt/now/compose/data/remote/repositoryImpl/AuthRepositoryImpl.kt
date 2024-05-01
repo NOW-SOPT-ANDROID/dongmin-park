@@ -1,7 +1,7 @@
 package com.sopt.now.compose.data.remote.repositoryImpl
 
-import com.sopt.now.compose.data.remote.dto.response.BaseResponseDto
 import com.sopt.now.compose.data.remote.service.AuthService
+import com.sopt.now.compose.domain.entity.request.RequestSignInEntity
 import com.sopt.now.compose.domain.entity.request.RequestUserEntity
 import com.sopt.now.compose.domain.repository.AuthRepository
 import javax.inject.Inject
@@ -11,7 +11,7 @@ class AuthRepositoryImpl @Inject constructor(
 ) : AuthRepository {
     override suspend fun postSignUp(user: RequestUserEntity): String? =
         runCatching {
-            authService.signUp(user)
+            authService.postSignUp(user)
         }.fold(
             onSuccess = {
                 it.headers()["location"]
@@ -20,4 +20,9 @@ class AuthRepositoryImpl @Inject constructor(
                 null
             }
         )
+
+    override suspend fun getSignIn(user: RequestSignInEntity): Result<Unit> =
+        runCatching {
+            authService.postSignIn(user)
+        }
 }
