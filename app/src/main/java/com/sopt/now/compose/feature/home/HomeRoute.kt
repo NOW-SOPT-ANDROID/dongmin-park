@@ -1,5 +1,6 @@
 package com.sopt.now.compose.feature.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,15 +25,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.sopt.now.compose.component.layout.CircleLoadingScreen
 import com.sopt.now.compose.component.layout.ErrorScreen
-import com.sopt.now.compose.component.layout.LoadingScreen
 import com.sopt.now.compose.domain.entity.response.ResponseUserList
+import com.sopt.now.compose.feature.main.LocalPhoneSizeComposition
+import com.sopt.now.compose.feature.main.PhoneSize
 import com.sopt.now.compose.util.UiState
 
 @Composable
@@ -44,12 +44,19 @@ fun HomeRoute(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val userListPager = viewModel.userListPager.collectAsLazyPagingItems()
 
+    val gridCount = when (LocalPhoneSizeComposition.current) {
+        PhoneSize.SMALL -> 1
+        PhoneSize.MEDIUM -> 2
+        PhoneSize.BIG -> 3
+    }
+
     when (state.loadState) {
         UiState.Loading -> CircleLoadingScreen(modifier)
         UiState.Failure -> ErrorScreen(modifier)
         is UiState.Success -> {
             HomeScreen(
                 userList = userListPager,
+                gridCount = gridCount,
                 modifier = modifier
             )
         }
@@ -59,10 +66,11 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     userList: LazyPagingItems<ResponseUserList.UserData>,
+    gridCount: Int,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(gridCount),
         modifier = modifier,
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
