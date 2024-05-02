@@ -20,7 +20,7 @@ class AuthRepository @Inject constructor(
             }
         )
 
-    suspend fun getSignIn(user: RequestSignInDto): Result<Unit> =
+    suspend fun postSignIn(user: RequestSignInDto): Result<Unit> =
         runCatching {
             authService.postSignIn(user)
         }

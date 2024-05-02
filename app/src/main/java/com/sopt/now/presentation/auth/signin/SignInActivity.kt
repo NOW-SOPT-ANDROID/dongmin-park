@@ -2,8 +2,12 @@ package com.sopt.now.presentation.auth.signin
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignInBinding
 import com.sopt.now.model.User
@@ -14,11 +18,14 @@ import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.ext.getParcelable
 import com.sopt.now.util.ext.snackBar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding::inflate) {
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private var user: User? = null
+    private val viewModel by viewModels<SignInViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +33,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
         setSignUpActivityLauncher()
         setSignInBtnClickListener()
         setSignUpBtnClickListener()
+        observeSignInState()
     }
 
     private fun setSignUpActivityLauncher() {
@@ -54,11 +62,31 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
             val pw = binding.etvSignInPw.text.toString()
 
             if (id == user?.id && pw == user?.pw) {
-                navigateToMainActivity()
+                viewModel.signInBtnClicked(id, pw)
             } else {
                 snackBar(binding.root, getString(R.string.user_error))
             }
         }
+    }
+
+    private fun setSignUpBtnClickListener() {
+        binding.btnSignUp.setOnClickListener {
+            Intent(this, SignUpActivity::class.java).apply {
+                resultLauncher.launch(this)
+            }
+        }
+    }
+
+    private fun observeSignInState() {
+        viewModel.signInState.flowWithLifecycle(lifecycle).onEach { signInState ->
+            when (signInState) {
+                is SignInState.ERROR -> Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show()
+                SignInState.LOADING -> {}
+                SignInState.SUCCESS -> {
+                    navigateToMainActivity()
+                }
+            }
+        }.launchIn(lifecycleScope)
     }
 
     private fun navigateToMainActivity() {
@@ -67,20 +95,10 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
                 this,
                 user ?: throw IllegalStateException(),
             ).also(::startActivity)
-
         }.onFailure {
             snackBar(binding.root, getString(R.string.user_error))
         }.onSuccess {
             finish()
-        }
-
-    }
-
-    private fun setSignUpBtnClickListener() {
-        binding.btnSignUp.setOnClickListener {
-            Intent(this, SignUpActivity::class.java).apply {
-                resultLauncher.launch(this)
-            }
         }
     }
 }
