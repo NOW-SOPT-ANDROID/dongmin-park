@@ -84,7 +84,6 @@ object NetModule {
         .addInterceptor(headerInterceptor)
         .build()
 
-
     @Provides
     @Singleton
     @AUTH
