@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.auth.signup.SignUpActivity">
+
     <TextView
         android:id="@+id/tv_sign_up_title"
         android:layout_width="wrap_content"
@@ -52,8 +53,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:inputType="textPassword"
         android:hint="@string/pw_hint"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_sign_up_pw"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_up_pw" />
@@ -79,25 +80,25 @@
         app:layout_constraintTop_toBottomOf="@id/tv_sign_up_nickname" />
 
     <TextView
-        android:id="@+id/tv_sign_up_juryang"
+        android:id="@+id/tv_sign_up_phone_number"
         style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="@string/juryang"
+        android:text="@string/phone_number"
         app:layout_constraintStart_toStartOf="@id/etv_sign_up_nickname"
         app:layout_constraintTop_toBottomOf="@id/etv_sign_up_nickname" />
 
     <EditText
-        android:id="@+id/etv_sign_up_juryang"
+        android:id="@+id/etv_sign_up_phone_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:inputType="number"
-        android:hint="@string/juryang_hint"
+        android:hint="@string/phone_number_hint"
+        android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/tv_sign_up_juryang"
-        app:layout_constraintTop_toBottomOf="@id/tv_sign_up_juryang" />
+        app:layout_constraintStart_toStartOf="@id/tv_sign_up_phone_number"
+        app:layout_constraintTop_toBottomOf="@id/tv_sign_up_phone_number" />
 
     <Button
         android:id="@+id/btn_sign_up"

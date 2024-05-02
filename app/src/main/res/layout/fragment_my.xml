@@ -86,12 +86,12 @@
             tools:text="1" />
 
         <TextView
-            android:id="@+id/tv_my_juryang_title"
+            android:id="@+id/tv_my_phone_number_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
-            android:text="@string/juryang"
+            android:text="@string/phone_number"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/tv_my_juryang_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_my_juryang_title"
+            app:layout_constraintStart_toStartOf="@+id/tv_my_phone_number_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_my_phone_number_title"
             tools:text="1" />
 </androidx.constraintlayout.widget.ConstraintLayout>
