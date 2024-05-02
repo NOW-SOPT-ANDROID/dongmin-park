@@ -15,7 +15,7 @@ sealed class Profile {
     ) : Profile()
 
     data class FriendProfile(
-        @DrawableRes val profileImage: Int,
+        val profileImage: String,
         override val name: String,
         val selfDescription: String,
         override val view: Int = R.layout.item_friend,
