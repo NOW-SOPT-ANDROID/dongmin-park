@@ -1,6 +1,7 @@
 package com.sopt.now.compose.data.remote.service
 
 import com.sopt.now.compose.data.remote.dto.response.BaseResponseDto
+import com.sopt.now.compose.data.remote.dto.response.BaseResponseWithoutDataDto
 import com.sopt.now.compose.data.remote.dto.response.ResponseUserDto
 import com.sopt.now.compose.domain.entity.request.RequestSignInEntity
 import com.sopt.now.compose.domain.entity.request.RequestUserEntity
@@ -12,10 +13,10 @@ interface AuthService {
     @POST("member/join")
     suspend fun postSignUp(
         @Body user: RequestUserEntity,
-    ): Response<BaseResponseDto<Unit>>
+    ): Response<BaseResponseWithoutDataDto>
 
     @POST("member/login")
     suspend fun postSignIn(
-        @Body user: RequestSignInEntity
+        @Body user: RequestSignInEntity,
     ): BaseResponseDto<ResponseUserDto>
 }

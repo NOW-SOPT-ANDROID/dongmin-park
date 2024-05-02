@@ -11,6 +11,6 @@ class HomeRepositoryImpl @Inject constructor(
 ) : HomeRepository {
     override suspend fun getUserInfo(): Result<ResponseUserInfo> =
         runCatching {
-            homeService.getUserInfo().data!!.toResponseUserInfo()
+            homeService.getUserInfo().data.toResponseUserInfo()
         }
 }
