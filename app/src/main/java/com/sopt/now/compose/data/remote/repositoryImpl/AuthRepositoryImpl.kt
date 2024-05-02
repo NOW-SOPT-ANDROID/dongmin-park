@@ -1,11 +1,9 @@
 package com.sopt.now.compose.data.remote.repositoryImpl
 
-import android.util.Log
 import com.sopt.now.compose.data.remote.service.AuthService
 import com.sopt.now.compose.domain.entity.request.RequestSignInEntity
 import com.sopt.now.compose.domain.entity.request.RequestUserEntity
 import com.sopt.now.compose.domain.repository.AuthRepository
-import retrofit2.HttpException
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -16,7 +14,7 @@ class AuthRepositoryImpl @Inject constructor(
             authService.postSignUp(user)
         }.fold(
             onSuccess = {
-                it.headers()["location"]
+                it.headers()[HEADER]
             },
             onFailure = {
                 null
@@ -27,4 +25,8 @@ class AuthRepositoryImpl @Inject constructor(
         runCatching {
             authService.postSignIn(user)
         }
+
+    companion object {
+        private const val HEADER = "location"
+    }
 }
