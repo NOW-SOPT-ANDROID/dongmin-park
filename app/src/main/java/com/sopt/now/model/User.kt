@@ -11,6 +11,6 @@ data class User(
     val id: String,
     val pw: String,
     val nickname: String,
-    val juryang: String,
+    val phoneNumber: String,
     val selfDescription: String = "하이요"
 ) : Parcelable

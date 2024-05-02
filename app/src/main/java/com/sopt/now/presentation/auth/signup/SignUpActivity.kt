@@ -1,13 +1,13 @@
 package com.sopt.now.presentation.auth.signup
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.model.User
 import com.sopt.now.util.base.BaseActivity
+import com.sopt.now.util.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -37,10 +37,10 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(ActivitySignUpBinding
     }
 
     private fun observeSignUpState() {
-        viewModel.signUpState.flowWithLifecycle(lifecycle).onEach {
-            when (it) {
+        viewModel.signUpState.flowWithLifecycle(lifecycle).onEach { state ->
+            when (state) {
                 is SignUpState.ERROR -> {
-                    Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show()
+                    toast(getString(state.errorMessage))
                 }
 
                 SignUpState.LOADING -> {}
@@ -55,7 +55,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(ActivitySignUpBinding
                 id = etvSignUpId.text.toString(),
                 pw = etvSignUpPw.text.toString(),
                 nickname = etvSignUpNickname.text.toString(),
-                juryang = etvSignUpPhoneNumber.text.toString()
+                phoneNumber = etvSignUpPhoneNumber.text.toString()
             )
         }
 

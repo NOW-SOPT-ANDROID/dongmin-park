@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.sopt.now.databinding.FragmentSearchBinding
 import com.sopt.now.util.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     override fun getFragmentBinding(
         inflater: LayoutInflater,

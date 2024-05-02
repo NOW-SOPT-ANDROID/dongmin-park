@@ -2,7 +2,6 @@ package com.sopt.now.presentation.auth.signin
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -17,6 +16,7 @@ import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.ext.getParcelable
 import com.sopt.now.util.ext.snackBar
+import com.sopt.now.util.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -78,9 +78,9 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
     }
 
     private fun observeSignInState() {
-        viewModel.signInState.flowWithLifecycle(lifecycle).onEach { signInState ->
-            when (signInState) {
-                is SignInState.ERROR -> Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show()
+        viewModel.signInState.flowWithLifecycle(lifecycle).onEach { state ->
+            when (state) {
+                is SignInState.ERROR -> toast(getString(state.errorMessage))
                 SignInState.LOADING -> {}
                 SignInState.SUCCESS -> {
                     navigateToMainActivity()

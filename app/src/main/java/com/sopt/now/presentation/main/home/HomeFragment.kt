@@ -10,7 +10,9 @@ import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.presentation.main.MainViewModel
 import com.sopt.now.presentation.main.ProfileAdapter
 import com.sopt.now.util.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val viewmodel: MainViewModel by activityViewModels()
 
