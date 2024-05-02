@@ -1,9 +1,9 @@
-package com.sopt.now.data.dto.response
+package com.sopt.now.data.remote.dto.response
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseUserInfo(
+data class ResponseUserDto(
     val authenticationId: String,
     val nickname: String,
     val phone: String,

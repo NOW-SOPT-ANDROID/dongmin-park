@@ -1,4 +1,4 @@
-package com.sopt.now.data.dto.response.reqres
+package com.sopt.now.data.remote.dto.response.reqres
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

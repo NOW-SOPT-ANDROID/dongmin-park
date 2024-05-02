@@ -3,8 +3,8 @@ package com.sopt.now.presentation.auth.signup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.R
-import com.sopt.now.data.dto.request.RequestSignUpDto
 import com.sopt.now.data.local.UserDataStore
+import com.sopt.now.data.remote.dto.request.RequestSignUpDto
 import com.sopt.now.data.remote.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

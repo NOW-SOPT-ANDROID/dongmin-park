@@ -1,7 +1,7 @@
 package com.sopt.now.data.remote.repository
 
-import com.sopt.now.data.dto.request.RequestSignInDto
-import com.sopt.now.data.dto.request.RequestSignUpDto
+import com.sopt.now.data.remote.dto.request.RequestSignInDto
+import com.sopt.now.data.remote.dto.request.RequestSignUpDto
 import com.sopt.now.data.remote.service.AuthService
 import javax.inject.Inject
 
@@ -20,8 +20,15 @@ class AuthRepository @Inject constructor(
             }
         )
 
-    suspend fun postSignIn(user: RequestSignInDto): Result<Unit> =
+    suspend fun postSignIn(user: RequestSignInDto): String? =
         runCatching {
             authService.postSignIn(user)
-        }
+        }.fold(
+            onSuccess = {
+                it.headers()["location"]
+            },
+            onFailure = {
+                null
+            }
+        )
 }

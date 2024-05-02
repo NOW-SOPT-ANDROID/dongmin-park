@@ -3,8 +3,8 @@ package com.sopt.now.presentation.auth.signin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.R
-import com.sopt.now.data.dto.request.RequestSignInDto
 import com.sopt.now.data.local.UserDataStore
+import com.sopt.now.data.remote.dto.request.RequestSignInDto
 import com.sopt.now.data.remote.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,13 +24,20 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             _signInState.value = SignInState.LOADING
 
-            authRepository.postSignIn(
-                RequestSignInDto(id, pw)
-            ).onSuccess {
-                _signInState.value = SignInState.SUCCESS
-            }.onFailure {
+            val header = authRepository.postSignIn(RequestSignInDto(id, pw))
+
+            if (header == null) {
                 _signInState.value = SignInState.ERROR(R.string.network_error)
+            } else {
+                setUserData(header)
+                _signInState.value = SignInState.SUCCESS
             }
+        }
+    }
+
+    private fun setUserData(memberId: String) {
+        with(userDataStore) {
+            userId = memberId
         }
     }
 }

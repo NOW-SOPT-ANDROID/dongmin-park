@@ -1,6 +1,6 @@
 package com.sopt.now.data.remote.repository
 
-import com.sopt.now.data.dto.response.reqres.RequreUserList
+import com.sopt.now.data.remote.dto.response.reqres.RequreUserList
 import com.sopt.now.data.remote.service.ReqresService
 import javax.inject.Inject
 
