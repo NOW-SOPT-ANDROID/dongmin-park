@@ -1,6 +1,5 @@
 package com.sopt.now.compose.feature.home
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -11,8 +10,10 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -88,23 +90,24 @@ fun HomeScreen(
                     .aspectRatio(1f)
             )
         }
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            userList.apply {
+                when {
+                    loadState.refresh is LoadState.Loading -> {
+                        CircleLoadingScreen(modifier = modifier)
+                    }
 
-//        userList.apply {
-//            when {
-//                loadState.refresh is LoadState.Loading -> {
-//                    item { CircleLoadingScreen(modifier = modifier)}
-//                }
-//
-//                loadState.append is LoadState.Loading -> {
-//                    item { CircleLoadingScreen(modifier = modifier) }
-//                }
-//
-//                loadState.source.append is LoadState.NotLoading &&
-//                        loadState.append.endOfPaginationReached -> {
-//                    item { Text("더 이상 데이터가 없습니다.") }
-//                }
-//            }
-//        }
+                    loadState.append is LoadState.Loading -> {
+                        CircleLoadingScreen(modifier = modifier)
+                    }
+
+                    loadState.source.append is LoadState.NotLoading &&
+                            loadState.append.endOfPaginationReached -> {
+                        HorizontalDivider()
+                    }
+                }
+            }
+        }
     }
 }
 
