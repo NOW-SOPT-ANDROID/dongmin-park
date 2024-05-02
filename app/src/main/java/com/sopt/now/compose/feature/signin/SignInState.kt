@@ -4,5 +4,5 @@ data class SignInState(
     val id: String = "",
     val pw: String = "",
     val nickname: String = "",
-    val juryang: String = ""
+    val phoneNumber: String = ""
 )

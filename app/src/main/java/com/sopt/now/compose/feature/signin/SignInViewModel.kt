@@ -35,7 +35,7 @@ class SignInViewModel @Inject constructor(
             id = userDataStore.id,
             pw = userDataStore.pw,
             nickname = userDataStore.nickname,
-            juryang = userDataStore.phoneNumber
+            phoneNumber = userDataStore.phoneNumber
         )
     }
 
@@ -49,7 +49,7 @@ class SignInViewModel @Inject constructor(
 
     suspend fun signInBtnClicked() {
         viewModelScope.launch {
-            authRepository.getSignIn(RequestSignInEntity(_state.value.id, _state.value.pw))
+            authRepository.postSignIn(RequestSignInEntity(_state.value.id, _state.value.pw))
                 .onSuccess { _sideEffect.emit(SignInSideEffect.NavigateToMain) }
                 .onFailure {
                     SignInSideEffect.SnackBar(

@@ -21,7 +21,7 @@ class AuthRepositoryImpl @Inject constructor(
             }
         )
 
-    override suspend fun getSignIn(user: RequestSignInEntity): Result<Unit> =
+    override suspend fun postSignIn(user: RequestSignInEntity): Result<Unit> =
         runCatching {
             authService.postSignIn(user)
         }
