@@ -105,4 +105,7 @@ dependencies {
 
     // timber
     implementation("com.jakewharton.timber:timber:5.0.1")
+
+    // paging
+    implementation("androidx.paging:paging-compose:3.2.1")
 }
