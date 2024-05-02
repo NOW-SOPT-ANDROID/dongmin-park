@@ -1,68 +1,48 @@
 package com.sopt.now.presentation.auth.signup
 
 import android.os.Bundle
-import com.sopt.now.data.dto.request.RequestSignUpDto
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.model.User
 import com.sopt.now.util.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
+@AndroidEntryPoint
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(ActivitySignUpBinding::inflate) {
+    private val viewModel by viewModels<SignUpViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setSignUpBtnClickListener()
+        viewModel.signUpState.flowWithLifecycle(lifecycle).onEach {
+            when (it) {
+                is SignUpState.ERROR -> {
+                    Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show()
+                }
+
+                SignUpState.LOADING -> {}
+                SignUpState.SUCCESS -> navigateSignIn()
+            }
+        }.launchIn(lifecycleScope)
     }
 
     private fun setSignUpBtnClickListener() {
-        binding.btnSignUp.setOnClickListener {
-            signUp()
+        with(binding) {
+            btnSignUp.setOnClickListener {
+                viewModel.signUpBtnClicked(
+                    etvSignUpId.text.toString(),
+                    etvSignUpPw.text.toString(),
+                    etvSignUpNickname.text.toString(),
+                    etvSignUpPhoneNumber.text.toString()
+                )
+            }
         }
-    }
-
-    private fun signUp() {
-        val signUpRequest = getSignUpRequestDto()
-//        authService.postSignUp(signUpRequest).enqueue(object : Callback<ResponseSignUpDto> {
-//            override fun onResponse(
-//                call: Call<ResponseSignUpDto>,
-//                response: Response<ResponseSignUpDto>,
-//            ) {
-//                if (response.isSuccessful) {
-//                    val data: ResponseSignUpDto? = response.body()
-//                    val userId = response.headers()["location"]
-//                    Toast.makeText(
-//                        this@SignUpActivity,
-//                        "회원가입 성공 유저의 ID는 $userId 입니둥",
-//                        Toast.LENGTH_SHORT,
-//                    ).show()
-//                    Log.d("SignUp", "data: $data, userId: $userId")
-//                } else {
-//                    val error = response.message()
-//                    Toast.makeText(
-//                        this@SignUpActivity,
-//                        "로그인이 실패 $error",
-//                        Toast.LENGTH_SHORT,
-//                    ).show()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResponseSignUpDto>, t: Throwable) {
-//                Toast.makeText(this@SignUpActivity, "서버 에러 발생 ", Toast.LENGTH_SHORT).show()
-//            }
-//        })
-    }
-
-    private fun getSignUpRequestDto(): RequestSignUpDto {
-        val id = binding.etvSignUpId.text.toString()
-        val password = binding.etvSignUpPw.text.toString()
-        val nickname = binding.etvSignUpNickname.text.toString()
-        val phoneNumber = binding.etvSignUpPhoneNumber.text.toString()
-        return RequestSignUpDto(
-            authenticationId = id,
-            password = password,
-            nickname = nickname,
-            phone = phoneNumber
-        )
     }
 
     private fun navigateSignIn() {

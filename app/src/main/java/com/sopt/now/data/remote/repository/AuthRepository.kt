@@ -5,7 +5,7 @@ import com.sopt.now.data.dto.request.RequestSignUpDto
 import com.sopt.now.data.remote.service.AuthService
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor(
+class AuthRepository @Inject constructor(
     private val authService: AuthService,
 ) {
     suspend fun postSignUp(user: RequestSignUpDto): String? =

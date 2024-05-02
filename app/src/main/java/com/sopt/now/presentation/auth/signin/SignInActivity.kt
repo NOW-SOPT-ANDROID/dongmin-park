@@ -13,7 +13,9 @@ import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.ext.getParcelable
 import com.sopt.now.util.ext.snackBar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding::inflate) {
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private var user: User? = null
