@@ -1,20 +1,12 @@
 package com.sopt.now.presentation.auth.signup
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import com.sopt.now.data.dto.request.RequestSignUpDto
-import com.sopt.now.data.dto.response.ResponseSignUpDto
-import com.sopt.now.data.remote.service.ServicePool
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.model.User
 import com.sopt.now.util.base.BaseActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(ActivitySignUpBinding::inflate) {
-    private val authService by lazy { ServicePool.authService }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

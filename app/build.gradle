@@ -22,7 +22,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "AUTH_BASE_URL", properties["base.url"]
+
+        buildConfigField "String", "BASE_URL", properties["base.url"]
+        buildConfigField "String", "REQRES_URL", properties["reqres.url"]
     }
 
     buildTypes {
@@ -72,4 +74,7 @@ dependencies {
     // hilt
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
+
+    // timber
+    implementation("com.jakewharton.timber:timber:5.0.1")
 }
