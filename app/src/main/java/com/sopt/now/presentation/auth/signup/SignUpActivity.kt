@@ -20,16 +20,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(ActivitySignUpBinding
         super.onCreate(savedInstanceState)
 
         setSignUpBtnClickListener()
-        viewModel.signUpState.flowWithLifecycle(lifecycle).onEach {
-            when (it) {
-                is SignUpState.ERROR -> {
-                    Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show()
-                }
-
-                SignUpState.LOADING -> {}
-                SignUpState.SUCCESS -> navigateSignIn()
-            }
-        }.launchIn(lifecycleScope)
+        observeSignUpState()
     }
 
     private fun setSignUpBtnClickListener() {
@@ -43,6 +34,19 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(ActivitySignUpBinding
                 )
             }
         }
+    }
+
+    private fun observeSignUpState() {
+        viewModel.signUpState.flowWithLifecycle(lifecycle).onEach {
+            when (it) {
+                is SignUpState.ERROR -> {
+                    Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show()
+                }
+
+                SignUpState.LOADING -> {}
+                SignUpState.SUCCESS -> navigateSignIn()
+            }
+        }.launchIn(lifecycleScope)
     }
 
     private fun navigateSignIn() {
