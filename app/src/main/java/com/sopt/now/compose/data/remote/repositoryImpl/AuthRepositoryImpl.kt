@@ -21,10 +21,17 @@ class AuthRepositoryImpl @Inject constructor(
             }
         )
 
-    override suspend fun postSignIn(user: RequestSignInEntity): Result<Unit> =
+    override suspend fun postSignIn(user: RequestSignInEntity): String? =
         runCatching {
             authService.postSignIn(user)
-        }
+        }.fold(
+            onSuccess = {
+                it.headers()[HEADER]
+            },
+            onFailure = {
+                null
+            }
+        )
 
     companion object {
         private const val HEADER = "location"

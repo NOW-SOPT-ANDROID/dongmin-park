@@ -49,13 +49,25 @@ class SignInViewModel @Inject constructor(
 
     suspend fun signInBtnClicked() {
         viewModelScope.launch {
-            authRepository.postSignIn(RequestSignInEntity(_state.value.id, _state.value.pw))
-                .onSuccess { _sideEffect.emit(SignInSideEffect.NavigateToMain) }
-                .onFailure {
+            val header =
+                authRepository.postSignIn(RequestSignInEntity(_state.value.id, _state.value.pw))
+
+            if (header == null) {
+                _sideEffect.emit(
                     SignInSideEffect.SnackBar(
-                        R.string.id_error
+                        R.string.server_error
                     )
-                }
+                )
+            } else {
+                setUserData(header)
+                _sideEffect.emit(SignInSideEffect.NavigateToMain)
+            }
+        }
+    }
+
+    private fun setUserData(memberId: String) {
+        with(userDataStore) {
+            userId = memberId
         }
     }
 

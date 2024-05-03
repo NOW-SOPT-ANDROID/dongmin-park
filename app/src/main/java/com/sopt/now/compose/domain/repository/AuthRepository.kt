@@ -5,5 +5,5 @@ import com.sopt.now.compose.domain.entity.request.RequestUserEntity
 
 interface AuthRepository {
     suspend fun postSignUp(user: RequestUserEntity): String?
-    suspend fun postSignIn(user: RequestSignInEntity): Result<Unit>
+    suspend fun postSignIn(user: RequestSignInEntity): String?
 }

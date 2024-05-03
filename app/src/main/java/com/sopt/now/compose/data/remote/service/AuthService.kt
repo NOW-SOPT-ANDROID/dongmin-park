@@ -16,5 +16,5 @@ interface AuthService {
     @POST("member/login")
     suspend fun postSignIn(
         @Body user: RequestSignInEntity,
-    ): BaseResponseWithoutDataDto
+    ): Response<BaseResponseWithoutDataDto>
 }
