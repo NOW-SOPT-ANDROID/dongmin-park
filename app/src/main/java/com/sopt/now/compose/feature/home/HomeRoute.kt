@@ -39,8 +39,7 @@ fun HomeRoute(
     modifier: Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
-    val userPagingItems: LazyPagingItems<ReqresUserModel> =
-        viewModel.userState.collectAsLazyPagingItems()
+    val userPagingItems = viewModel.userListStream.collectAsLazyPagingItems()
 
     HomeScreen(
         userList = userPagingItems,
