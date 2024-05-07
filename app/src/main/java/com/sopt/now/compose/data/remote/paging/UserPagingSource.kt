@@ -4,15 +4,15 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.sopt.now.compose.data.remote.datasource.ReqresDataSource
 import com.sopt.now.compose.data.remote.dto.response.reqres.toResponseUserList
-import com.sopt.now.compose.domain.entity.response.ReqresUserData
+import com.sopt.now.compose.domain.entity.response.ReqresUserModel
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
 
 class UserPagingSource @Inject constructor(
     private val requreDataSource: ReqresDataSource,
-) : PagingSource<Int, ReqresUserData>() {
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ReqresUserData> {
+) : PagingSource<Int, ReqresUserModel>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ReqresUserModel> {
         return try {
             val page = params.key ?: 1
             val result = requreDataSource.getUserList(page)
@@ -29,7 +29,7 @@ class UserPagingSource @Inject constructor(
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, ReqresUserData>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, ReqresUserModel>): Int? {
         return state.anchorPosition
     }
 }

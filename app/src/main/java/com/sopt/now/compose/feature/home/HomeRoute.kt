@@ -30,7 +30,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.sopt.now.compose.component.layout.CircleLoadingScreen
-import com.sopt.now.compose.domain.entity.response.ReqresUserData
+import com.sopt.now.compose.domain.entity.response.ReqresUserModel
 import com.sopt.now.compose.feature.main.DeviceSize
 import com.sopt.now.compose.feature.main.LocalDeviceSizeComposition
 
@@ -39,7 +39,7 @@ fun HomeRoute(
     modifier: Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
-    val userPagingItems: LazyPagingItems<ReqresUserData> =
+    val userPagingItems: LazyPagingItems<ReqresUserModel> =
         viewModel.userState.collectAsLazyPagingItems()
 
     HomeScreen(
@@ -50,7 +50,7 @@ fun HomeRoute(
 
 @Composable
 fun HomeScreen(
-    userList: LazyPagingItems<ReqresUserData>,
+    userList: LazyPagingItems<ReqresUserModel>,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(

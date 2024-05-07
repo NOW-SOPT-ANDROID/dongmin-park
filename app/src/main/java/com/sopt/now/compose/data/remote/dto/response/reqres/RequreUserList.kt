@@ -1,6 +1,6 @@
 package com.sopt.now.compose.data.remote.dto.response.reqres
 
-import com.sopt.now.compose.domain.entity.response.ReqresUserData
+import com.sopt.now.compose.domain.entity.response.ReqresUserModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -45,6 +45,6 @@ data class RequreUserList(
 
 fun RequreUserList.toResponseUserList() = data.map { it.toUserData() }.toPersistentList()
 
-fun RequreUserList.Data.toUserData() = ReqresUserData(
+fun RequreUserList.Data.toUserData() = ReqresUserModel(
     avatar, email, firstName, id, lastName
 )

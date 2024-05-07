@@ -1,6 +1,6 @@
 package com.sopt.now.compose.domain.entity.response
 
-data class ReqresUserData(
+data class ReqresUserModel(
     val avatar: String,
     val email: String,
     val firstName: String,
