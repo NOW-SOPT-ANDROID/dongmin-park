@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-val LocalPhoneSizeComposition = staticCompositionLocalOf {
-    PhoneSize.MEDIUM
+val LocalDeviceSizeComposition = staticCompositionLocalOf {
+    DeviceSize.MEDIUM
 }
 
 @AndroidEntryPoint
@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     CompositionLocalProvider(
-                        LocalPhoneSizeComposition provides PhoneSize.getPhoneSize(deviceWidth)
+                        LocalDeviceSizeComposition provides DeviceSize.of(deviceWidth)
                     ) {
                         MainScreen(navigator)
                     }
@@ -40,15 +40,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-enum class PhoneSize(val minWidthSize: Int) {
+enum class DeviceSize(val minWidthSize: Int) {
     BIG(1840), // Pixel Fold 기준
     MEDIUM(1080), // Android Studio Medium Phone 기준
     SMALL(720); // Android Studio Small Phone 기준
 
     companion object {
-        fun getPhoneSize(phoneWidth: Int): PhoneSize = when {
-            BIG.minWidthSize <= phoneWidth -> BIG
-            MEDIUM.minWidthSize <= phoneWidth -> MEDIUM
+        fun of(deviceWidth: Int): DeviceSize = when {
+            BIG.minWidthSize <= deviceWidth -> BIG
+            MEDIUM.minWidthSize <= deviceWidth -> MEDIUM
             else -> SMALL
         }
     }

@@ -34,8 +34,8 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.sopt.now.compose.component.layout.CircleLoadingScreen
 import com.sopt.now.compose.component.layout.ErrorScreen
 import com.sopt.now.compose.domain.entity.response.ResponseUserList
-import com.sopt.now.compose.feature.main.LocalPhoneSizeComposition
-import com.sopt.now.compose.feature.main.PhoneSize
+import com.sopt.now.compose.feature.main.LocalDeviceSizeComposition
+import com.sopt.now.compose.feature.main.DeviceSize
 import com.sopt.now.compose.util.UiState
 
 @Composable
@@ -65,10 +65,10 @@ fun HomeScreen(
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(
-            when (LocalPhoneSizeComposition.current) {
-                PhoneSize.SMALL -> 1
-                PhoneSize.MEDIUM -> 2
-                PhoneSize.BIG -> 3
+            when (LocalDeviceSizeComposition.current) {
+                DeviceSize.SMALL -> 1
+                DeviceSize.MEDIUM -> 2
+                DeviceSize.BIG -> 3
             }
         ),
         modifier = modifier,
