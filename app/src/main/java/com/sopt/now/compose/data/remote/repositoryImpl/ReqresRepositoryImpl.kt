@@ -1,16 +1,21 @@
 package com.sopt.now.compose.data.remote.repositoryImpl
 
-import com.sopt.now.compose.data.remote.dto.response.reqres.toResponseUserList
-import com.sopt.now.compose.data.remote.service.ReqresService
-import com.sopt.now.compose.domain.entity.response.ResponseUserList
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.sopt.now.compose.data.remote.datasource.ReqresDataSource
+import com.sopt.now.compose.data.remote.paging.UserPagingSource
+import com.sopt.now.compose.domain.entity.response.ReqresUserData
 import com.sopt.now.compose.domain.repository.ReqresRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ReqresRepositoryImpl @Inject constructor(
-    private val reqresService: ReqresService,
+    private val reqresDataSource: ReqresDataSource
 ) : ReqresRepository {
-    override suspend fun getUserList(page: Int): Result<ResponseUserList> =
-        runCatching {
-            reqresService.getUserInfo(page).toResponseUserList()
-        }
+    override suspend fun getUserList(): Flow<PagingData<ReqresUserData>> =
+        Pager(
+            config = PagingConfig(pageSize = 1)) {
+            UserPagingSource(reqresDataSource)
+        }.flow
 }

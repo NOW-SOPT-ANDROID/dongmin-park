@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,42 +24,33 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.sopt.now.compose.component.layout.CircleLoadingScreen
-import com.sopt.now.compose.component.layout.ErrorScreen
-import com.sopt.now.compose.domain.entity.response.ResponseUserList
-import com.sopt.now.compose.feature.main.LocalDeviceSizeComposition
+import com.sopt.now.compose.domain.entity.response.ReqresUserData
 import com.sopt.now.compose.feature.main.DeviceSize
-import com.sopt.now.compose.util.UiState
+import com.sopt.now.compose.feature.main.LocalDeviceSizeComposition
 
 @Composable
 fun HomeRoute(
     modifier: Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    val userListPager = viewModel.userListPager.collectAsLazyPagingItems()
+    val userPagingItems: LazyPagingItems<ReqresUserData> =
+        viewModel.userState.collectAsLazyPagingItems()
 
-    when (state.loadState) {
-        UiState.Loading -> CircleLoadingScreen(modifier)
-        UiState.Failure -> ErrorScreen(modifier)
-        is UiState.Success -> {
-            HomeScreen(
-                userList = userListPager,
-                modifier = modifier
-            )
-        }
-    }
+    HomeScreen(
+        userList = userPagingItems,
+        modifier = modifier
+    )
 }
 
 @Composable
 fun HomeScreen(
-    userList: LazyPagingItems<ResponseUserList.UserData>,
+    userList: LazyPagingItems<ReqresUserData>,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
@@ -80,7 +70,7 @@ fun HomeScreen(
             val user = userList[index]
             ProfileView(
                 image = user?.avatar.orEmpty(),
-                name = user?.first_name + user?.last_name,
+                name = user?.firstName + user?.lastName,
                 selfDescription = user?.email.orEmpty(),
                 fontSize = 15.sp,
                 imageModifier = Modifier
