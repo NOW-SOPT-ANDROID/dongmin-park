@@ -13,7 +13,7 @@ import javax.inject.Inject
 class ReqresRepositoryImpl @Inject constructor(
     private val reqresDataSource: ReqresDataSource
 ) : ReqresRepository {
-    override suspend fun getUserList(): Flow<PagingData<ReqresUserModel>> =
+    override fun getUserList(): Flow<PagingData<ReqresUserModel>> =
         Pager(
             config = PagingConfig(pageSize = 1)) {
             UserPagingSource(reqresDataSource)

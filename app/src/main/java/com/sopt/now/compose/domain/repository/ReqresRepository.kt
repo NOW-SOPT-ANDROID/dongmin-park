@@ -5,5 +5,5 @@ import com.sopt.now.compose.domain.entity.response.ReqresUserModel
 import kotlinx.coroutines.flow.Flow
 
 interface ReqresRepository {
-    suspend fun getUserList(): Flow<PagingData<ReqresUserModel>>
+    fun getUserList(): Flow<PagingData<ReqresUserModel>>
 }

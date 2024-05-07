@@ -9,22 +9,12 @@ import com.sopt.now.compose.domain.repository.ReqresRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val reqresRepository: ReqresRepository,
+    reqresRepository: ReqresRepository,
 ) : ViewModel() {
-    val userListStream: Flow<PagingData<ReqresUserModel>> = flow {
-        getReqresUserData().collect(
-            this
-        )
-    }
-
-    private suspend fun getReqresUserData(): Flow<PagingData<ReqresUserModel>> {
-        return reqresRepository.getUserList()
-            .distinctUntilChanged()
-            .cachedIn(viewModelScope)
-    }
+    val userListStream: Flow<PagingData<ReqresUserModel>> =
+        reqresRepository.getUserList().distinctUntilChanged().cachedIn(viewModelScope)
 }
