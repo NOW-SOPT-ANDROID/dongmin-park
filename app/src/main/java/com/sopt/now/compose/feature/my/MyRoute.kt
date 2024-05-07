@@ -25,7 +25,6 @@ import com.sopt.now.compose.R
 import com.sopt.now.compose.component.layout.CircleLoadingScreen
 import com.sopt.now.compose.component.layout.ErrorScreen
 import com.sopt.now.compose.component.text.DescriptionWithTitle
-import com.sopt.now.compose.feature.signup.SignUpSideEffect
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.UiState
 
@@ -50,7 +49,6 @@ fun MyRoute(
         }
     }
 
-
     when (state.loadState) {
         UiState.Loading -> CircleLoadingScreen()
         UiState.Failure -> ErrorScreen()
@@ -59,7 +57,6 @@ fun MyRoute(
             MyScreen(
                 profileImage = user.profileImage,
                 id = user.id,
-                pw = user.pw,
                 nickname = user.nickname,
                 phoneNumber = user.phoneNumber,
                 selfDescription = user.selfDescription,
@@ -74,7 +71,6 @@ fun MyRoute(
 fun MyScreen(
     @DrawableRes profileImage: Int,
     id: String,
-    pw: String,
     nickname: String,
     phoneNumber: String,
     selfDescription: String,
@@ -103,10 +99,6 @@ fun MyScreen(
         Spacer(modifier = Modifier.padding(vertical = 30.dp))
 
         DescriptionWithTitle(title = stringResource(id = R.string.id), description = id)
-
-        Spacer(modifier = Modifier.padding(vertical = 20.dp))
-
-        DescriptionWithTitle(title = stringResource(id = R.string.pw), description = pw)
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 

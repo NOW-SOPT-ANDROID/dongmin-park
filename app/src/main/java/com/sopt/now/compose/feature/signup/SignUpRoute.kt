@@ -50,7 +50,7 @@ fun SignUpRoute(
 
     SignUpScreen(
         id = state.id,
-        pw = state.pw,
+        pw = state.password,
         nickname = state.nickname,
         phoneNumber = state.phoneNumber,
         fetchId = { viewModel.fetchId(it) },

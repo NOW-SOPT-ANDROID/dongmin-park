@@ -3,7 +3,6 @@ package com.sopt.now.compose.feature.signin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.local.UserDataStore
 import com.sopt.now.compose.domain.entity.request.RequestSignInEntity
 import com.sopt.now.compose.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val userDataStore: UserDataStore,
     private val authRepository: AuthRepository,
 ) : ViewModel() {
     private val _state: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
@@ -32,10 +30,9 @@ class SignInViewModel @Inject constructor(
 
     fun setInfo() {
         _state.value = _state.value.copy(
-            id = userDataStore.id,
-            pw = userDataStore.pw,
-            nickname = userDataStore.nickname,
-            phoneNumber = userDataStore.phoneNumber
+            id = authRepository.getId(),
+            password = authRepository.getPassword(),
+            nickname = authRepository.getNickname()
         )
     }
 
@@ -43,14 +40,19 @@ class SignInViewModel @Inject constructor(
         _state.value = _state.value.copy(id = id)
     }
 
-    fun fetchPw(pw: String) {
-        _state.value = _state.value.copy(pw = pw)
+    fun fetchPw(password: String) {
+        _state.value = _state.value.copy(password = password)
     }
 
     suspend fun signInBtnClicked() {
         viewModelScope.launch {
             val header =
-                authRepository.postSignIn(RequestSignInEntity(_state.value.id, _state.value.pw))
+                authRepository.postSignIn(
+                    RequestSignInEntity(
+                        _state.value.id,
+                        _state.value.password
+                    )
+                )
 
             if (header == null) {
                 _sideEffect.emit(
@@ -66,9 +68,7 @@ class SignInViewModel @Inject constructor(
     }
 
     private fun setUserData(memberId: String) {
-        with(userDataStore) {
-            userId = memberId
-        }
+        authRepository.setUserId(memberId)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

@@ -13,9 +13,9 @@ class UserDataStoreImpl @Inject constructor(
     override var id: String
         get() = dataStore.getString(ID, "").orEmpty()
         set(value) = dataStore.edit { putString(ID, value) }
-    override var pw: String
-        get() = dataStore.getString(PW, "").orEmpty()
-        set(value) = dataStore.edit { putString(PW, value) }
+    override var password: String
+        get() = dataStore.getString(PASSWORD, "").orEmpty()
+        set(value) = dataStore.edit { putString(PASSWORD, value) }
     override var nickname: String
         get() = dataStore.getString(NICKNAME, "").orEmpty()
         set(value) = dataStore.edit { putString(NICKNAME, value) }
@@ -30,7 +30,7 @@ class UserDataStoreImpl @Inject constructor(
     companion object {
         private const val USER_ID = "userId"
         private const val ID = "id"
-        private const val PW = "pw"
+        private const val PASSWORD = "password"
         private const val NICKNAME = "nickname"
         private const val PHONE_NUMBER = "phoneNumber"
     }

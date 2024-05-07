@@ -2,7 +2,7 @@ package com.sopt.now.compose.feature.signin
 
 data class SignInState(
     val id: String = "",
-    val pw: String = "",
+    val password: String = "",
     val nickname: String = "",
     val phoneNumber: String = ""
 )

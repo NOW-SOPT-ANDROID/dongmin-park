@@ -38,7 +38,7 @@ fun SignInRoute(
     onSignUpClick: () -> Unit,
     onMainClick: () -> Unit,
     onShowErrorSnackBar: (Int) -> Unit,
-    viewModel: SignInViewModel = hiltViewModel()
+    viewModel: SignInViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -64,7 +64,7 @@ fun SignInRoute(
 
     SignInScreen(
         id = state.id,
-        pw = state.pw,
+        password = state.password,
         signInBtnClicked = {
             scope.launch {
                 viewModel.signInBtnClicked()
@@ -76,18 +76,18 @@ fun SignInRoute(
             }
         },
         fetchId = { viewModel.fetchId(it) },
-        fetchPw = { viewModel.fetchPw(it) }
+        fetchPassword = { viewModel.fetchPw(it) }
     )
 }
 
 @Composable
 fun SignInScreen(
     id: String,
-    pw: String,
+    password: String,
     signInBtnClicked: () -> Unit,
     signUpBtnClicked: () -> Unit,
     fetchId: (String) -> Unit,
-    fetchPw: (String) -> Unit
+    fetchPassword: (String) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.addFocusCleaner(LocalFocusManager.current),
@@ -153,12 +153,12 @@ fun SignInScreen(
 
             TextFieldWithTitle(
                 title = stringResource(id = R.string.pw),
-                value = pw,
+                value = password,
                 singleLine = true,
                 keyboardType = KeyboardType.Password,
                 hint = stringResource(id = R.string.pw_hint),
-                onValueChanged = { pw ->
-                    fetchPw(pw)
+                onValueChanged = { password ->
+                    fetchPassword(password)
                 }
             )
         }

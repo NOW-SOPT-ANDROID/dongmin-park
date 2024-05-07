@@ -3,7 +3,6 @@ package com.sopt.now.compose.feature.signup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.local.UserDataStore
 import com.sopt.now.compose.domain.entity.request.RequestUserEntity
 import com.sopt.now.compose.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,8 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val userDataStore: UserDataStore,
-    private val authRepository: AuthRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
     private val _state: MutableStateFlow<SignUpState> = MutableStateFlow(SignUpState())
     val state: StateFlow<SignUpState>
@@ -34,8 +32,8 @@ class SignUpViewModel @Inject constructor(
         _state.value = _state.value.copy(id = id)
     }
 
-    fun fetchPw(pw: String) {
-        _state.value = _state.value.copy(pw = pw)
+    fun fetchPw(password: String) {
+        _state.value = _state.value.copy(password = password)
     }
 
     fun fetchNickname(nickname: String) {
@@ -52,7 +50,7 @@ class SignUpViewModel @Inject constructor(
                 state.value.run {
                     RequestUserEntity(
                         id,
-                        pw,
+                        password,
                         nickname,
                         phoneNumber
                     )
@@ -73,7 +71,7 @@ class SignUpViewModel @Inject constructor(
         val errorMessage = when {
             _state.value.id.length !in ID_MIN_LEN..ID_MAX_LEN -> R.string.id_error
 
-            _state.value.pw.length !in PW_MIN_LEN..PW_MAX_LEN -> R.string.pw_error
+            _state.value.password.length !in PW_MIN_LEN..PW_MAX_LEN -> R.string.pw_error
 
             _state.value.nickname.isBlank() -> R.string.nickname_error
             _state.value.phoneNumber.isBlank() -> R.string.phone_error
@@ -85,13 +83,11 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun setUserData(memberId: String) {
-        with(userDataStore) {
-            userId = memberId
-            id = state.value.id
-            pw = state.value.pw
-            nickname = state.value.nickname
-            phoneNumber = state.value.phoneNumber
-        }
+        authRepository.setUserId(memberId)
+        authRepository.setId(state.value.id)
+        authRepository.setPassword(state.value.password)
+        authRepository.setNickname(state.value.nickname)
+        authRepository.setPhoneNumber(state.value.phoneNumber)
     }
 
     companion object {
