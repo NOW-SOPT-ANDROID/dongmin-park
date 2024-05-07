@@ -46,19 +46,12 @@ fun HomeRoute(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val userListPager = viewModel.userListPager.collectAsLazyPagingItems()
 
-    val gridCount = when (LocalPhoneSizeComposition.current) {
-        PhoneSize.SMALL -> 1
-        PhoneSize.MEDIUM -> 2
-        PhoneSize.BIG -> 3
-    }
-
     when (state.loadState) {
         UiState.Loading -> CircleLoadingScreen(modifier)
         UiState.Failure -> ErrorScreen(modifier)
         is UiState.Success -> {
             HomeScreen(
                 userList = userListPager,
-                gridCount = gridCount,
                 modifier = modifier
             )
         }
@@ -68,11 +61,16 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     userList: LazyPagingItems<ResponseUserList.UserData>,
-    gridCount: Int,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(gridCount),
+        columns = GridCells.Fixed(
+            when (LocalPhoneSizeComposition.current) {
+                PhoneSize.SMALL -> 1
+                PhoneSize.MEDIUM -> 2
+                PhoneSize.BIG -> 3
+            }
+        ),
         modifier = modifier,
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -94,11 +92,11 @@ fun HomeScreen(
             userList.apply {
                 when {
                     loadState.refresh is LoadState.Loading -> {
-                        CircleLoadingScreen(modifier = modifier)
+                        CircleLoadingScreen()
                     }
 
                     loadState.append is LoadState.Loading -> {
-                        CircleLoadingScreen(modifier = modifier)
+                        CircleLoadingScreen()
                     }
 
                     loadState.source.append is LoadState.NotLoading &&
