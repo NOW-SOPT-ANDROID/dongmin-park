@@ -2,7 +2,6 @@ package com.sopt.now
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.sopt.now.compose.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
