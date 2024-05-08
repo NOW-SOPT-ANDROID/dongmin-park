@@ -3,6 +3,7 @@ package com.sopt.now.compose.feature.signin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.R
+import com.sopt.now.compose.data.remote.repositoryImpl.AuthRepositoryImpl
 import com.sopt.now.compose.domain.entity.request.RequestSignInEntity
 import com.sopt.now.compose.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,23 +47,22 @@ class SignInViewModel @Inject constructor(
 
     suspend fun signInBtnClicked() {
         viewModelScope.launch {
-            val header =
-                authRepository.postSignIn(
-                    RequestSignInEntity(
-                        _state.value.id,
-                        _state.value.password
-                    )
+            authRepository.postSignIn(
+                RequestSignInEntity(
+                    _state.value.id,
+                    _state.value.password
                 )
+            ).onSuccess {
+                val header = it.headers()[AuthRepositoryImpl.HEADER].orEmpty()
 
-            if (header == null) {
+                setUserData(header)
+                _sideEffect.emit(SignInSideEffect.NavigateToMain)
+            }.onFailure {
                 _sideEffect.emit(
                     SignInSideEffect.SnackBar(
                         R.string.server_error
                     )
                 )
-            } else {
-                setUserData(header)
-                _sideEffect.emit(SignInSideEffect.NavigateToMain)
             }
         }
     }

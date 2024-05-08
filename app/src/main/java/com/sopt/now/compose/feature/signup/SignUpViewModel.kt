@@ -3,6 +3,7 @@ package com.sopt.now.compose.feature.signup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.R
+import com.sopt.now.compose.data.remote.repositoryImpl.AuthRepositoryImpl
 import com.sopt.now.compose.domain.entity.request.RequestUserEntity
 import com.sopt.now.compose.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,7 +47,7 @@ class SignUpViewModel @Inject constructor(
 
     fun signUpBtnClicked() {
         viewModelScope.launch {
-            val header = authRepository.postSignUp(
+            authRepository.postSignUp(
                 state.value.run {
                     RequestUserEntity(
                         id,
@@ -55,13 +56,13 @@ class SignUpViewModel @Inject constructor(
                         phoneNumber
                     )
                 }
-            )
+            ).onSuccess {
+                val header = it.headers()[AuthRepositoryImpl.HEADER].orEmpty()
 
-            if (header == null) {
-                emitErrorMessage()
-            } else {
                 setUserData(header)
                 _sideEffect.emit(SignUpSideEffect.NavigateToSignIn)
+            }.onFailure {
+                emitErrorMessage()
             }
         }
     }
