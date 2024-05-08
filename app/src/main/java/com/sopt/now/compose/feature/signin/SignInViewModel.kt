@@ -47,7 +47,7 @@ class SignInViewModel @Inject constructor(
 
     suspend fun signInBtnClicked() {
         viewModelScope.launch {
-            authRepository.postSignIn(
+            authRepository.verifyUser(
                 RequestSignInEntity(
                     _state.value.id,
                     _state.value.password

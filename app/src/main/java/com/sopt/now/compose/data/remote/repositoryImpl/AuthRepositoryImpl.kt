@@ -13,12 +13,12 @@ class AuthRepositoryImpl @Inject constructor(
     private val authDataSource: AuthDataSource,
     private val userDataStore: UserDataStore
 ) : AuthRepository {
-    override suspend fun postSignUp(user: RequestUserEntity): Result<Response<BaseResponseWithoutDataDto>> =
+    override suspend fun registerUser(user: RequestUserEntity): Result<Response<BaseResponseWithoutDataDto>> =
         runCatching {
             authDataSource.postSignUp(user)
         }
 
-    override suspend fun postSignIn(user: RequestSignInEntity): Result<Response<BaseResponseWithoutDataDto>> =
+    override suspend fun verifyUser(user: RequestSignInEntity): Result<Response<BaseResponseWithoutDataDto>> =
         runCatching {
             authDataSource.postSignIn(user)
         }

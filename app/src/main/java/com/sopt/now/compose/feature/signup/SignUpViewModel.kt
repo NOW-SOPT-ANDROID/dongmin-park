@@ -47,7 +47,7 @@ class SignUpViewModel @Inject constructor(
 
     fun signUpBtnClicked() {
         viewModelScope.launch {
-            authRepository.postSignUp(
+            authRepository.registerUser(
                 state.value.run {
                     RequestUserEntity(
                         id,

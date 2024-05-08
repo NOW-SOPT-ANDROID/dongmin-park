@@ -6,8 +6,8 @@ import com.sopt.now.compose.domain.entity.request.RequestUserEntity
 import retrofit2.Response
 
 interface AuthRepository {
-    suspend fun postSignUp(user: RequestUserEntity): Result<Response<BaseResponseWithoutDataDto>>
-    suspend fun postSignIn(user: RequestSignInEntity): Result<Response<BaseResponseWithoutDataDto>>
+    suspend fun registerUser(user: RequestUserEntity): Result<Response<BaseResponseWithoutDataDto>>
+    suspend fun verifyUser(user: RequestSignInEntity): Result<Response<BaseResponseWithoutDataDto>>
     fun getId(): String
     fun getPassword(): String
     fun getNickname(): String
