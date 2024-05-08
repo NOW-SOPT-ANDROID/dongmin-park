@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.onEach
 @AndroidEntryPoint
 class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding::inflate) {
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
-    private var user: User? = null
     private val viewModel by viewModels<SignInViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +40,10 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                user = result.data?.getParcelable(USER_KEY, User::class.java)
-                    ?: return@registerForActivityResult
+                viewModel.setUser(
+                    result.data?.getParcelable(USER_KEY, User::class.java)
+                        ?: return@registerForActivityResult
+                )
 
                 setLoginInfo()
             }
@@ -51,8 +52,8 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
 
     private fun setLoginInfo() {
         with(binding) {
-            etvSignInId.setText(user?.id)
-            etvSignInPw.setText(user?.pw)
+            etvSignInId.setText(viewModel.user?.id)
+            etvSignInPw.setText(viewModel.user?.pw)
         }
     }
 
@@ -61,7 +62,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
             val id = binding.etvSignInId.text.toString()
             val pw = binding.etvSignInPw.text.toString()
 
-            if (id == user?.id && pw == user?.pw) {
+            if (id == viewModel.user?.id && pw == viewModel.user?.pw) {
                 viewModel.signInBtnClicked(id, pw)
             } else {
                 snackBar(binding.root, getString(R.string.user_error))
@@ -93,7 +94,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
         runCatching {
             MainActivity.createIntent(
                 this,
-                user ?: throw IllegalStateException(),
+                viewModel.user ?: throw IllegalStateException(),
             ).also(::startActivity)
         }.onFailure {
             snackBar(binding.root, getString(R.string.user_error))

@@ -6,6 +6,7 @@ import com.sopt.now.R
 import com.sopt.now.data.local.UserDataStore
 import com.sopt.now.data.remote.dto.request.RequestSignInDto
 import com.sopt.now.data.remote.repository.AuthRepository
+import com.sopt.now.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,6 +20,11 @@ class SignInViewModel @Inject constructor(
 ) : ViewModel() {
     private val _signInState = MutableStateFlow<SignInState>(SignInState.LOADING)
     val signInState: StateFlow<SignInState> = _signInState
+    var user: User? = null
+
+    fun setUser(userInfo: User) {
+        user = userInfo
+    }
 
     fun signInBtnClicked(id: String, pw: String) {
         viewModelScope.launch {
