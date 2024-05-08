@@ -40,7 +40,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                viewModel.setUser(
+                viewModel.setUserInfo(
                     result.data?.getParcelable(USER_KEY, User::class.java)
                         ?: return@registerForActivityResult
                 )

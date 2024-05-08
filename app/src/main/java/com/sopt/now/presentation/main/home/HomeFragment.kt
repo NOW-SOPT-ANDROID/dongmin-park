@@ -57,4 +57,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         }.launchIn(lifecycleScope)
     }
+
+    override fun onDestroyView() {
+        binding.rvFriends.adapter = null
+        super.onDestroyView()
+    }
 }

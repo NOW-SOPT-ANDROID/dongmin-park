@@ -22,7 +22,7 @@ class SignInViewModel @Inject constructor(
     val signInState: StateFlow<SignInState> = _signInState
     var user: User? = null
 
-    fun setUser(userInfo: User) {
+    fun setUserInfo(userInfo: User) {
         user = userInfo
     }
 
