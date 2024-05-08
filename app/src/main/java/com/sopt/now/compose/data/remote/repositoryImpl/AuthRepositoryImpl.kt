@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val authDataSource: AuthDataSource,
-    private val userDataStore: UserDataStore,
+    private val userDataStore: UserDataStore
 ) : AuthRepository {
     override suspend fun postSignUp(user: RequestUserEntity): Result<Response<BaseResponseWithoutDataDto>> =
         runCatching {

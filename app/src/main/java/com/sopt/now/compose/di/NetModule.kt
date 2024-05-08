@@ -28,7 +28,7 @@ import javax.inject.Singleton
 object NetModule {
     private const val APPLICATION_JSON = "application/json"
     private const val OKHTTP = "okhttp"
-    private const val SPACING = 4
+    private const val UNIT_TAB = 4
 
     @Provides
     @Singleton
@@ -47,10 +47,10 @@ object NetModule {
     fun provideHttpLoggingInterceptor(): Interceptor = HttpLoggingInterceptor { message ->
         when {
             message.isJsonObject() ->
-                Timber.tag(OKHTTP).d(JSONObject(message).toString(SPACING))
+                Timber.tag(OKHTTP).d(JSONObject(message).toString(UNIT_TAB))
 
             message.isJsonArray() ->
-                Timber.tag(OKHTTP).d(JSONObject(message).toString(SPACING))
+                Timber.tag(OKHTTP).d(JSONObject(message).toString(UNIT_TAB))
 
             else -> {
                 Timber.tag(OKHTTP).d("CONNECTION INFO -> $message")
