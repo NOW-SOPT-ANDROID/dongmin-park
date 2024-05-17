@@ -12,8 +12,9 @@ import com.sopt.now.presentation.main.home.HomeFragment
 import com.sopt.now.presentation.main.my.MyFragment
 import com.sopt.now.presentation.main.search.SearchFragment
 import com.sopt.now.util.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
     enum class BottomNavigationType(val menuId: Int) {
         HOME(R.id.menu_home),
