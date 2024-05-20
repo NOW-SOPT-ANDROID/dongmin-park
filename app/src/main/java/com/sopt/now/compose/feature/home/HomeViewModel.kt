@@ -1,169 +1,20 @@
 package com.sopt.now.compose.feature.home
 
 import androidx.lifecycle.ViewModel
-import com.sopt.now.compose.R
-import com.sopt.now.compose.data.local.UserDataStore
-import com.sopt.now.compose.model.Friend
-import com.sopt.now.compose.model.User
-import com.sopt.now.compose.util.UiState
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.sopt.now.compose.domain.entity.response.ReqresUserModel
+import com.sopt.now.compose.domain.repository.ReqresRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val userDataStore: UserDataStore
+    reqresRepository: ReqresRepository,
 ) : ViewModel() {
-    private val _state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
-    val state: StateFlow<HomeState>
-        get() = _state.asStateFlow()
-
-    fun setState() {
-        val user = userDataStore.run {
-            User(id, pw, nickname, juryang)
-        }
-
-        if (user.isEmptyUser()) {
-            _state.value = _state.value.copy(
-                loadState = UiState.Failure
-            )
-        } else {
-            _state.value = _state.value.copy(
-                loadState = UiState.Success(user)
-            )
-        }
-    }
-
-    val friendDataList = persistentListOf(
-        Friend(
-            R.drawable.img_error,
-            "박동민",
-            "지금은 금요일 저녁 10시"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "동민",
-            "벼락치기 힘들다"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "민",
-            "다음주엔 미리해야지"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "송혜음",
-            "히히 안드 재밌다"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "이석준",
-            "솔직히 내가 리드실력임 ㅋㅋ"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "박유진",
-            "으앙 어려워요"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ), Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ), Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ), Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        ),
-        Friend(
-            R.drawable.img_error,
-            "더미",
-            "더미더미"
-        )
-    )
+    val userListStream: Flow<PagingData<ReqresUserModel>> =
+        reqresRepository.getUserList().distinctUntilChanged().cachedIn(viewModelScope)
 }

@@ -1,8 +1,11 @@
 package com.sopt.now.compose.feature.signin
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.local.UserDataStore
+import com.sopt.now.compose.data.remote.repositoryImpl.AuthRepositoryImpl
+import com.sopt.now.compose.domain.entity.request.RequestSignInEntity
+import com.sopt.now.compose.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -11,11 +14,12 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val userDataStore: UserDataStore
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
     private val _state: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
     val state: StateFlow<SignInState>
@@ -27,10 +31,9 @@ class SignInViewModel @Inject constructor(
 
     fun setInfo() {
         _state.value = _state.value.copy(
-            id = userDataStore.id,
-            pw = userDataStore.pw,
-            nickname = userDataStore.nickname,
-            juryang = userDataStore.juryang
+            id = authRepository.getId(),
+            password = authRepository.getPassword(),
+            nickname = authRepository.getNickname()
         )
     }
 
@@ -38,40 +41,34 @@ class SignInViewModel @Inject constructor(
         _state.value = _state.value.copy(id = id)
     }
 
-    fun fetchPw(pw: String) {
-        _state.value = _state.value.copy(pw = pw)
+    fun fetchPw(password: String) {
+        _state.value = _state.value.copy(password = password)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun signInBtnClicked() {
-        when {
-            _state.value.id == "" -> _sideEffect.emit(
-                SignInSideEffect.SnackBar(
-                    R.string.id_error
+        viewModelScope.launch {
+            authRepository.verifyUser(
+                RequestSignInEntity(
+                    _state.value.id,
+                    _state.value.password
                 )
-            )
+            ).onSuccess {
+                val header = it.headers()[AuthRepositoryImpl.HEADER].orEmpty()
 
-            _state.value.pw == "" -> _sideEffect.emit(
-                SignInSideEffect.SnackBar(
-                    R.string.pw_error
+                setUserData(header)
+                _sideEffect.emit(SignInSideEffect.NavigateToMain)
+            }.onFailure {
+                _sideEffect.emit(
+                    SignInSideEffect.SnackBar(
+                        R.string.server_error
+                    )
                 )
-            )
-
-            _state.value.id != userDataStore.id -> _sideEffect.emit(
-                SignInSideEffect.SnackBar(
-                    R.string.id_error
-                )
-            )
-
-            _state.value.pw != userDataStore.pw -> _sideEffect.emit(
-                SignInSideEffect.SnackBar(
-                    R.string.pw_error
-                )
-            )
-
-            else -> _sideEffect.emit(SignInSideEffect.NavigateToMain)
+            }
         }
-        _sideEffect.resetReplayCache()
+    }
+
+    private fun setUserData(memberId: String) {
+        authRepository.setUserId(memberId)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

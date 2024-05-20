@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -27,8 +26,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
-import com.sopt.now.compose.model.User
-import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpRoute(
@@ -39,21 +36,10 @@ fun SignUpRoute(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    val scope = rememberCoroutineScope()
-
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle).collect { sideEffect ->
             when (sideEffect) {
                 SignUpSideEffect.NavigateToSignIn -> {
-                    val user = User(
-                        id = state.id,
-                        pw = state.pw,
-                        nickname = state.nickname,
-                        juryang = state.juryang
-                    )
-
-                    viewModel.setUserData(user)
-
                     onSignInClick()
                 }
 
@@ -64,17 +50,16 @@ fun SignUpRoute(
 
     SignUpScreen(
         id = state.id,
-        pw = state.pw,
+        pw = state.password,
         nickname = state.nickname,
-        juryang = state.juryang,
+        phoneNumber = state.phoneNumber,
         fetchId = { viewModel.fetchId(it) },
         fetchPw = { viewModel.fetchPw(it) },
         fetchNickname = { viewModel.fetchNickname(it) },
-        fetchJuryang = { viewModel.fetchJuryang(it) },
+        fetchPhoneNumber = { viewModel.fetchPhoneNumber(it) },
         signUpBtnClicked = {
-            scope.launch {
                 viewModel.signUpBtnClicked()
-            }
+
         }
     )
 }
@@ -84,11 +69,11 @@ fun SignUpScreen(
     id: String,
     pw: String,
     nickname: String,
-    juryang: String,
+    phoneNumber: String,
     fetchId: (String) -> Unit,
     fetchPw: (String) -> Unit,
     fetchNickname: (String) -> Unit,
-    fetchJuryang: (String) -> Unit,
+    fetchPhoneNumber: (String) -> Unit,
     signUpBtnClicked: () -> Unit,
 ) {
     Scaffold(
@@ -168,12 +153,12 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             TextFieldWithTitle(
-                title = stringResource(id = R.string.juryang),
-                value = juryang,
-                hint = stringResource(id = R.string.juryang_hint),
+                title = stringResource(id = R.string.phone_number),
+                value = phoneNumber,
+                hint = stringResource(id = R.string.phone_number_hint),
                 singleLine = true,
-                onValueChanged = { juryang ->
-                    fetchJuryang(juryang)
+                onValueChanged = { number ->
+                    fetchPhoneNumber(number)
                 }
             )
         }

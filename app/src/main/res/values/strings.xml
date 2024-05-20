@@ -5,12 +5,12 @@
     <string name="id">ID</string>
     <string name="pw">PW</string>
     <string name="nickname">NICKNAME</string>
-    <string name="juryang">주량</string>
+    <string name="phone_number">전화번호</string>
 
     <string name="id_hint">아이디를 입력해주세요</string>
     <string name="pw_hint">비밀번호를 입력해주세요</string>
     <string name="nickname_hint">닉네임을 입력해주세요</string>
-    <string name="juryang_hint">소주 주량을 입력해주세요</string>
+    <string name="phone_number_hint">전화번호를 입력해주세요</string>
 
     <string name="sign_in_title">Welcome To SOPT</string>
     <string name="sign_in_btn">로그인하기</string>
@@ -20,5 +20,6 @@
     <string name="id_error">ID ERROR</string>
     <string name="pw_error">PW ERROR</string>
     <string name="nickname_error">NICKNAME ERROR</string>
-    <string name="juryang_error">JURYANG ERROR</string>
+    <string name="phone_error">PHONE ERROR</string>
+    <string name="server_error">SERVER ERROR</string>
 </resources>

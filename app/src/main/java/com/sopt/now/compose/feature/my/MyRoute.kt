@@ -13,10 +13,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.flowWithLifecycle
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.sopt.now.compose.R
@@ -29,12 +31,22 @@ import com.sopt.now.compose.util.UiState
 @Composable
 fun MyRoute(
     modifier: Modifier,
+    onShowErrorSnackBar: (Int) -> Unit,
     viewModel: MyViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(true) {
-        viewModel.setState()
+        viewModel.getUserInfo()
+    }
+
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        viewModel.sideEffect.flowWithLifecycle(lifecycleOwner.lifecycle).collect { sideEffect ->
+            when (sideEffect) {
+                is MySideEffect.SnackBar -> onShowErrorSnackBar(sideEffect.message)
+            }
+        }
     }
 
     when (state.loadState) {
@@ -45,9 +57,8 @@ fun MyRoute(
             MyScreen(
                 profileImage = user.profileImage,
                 id = user.id,
-                pw = user.pw,
                 nickname = user.nickname,
-                juryang = user.juryang,
+                phoneNumber = user.phoneNumber,
                 selfDescription = user.selfDescription,
                 modifier = modifier
             )
@@ -60,9 +71,8 @@ fun MyRoute(
 fun MyScreen(
     @DrawableRes profileImage: Int,
     id: String,
-    pw: String,
     nickname: String,
-    juryang: String,
+    phoneNumber: String,
     selfDescription: String,
     modifier: Modifier = Modifier,
 ) {
@@ -92,10 +102,9 @@ fun MyScreen(
 
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-        DescriptionWithTitle(title = stringResource(id = R.string.pw), description = pw)
-
-        Spacer(modifier = Modifier.padding(vertical = 20.dp))
-
-        DescriptionWithTitle(title = stringResource(id = R.string.juryang), description = juryang)
+        DescriptionWithTitle(
+            title = stringResource(id = R.string.phone_number),
+            description = phoneNumber
+        )
     }
 }
