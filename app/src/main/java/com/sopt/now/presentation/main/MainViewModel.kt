@@ -22,7 +22,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val homeRepository: HomeRepository,
-    private val reqresRepository: ReqresRepository,
+    private val reqresRepository: ReqresRepository
 ) : ViewModel() {
     private val _myState = MutableStateFlow<MyState>(MyState.LOADING)
     val myState: StateFlow<MyState> = _myState
