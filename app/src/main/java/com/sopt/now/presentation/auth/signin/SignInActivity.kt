@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.content.IntentCompat
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.sopt.now.R
@@ -14,7 +15,6 @@ import com.sopt.now.presentation.auth.signup.SignUpActivity
 import com.sopt.now.presentation.auth.signup.SignUpActivity.Companion.USER_KEY
 import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.util.base.BaseActivity
-import com.sopt.now.util.ext.getParcelable
 import com.sopt.now.util.ext.snackBar
 import com.sopt.now.util.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +41,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
         ) { result ->
             if (result.resultCode == RESULT_OK) {
                 viewModel.setUserInfo(
-                    result.data?.getParcelable(USER_KEY, User::class.java)
+                    IntentCompat.getParcelableExtra(result.data?: Intent(), USER_KEY, User::class.java)
                         ?: return@registerForActivityResult
                 )
 
