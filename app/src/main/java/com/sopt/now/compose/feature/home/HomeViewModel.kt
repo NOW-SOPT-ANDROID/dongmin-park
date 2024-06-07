@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    reqresRepository: ReqresRepository,
+    reqresRepository: ReqresRepository
 ) : ViewModel() {
     val userListStream: Flow<PagingData<ReqresUserModel>> =
         reqresRepository.getUserList().distinctUntilChanged().cachedIn(viewModelScope)
