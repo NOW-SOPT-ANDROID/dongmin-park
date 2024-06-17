@@ -1,8 +1,8 @@
 package com.sopt.now.compose.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.sopt.now.BuildConfig.BASE_URL
-import com.sopt.now.BuildConfig.REQRES_URL
+import com.sopt.now.compose.BuildConfig.BASE_URL
+import com.sopt.now.compose.BuildConfig.REQRES_URL
 import com.sopt.now.compose.di.qualifier.AUTH
 import com.sopt.now.compose.di.qualifier.HEADER
 import com.sopt.now.compose.di.qualifier.REQRES

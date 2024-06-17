@@ -2,9 +2,11 @@
 buildscript {
     ext {
         hilt_version = "2.51"
+        ksp_version = "1.9.0-1.0.13"
     }
 
     dependencies {
+        classpath "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:$ksp_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }
 }
@@ -13,4 +15,5 @@ plugins {
     id 'com.android.library' version '8.3.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.9.0' apply false
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.20' apply false
+    id 'com.google.devtools.ksp' version "$ksp_version" apply false
 }
